@@ -43,3 +43,28 @@ site.sign_out = Sign out
 
 unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account
+
+dateOfDeathBefore.title = myNewPage
+dateOfDeathBefore.heading = myNewPage
+dateOfDeathBefore.checkYourAnswersLabel = myNewPage
+dateOfDeathBefore.error.required = Select yes if myNewPage
+
+moreThanQuaterMill.title = m
+moreThanQuaterMill.heading = m
+moreThanQuaterMill.checkYourAnswersLabel = m
+moreThanQuaterMill.error.required = Select yes if m
+
+moreThanHalfMill.title = myNewPage
+moreThanHalfMill.heading = myNewPage
+moreThanHalfMill.checkYourAnswersLabel = myNewPage
+moreThanHalfMill.error.required = Select yes if myNewPage
+
+moreThanTenThousand.title = myNewPage
+moreThanTenThousand.heading = myNewPage
+moreThanTenThousand.checkYourAnswersLabel = myNewPage
+moreThanTenThousand.error.required = Select yes if myNewPage
+
+moreThanTwoHalfMill.title = myNewPage
+moreThanTwoHalfMill.heading = myNewPage
+moreThanTwoHalfMill.checkYourAnswersLabel = myNewPage
+moreThanTwoHalfMill.error.required = Select yes if myNewPage

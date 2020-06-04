@@ -13,3 +13,19 @@ GET        /check-your-answers                          controllers.CheckYourAns
 GET        /unauthorised                                controllers.UnauthorisedController.onPageLoad
 
 GET        /logout                                      controllers.LogoutController.logout()
+
+GET        /date-of-death-before                        controllers.DateOfDeathBeforeController.onPageLoad()
+POST       /date-of-death-before                        controllers.DateOfDeathBeforeController.onSubmit()
+
+GET        /more-than-quater-million                    controllers.MoreThanHalfMillController.onPageLoad()
+POST       /more-than-quater-million                    controllers.MoreThanHalfMillController.onSubmit()
+
+GET        /more-than-half-million                      controllers.MoreThanQuaterMillController.onPageLoad()
+POST       /more-than-half-million                      controllers.MoreThanQuaterMillController.onSubmit()
+
+GET        /more-than-ten-thousand                      controllers.MoreThanTenThousandController.onPageLoad()
+POST       /more-than-ten-thousand                      controllers.MoreThanTenThousandController.onSubmit()
+
+GET        /more-than-two-half-mill                     controllers.MoreThanTwoHalfMillController.onPageLoad()
+POST       /more-than-two-half-mill                     controllers.MoreThanTwoHalfMillController.onSubmit()
+

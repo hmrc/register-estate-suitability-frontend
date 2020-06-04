@@ -14,29 +14,13 @@
  * limitations under the License.
  */
 
-package navigation
+package pages
 
-import javax.inject.{Inject, Singleton}
+import play.api.libs.json.JsPath
 
-import play.api.mvc.Call
-import controllers.routes
-import pages._
-import models._
+case object DateOfDeathBeforePage extends QuestionPage[Boolean] {
 
-@Singleton
-class Navigator @Inject()() {
+  override def path: JsPath = JsPath \ toString
 
-  private val normalRoutes: Page => UserAnswers => Call = {
-    case _ => _ => routes.IndexController.onPageLoad()
-  }
-
-  private val checkRouteMap: Page => UserAnswers => Call = {
-    case _ => _ => routes.CheckYourAnswersController.onPageLoad()
-  }
-
-  def nextPage(page: Page, userAnswers: UserAnswers): Call = {
-    case NormalMode =>
-      normalRoutes(page)(userAnswers)
-
-  }
+  override def toString: String = "DateOfDeathBefore"
 }
