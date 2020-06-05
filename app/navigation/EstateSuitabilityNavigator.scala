@@ -20,9 +20,9 @@ import models.UserAnswers
 import pages.{DateOfDeathBeforePage, MoreThanHalfMillPage, MoreThanQuaterMillPage, MoreThanTenThousandPage, MoreThanTwoHalfMillPage, Page}
 import play.api.mvc.Call
 
-class EstateSuitabilityNavigator {
+object EstateSuitabilityNavigator {
 
-  protected def normalRoutes(): Page => UserAnswers => Call = {
+  val normalRoutes: PartialFunction[Page, UserAnswers => Call] = {
 
     case DateOfDeathBeforePage => saleOfEstatesAmountsRoute
     case MoreThanQuaterMillPage => moreThan250KRoute

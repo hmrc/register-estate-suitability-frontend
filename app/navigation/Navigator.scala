@@ -16,22 +16,21 @@
 
 package navigation
 
-import javax.inject.{Inject, Singleton}
-
-import play.api.mvc.Call
 import controllers.routes
-import pages._
-import models._
+import javax.inject.{Inject, Singleton}
+import models.UserAnswers
+import pages.Page
+import play.api.mvc.Call
 
 @Singleton
 class Navigator @Inject()() {
 
-  private val normalRoutes: Page => UserAnswers => Call = {
-    case _ => _ => routes.IndexController.onPageLoad()
-  }
+  private val normalRoutes: Page => UserAnswers => Call =
+    EstateSuitabilityNavigator.normalRoutes orElse {
+      case _ => _ => routes.IndexController.onPageLoad()
+    }
 
   def nextPage(page: Page, userAnswers: UserAnswers): Call = {
-    case NormalMode =>
-      normalRoutes(page)(userAnswers)
+    normalRoutes(page)(userAnswers)
   }
 }
