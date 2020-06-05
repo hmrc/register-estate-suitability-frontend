@@ -17,7 +17,8 @@ echo "" >> ../conf/messages.en
 echo "myNewPage.title = myNewPage" >> ../conf/messages.en
 echo "myNewPage.heading = myNewPage" >> ../conf/messages.en
 echo "myNewPage.checkYourAnswersLabel = myNewPage" >> ../conf/messages.en
-echo "myNewPage.error.required = Select yes if myNewPage" >> ../conf/messages.en
+echo "myNewPage.error.required = Enter myNewPage" >> ../conf/messages.en
+echo "myNewPage.error.length = MyNewPage must be 100 characters or less" >> ../conf/messages.en
 
 echo "Adding to UserAnswersEntryGenerators"
 awk '/trait UserAnswersEntryGenerators/ {\
@@ -27,7 +28,7 @@ awk '/trait UserAnswersEntryGenerators/ {\
     print "    Arbitrary {";\
     print "      for {";\
     print "        page  <- arbitrary[MyNewPagePage.type]";\
-    print "        value <- arbitrary[Boolean].map(Json.toJson(_))";\
+    print "        value <- arbitrary[String].suchThat(_.nonEmpty).map(Json.toJson(_))";\
     print "      } yield (page, value)";\
     print "    }";\
     next }1' ../test/generators/UserAnswersEntryGenerators.scala > tmp && mv tmp ../test/generators/UserAnswersEntryGenerators.scala
@@ -54,7 +55,7 @@ awk '/class/ {\
      print "    x =>";\
      print "      AnswerRow(";\
      print "        HtmlFormat.escape(messages(\"myNewPage.checkYourAnswersLabel\")),";\
-     print "        yesOrNo(x),";\
+     print "        HtmlFormat.escape(x),";\
      print "        routes.MyNewPageController.onPageLoad(CheckMode).url";\
      print "      )"
      print "  }";\

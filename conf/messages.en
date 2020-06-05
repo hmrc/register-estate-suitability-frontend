@@ -68,3 +68,15 @@ moreThanTwoHalfMill.title = myNewPage
 moreThanTwoHalfMill.heading = myNewPage
 moreThanTwoHalfMill.checkYourAnswersLabel = myNewPage
 moreThanTwoHalfMill.error.required = Select yes if myNewPage
+
+doNotNeedToRegister.title = myNewPage
+doNotNeedToRegister.heading = myNewPage
+doNotNeedToRegister.checkYourAnswersLabel = myNewPage
+doNotNeedToRegister.error.required = Enter myNewPage
+doNotNeedToRegister.error.length = MyNewPage must be 100 characters or less
+
+youNeedToRegister.title = myNewPage
+youNeedToRegister.heading = myNewPage
+youNeedToRegister.checkYourAnswersLabel = myNewPage
+youNeedToRegister.error.required = Enter myNewPage
+youNeedToRegister.error.length = MyNewPage must be 100 characters or less

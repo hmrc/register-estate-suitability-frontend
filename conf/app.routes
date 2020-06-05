@@ -29,3 +29,8 @@ POST       /more-than-ten-thousand                      controllers.MoreThanTenT
 GET        /more-than-two-half-mill                     controllers.MoreThanTwoHalfMillController.onPageLoad()
 POST       /more-than-two-half-mill                     controllers.MoreThanTwoHalfMillController.onSubmit()
 
+GET        /do-not-need-to-register                     controllers.DoNotNeedToRegisterController.onPageLoad()
+
+GET        /you-need-to-register                        controllers.YouNeedToRegisterController.onPageLoad()
+
+
