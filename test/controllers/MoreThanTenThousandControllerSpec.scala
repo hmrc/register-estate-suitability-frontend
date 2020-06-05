@@ -25,12 +25,11 @@ import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import pages.MoreThanTenThousandPage
 import play.api.inject.bind
-import play.api.libs.json.{JsBoolean, Json}
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import views.html.MyNewPageView
+import views.html.MoreThanTenThousandView
 
 import scala.concurrent.Future
 
@@ -41,7 +40,7 @@ class MoreThanTenThousandControllerSpec extends SpecBase with MockitoSugar {
   val formProvider = new YesNoFormProvider()
   val form = formProvider()
 
-  lazy val moreThanTenThousandRoute = routes.MoreThanTenThousandController.onPageLoad(NormalMode).url
+  lazy val moreThanTenThousandRoute = routes.MoreThanTenThousandController.onPageLoad().url
 
   "MyNewPage Controller" must {
 

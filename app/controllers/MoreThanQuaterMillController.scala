@@ -19,7 +19,6 @@ package controllers
 import controllers.actions._
 import forms.YesNoFormProvider
 import javax.inject.Inject
-import models.Mode
 import navigation.Navigator
 import pages.MoreThanHalfMillPage
 import play.api.data.Form

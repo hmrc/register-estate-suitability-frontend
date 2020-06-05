@@ -17,7 +17,7 @@
 package views
 
 import views.behaviours.StringViewBehaviours
-import views.html.{DoNotNeedToRegisterView, YouNeedToRegisterView}
+import views.html.YouNeedToRegisterView
 
 class YouNeedToRegisterViewSpec extends StringViewBehaviours {
 

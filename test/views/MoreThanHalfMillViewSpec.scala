@@ -26,7 +26,7 @@ import views.html.{MView, MoreThanHalfMillView}
 
 class MoreThanHalfMillViewSpec extends YesNoViewBehaviours {
 
-  val messageKeyPrefix = "m"
+  val messageKeyPrefix = "moreThanHalfMill"
 
   val form = new YesNoFormProvider()()
 

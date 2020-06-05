@@ -21,7 +21,7 @@ import org.scalatestplus.mockito.MockitoSugar
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import views.html.{DoNotNeedToRegisterView, YouNeedToRegisterView}
+import views.html.YouNeedToRegisterView
 
 class YouNeedToRegisterControllerSpec extends SpecBase with MockitoSugar {
 

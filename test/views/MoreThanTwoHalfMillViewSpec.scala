@@ -18,19 +18,18 @@ package views
 
 import controllers.routes
 import forms.YesNoFormProvider
-import models.NormalMode
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 import views.behaviours.YesNoViewBehaviours
-import views.html.{MoreThanTwoHalfMillView, MyNewPageView}
+import views.html.MoreThanTwoHalfMillView
 
 class MoreThanTwoHalfMillViewSpec extends YesNoViewBehaviours {
 
-  val messageKeyPrefix = "myNewPage"
+  val messageKeyPrefix = "moreThanTwoHalfMill"
 
   val form = new YesNoFormProvider()()
 
-  "MyNewPage view" must {
+  "MoreThanTwoHalfMill view" must {
 
     val view = viewFor[MoreThanTwoHalfMillView](Some(emptyUserAnswers))
 

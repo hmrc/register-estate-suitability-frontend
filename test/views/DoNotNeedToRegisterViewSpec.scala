@@ -16,12 +16,8 @@
 
 package views
 
-import controllers.routes
-import models.NormalMode
-import play.api.data.Form
-import play.twirl.api.HtmlFormat
 import views.behaviours.StringViewBehaviours
-import views.html.{DoNotNeedToRegisterView, MyNewPageView}
+import views.html.DoNotNeedToRegisterView
 
 class DoNotNeedToRegisterViewSpec extends StringViewBehaviours {
 
