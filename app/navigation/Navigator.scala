@@ -30,13 +30,8 @@ class Navigator @Inject()() {
     case _ => _ => routes.IndexController.onPageLoad()
   }
 
-  private val checkRouteMap: Page => UserAnswers => Call = {
-    case _ => _ => routes.CheckYourAnswersController.onPageLoad()
-  }
-
   def nextPage(page: Page, userAnswers: UserAnswers): Call = {
     case NormalMode =>
       normalRoutes(page)(userAnswers)
-
   }
 }
