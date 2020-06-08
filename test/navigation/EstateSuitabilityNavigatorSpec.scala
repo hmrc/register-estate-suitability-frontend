@@ -20,6 +20,7 @@ import base.SpecBase
 import controllers.routes
 import models.UserAnswers
 import org.scalacheck.Arbitrary.arbitrary
+import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import pages.DateOfDeathBeforePage
 
 class EstateSuitabilityNavigatorSpec extends SpecBase {
