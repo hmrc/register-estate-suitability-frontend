@@ -30,8 +30,6 @@
 
         @components.heading("youNeedToRegister.heading")
 
-     <p>@messages("youNeedToRegister.paragraph1")</p>
-
-        @components.submit_button()
+        @components.button_link(messages("site.estate.continue"), controllers.YouNeedToRegisterController.onPageLoad().url)
 
        }
