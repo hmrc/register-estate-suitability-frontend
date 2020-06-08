@@ -16,11 +16,9 @@
 
 package views
 
-import controllers.routes
 import forms.YesNoFormProvider
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.play.health.routes
 import views.behaviours.YesNoViewBehaviours
 import views.html.DateOfDeathBeforeView
 
@@ -28,7 +26,7 @@ class DateOfDeathBeforeViewSpec extends YesNoViewBehaviours {
 
   val messageKeyPrefix = "dateOfDeathBefore"
 
-  val form = new YesNoFormProvider()()
+  val form = new YesNoFormProvider().withPrefix(messageKeyPrefix)
 
   "dateOfDeathBefore view" must {
 

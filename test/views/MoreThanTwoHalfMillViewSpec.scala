@@ -27,7 +27,7 @@ class MoreThanTwoHalfMillViewSpec extends YesNoViewBehaviours {
 
   val messageKeyPrefix = "moreThanTwoHalfMill"
 
-  val form = new YesNoFormProvider()()
+  val form = new YesNoFormProvider().withPrefix(messageKeyPrefix)
 
   "MoreThanTwoHalfMill view" must {
 

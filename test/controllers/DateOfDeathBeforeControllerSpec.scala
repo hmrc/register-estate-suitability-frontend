@@ -38,7 +38,7 @@ class DateOfDeathBeforeControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new YesNoFormProvider()
-  val form = formProvider()
+  val form = formProvider.withPrefix("dateOfDeathBefore")
 
   lazy val myNewPageRoute = routes.DateOfDeathBeforeController.onPageLoad().url
 

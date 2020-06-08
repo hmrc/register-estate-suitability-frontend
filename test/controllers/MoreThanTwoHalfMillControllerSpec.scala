@@ -38,7 +38,7 @@ class MoreThanTwoHalfMillControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new YesNoFormProvider()
-  val form = formProvider()
+  val form = formProvider.withPrefix("moreThanTwoHalfMill")
 
   lazy val moreThanTwoHalfMillControllerRoute = routes.MoreThanTwoHalfMillController.onPageLoad().url
 

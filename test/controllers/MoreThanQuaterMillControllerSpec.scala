@@ -38,7 +38,7 @@ class MoreThanQuaterMillControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new YesNoFormProvider()
-  val form = formProvider()
+  val form = formProvider.withPrefix("moreThanQuaterMill")
 
   lazy val mRoute = routes.MoreThanQuaterMillController.onPageLoad().url
 
