@@ -18,7 +18,7 @@ package navigation
 
 import base.SpecBase
 import controllers.routes
-import pages.DateOfDeathBeforePage
+import pages.{DateOfDeathBeforePage, MoreThanHalfMillPage, MoreThanQuaterMillPage, MoreThanTenThousandPage, MoreThanTwoHalfMillPage}
 
 class EstateSuitabilityNavigatorSpec extends SpecBase {
 
@@ -26,19 +26,130 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
 
   "Navigator" when {
 
-    "in Normal mode" must {
+    "DateOfDeathBeforePage -> yes -> MoreThanQuaterMillPage" in {
 
-      "navigate from DateOfDeathBeforePage" in {
+      val page = DateOfDeathBeforePage
 
-        val page = DateOfDeathBeforePage
+      val userAnswers = emptyUserAnswers
+         .set(DateOfDeathBeforePage, true).success.value
 
-        val userAnswers = emptyUserAnswers
-
-        navigator.nextPage(page, userAnswers)
-          .mustBe(routes.DateOfDeathBeforeController.onPageLoad())
-      }
-
+      navigator.nextPage(page, userAnswers)
+         .mustBe(routes.MoreThanQuaterMillController.onPageLoad())
     }
-  }
 
+    "DateOfDeathBeforePage -> no -> MoreThanHalfMillPage" in {
+
+      val page = DateOfDeathBeforePage
+
+      val userAnswers = emptyUserAnswers
+        .set(DateOfDeathBeforePage, false).success.value
+
+      navigator.nextPage(page, userAnswers)
+        .mustBe(routes.MoreThanHalfMillController.onPageLoad())
+    }
+
+    "MoreThanQuaterMillPage -> yes -> YouNeedToRegister" in {
+
+      val page = MoreThanQuaterMillPage
+
+      val userAnswers = emptyUserAnswers
+        .set(DateOfDeathBeforePage,true).success.value
+        .set(MoreThanQuaterMillPage, true).success.value
+
+      navigator.nextPage(page, userAnswers)
+        .mustBe(routes.YouNeedToRegisterController.onPageLoad())
+    }
+
+    "MoreThanQuaterMillPage -> No -> MoreThan10K" in {
+
+      val page = MoreThanQuaterMillPage
+
+      val userAnswers = emptyUserAnswers
+        .set(DateOfDeathBeforePage,true).success.value
+        .set(MoreThanQuaterMillPage, false).success.value
+
+      navigator.nextPage(page, userAnswers)
+        .mustBe(routes.MoreThanTenThousandController.onPageLoad())
+    }
+
+    "MoreThanHalfMillPage -> Yes -> YouNeedToRegister" in {
+
+      val page = MoreThanHalfMillPage
+
+      val userAnswers = emptyUserAnswers
+        .set(DateOfDeathBeforePage,false).success.value
+        .set(MoreThanHalfMillPage, true).success.value
+
+      navigator.nextPage(page, userAnswers)
+        .mustBe(routes.YouNeedToRegisterController.onPageLoad())
+    }
+
+    "MoreThanHalfMillPage -> no -> MoreThan10K" in {
+
+      val page = MoreThanHalfMillPage
+
+      val userAnswers = emptyUserAnswers
+        .set(DateOfDeathBeforePage,false).success.value
+        .set(MoreThanHalfMillPage, false).success.value
+
+      navigator.nextPage(page, userAnswers)
+        .mustBe(routes.MoreThanTenThousandController.onPageLoad())
+    }
+
+    "MoreThanTenThousand -> Yes -> YouNeedToRegister" in {
+
+      val page = MoreThanTenThousandPage
+
+      val userAnswers = emptyUserAnswers
+        .set(DateOfDeathBeforePage,true).success.value
+        .set(MoreThanQuaterMillPage,false).success.value
+        .set(MoreThanTenThousandPage, true).success.value
+
+      navigator.nextPage(page, userAnswers)
+        .mustBe(routes.YouNeedToRegisterController.onPageLoad())
+    }
+
+    "MoreThanTenThousand -> no -> MoreThanTwoHalfMill" in {
+
+      val page = MoreThanTenThousandPage
+
+      val userAnswers = emptyUserAnswers
+        .set(DateOfDeathBeforePage,false).success.value
+        .set(MoreThanHalfMillPage,false).success.value
+        .set(MoreThanTenThousandPage, false).success.value
+
+      navigator.nextPage(page, userAnswers)
+        .mustBe(routes.MoreThanTwoHalfMillController.onPageLoad())
+    }
+
+
+    "MoreThanTwoHalfMill -> Yes -> YouNeedToRegister" in {
+
+      val page = MoreThanTwoHalfMillPage
+
+      val userAnswers = emptyUserAnswers
+        .set(DateOfDeathBeforePage,true).success.value
+        .set(MoreThanQuaterMillPage,false).success.value
+        .set(MoreThanTenThousandPage,false).success.value
+        .set(MoreThanTwoHalfMillPage, true).success.value
+
+      navigator.nextPage(page, userAnswers)
+        .mustBe(routes.YouNeedToRegisterController.onPageLoad())
+    }
+
+    "MoreThanTwoHalfMill -> no -> MoreThanTwoHalfMill" in {
+
+      val page = MoreThanTwoHalfMillPage
+
+      val userAnswers = emptyUserAnswers
+        .set(DateOfDeathBeforePage,false).success.value
+        .set(MoreThanQuaterMillPage,false).success.value
+        .set(MoreThanTenThousandPage,false).success.value
+        .set(MoreThanTwoHalfMillPage, false).success.value
+
+      navigator.nextPage(page, userAnswers)
+        .mustBe(routes.DoNotNeedToRegisterController.onPageLoad())
+    }
+
+  }
 }

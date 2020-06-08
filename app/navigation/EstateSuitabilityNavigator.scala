@@ -32,30 +32,30 @@ object EstateSuitabilityNavigator {
   }
 
   private def saleOfEstatesAmountsRoute(answers: UserAnswers) = answers.get(DateOfDeathBeforePage) match {
-    case Some(true)  => controllers.routes.MoreThanHalfMillController.onPageLoad()
-    case Some(false) => controllers.routes.MoreThanQuaterMillController.onPageLoad()
+    case Some(true)  => controllers.routes.MoreThanQuaterMillController.onPageLoad()
+    case Some(false) => controllers.routes.MoreThanHalfMillController.onPageLoad()
     case None        => controllers.routes.SessionExpiredController.onPageLoad()
   }
 
-  private def moreThan250KRoute(answers: UserAnswers) = answers.get(DateOfDeathBeforePage) match {
+  private def moreThan250KRoute(answers: UserAnswers) = answers.get(MoreThanQuaterMillPage) match {
     case Some(true)  => controllers.routes.YouNeedToRegisterController.onPageLoad()
     case Some(false) => controllers.routes.MoreThanTenThousandController.onPageLoad()
     case None        => controllers.routes.SessionExpiredController.onPageLoad()
   }
 
-  private def moreThan500KRoute(answers: UserAnswers) = answers.get(DateOfDeathBeforePage) match {
+  private def moreThan500KRoute(answers: UserAnswers) = answers.get(MoreThanHalfMillPage) match {
     case Some(true)  => controllers.routes.YouNeedToRegisterController.onPageLoad()
     case Some(false) => controllers.routes.MoreThanTenThousandController.onPageLoad()
     case None        => controllers.routes.SessionExpiredController.onPageLoad()
   }
 
-  private def moreThan10KRoute(answers: UserAnswers) = answers.get(DateOfDeathBeforePage) match {
+  private def moreThan10KRoute(answers: UserAnswers) = answers.get(MoreThanTenThousandPage) match {
     case Some(true)  => controllers.routes.YouNeedToRegisterController.onPageLoad()
     case Some(false) => controllers.routes.MoreThanTwoHalfMillController.onPageLoad()
     case None        => controllers.routes.SessionExpiredController.onPageLoad()
   }
 
-  private def moreThan25MillionKRoute(answers: UserAnswers) = answers.get(DateOfDeathBeforePage) match {
+  private def moreThan25MillionKRoute(answers: UserAnswers) = answers.get(MoreThanTwoHalfMillPage) match {
     case Some(true)  => controllers.routes.YouNeedToRegisterController.onPageLoad()
     case Some(false) => controllers.routes.DoNotNeedToRegisterController.onPageLoad()
     case None        => controllers.routes.SessionExpiredController.onPageLoad()
