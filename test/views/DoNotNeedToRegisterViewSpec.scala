@@ -16,10 +16,10 @@
 
 package views
 
-import views.behaviours.StringViewBehaviours
+import views.behaviours.ViewBehaviours
 import views.html.DoNotNeedToRegisterView
 
-class DoNotNeedToRegisterViewSpec extends StringViewBehaviours {
+class DoNotNeedToRegisterViewSpec extends ViewBehaviours {
 
   val messageKeyPrefix = "doNotNeedToRegister"
 

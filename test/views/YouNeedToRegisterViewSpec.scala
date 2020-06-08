@@ -16,10 +16,10 @@
 
 package views
 
-import views.behaviours.StringViewBehaviours
+import views.behaviours.ViewBehaviours
 import views.html.YouNeedToRegisterView
 
-class YouNeedToRegisterViewSpec extends StringViewBehaviours {
+class YouNeedToRegisterViewSpec extends ViewBehaviours {
 
   val messageKeyPrefix = "youNeedToRegister"
 
