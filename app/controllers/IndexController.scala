@@ -16,18 +16,34 @@
 
 package controllers
 
+import controllers.actions.DataRetrievalAction
 import javax.inject.Inject
+import models.UserAnswers
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import repositories.SessionRepository
+import uk.gov.hmrc.estates.controllers.actions.IdentifierAction
 import uk.gov.hmrc.play.bootstrap.controller.FrontendBaseController
-import views.html.IndexView
+
+import scala.concurrent.ExecutionContext.Implicits._
+import scala.concurrent.Future
 
 class IndexController @Inject()(
                                  val controllerComponents: MessagesControllerComponents,
-                                 view: IndexView
+                                 identify: IdentifierAction,
+                                 getData: DataRetrievalAction,
+                                 repository: SessionRepository
                                ) extends FrontendBaseController with I18nSupport {
 
-  def onPageLoad: Action[AnyContent] = Action { implicit request =>
-    Ok(view())
+  def onPageLoad: Action[AnyContent] = (identify andThen getData).async { implicit request =>
+    request.userAnswers match {
+      case Some(_) =>
+        Future.successful(Redirect(routes.DateOfDeathBeforeController.onPageLoad()))
+      case None =>
+        val userAnswers: UserAnswers = UserAnswers(request.user.internalId)
+        repository.set(userAnswers).map { _ =>
+          Redirect(routes.DateOfDeathBeforeController.onPageLoad())
+        }
+    }
   }
 }
