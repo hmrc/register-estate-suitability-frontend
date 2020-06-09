@@ -18,7 +18,7 @@ package controllers.actions
 
 import base.SpecBase
 import models.UserAnswers
-import models.requests.{IdentifierRequest, OptionalDataRequest}
+import models.requests.{IdentifierRequest, OptionalDataRequest, OrganisationUser}
 import org.mockito.Mockito._
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatestplus.mockito.MockitoSugar
@@ -44,7 +44,7 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar with ScalaFutur
         when(sessionRepository.get("id")) thenReturn Future(None)
         val action = new Harness(sessionRepository)
 
-        val futureResult = action.callTransform(new IdentifierRequest(fakeRequest, "id"))
+        val futureResult = action.callTransform(new IdentifierRequest(fakeRequest,OrganisationUser("id")))
 
         whenReady(futureResult) { result =>
           result.userAnswers.isEmpty mustBe true
@@ -60,7 +60,7 @@ class DataRetrievalActionSpec extends SpecBase with MockitoSugar with ScalaFutur
         when(sessionRepository.get("id")) thenReturn Future(Some(new UserAnswers("id")))
         val action = new Harness(sessionRepository)
 
-        val futureResult = action.callTransform(new IdentifierRequest(fakeRequest, "id"))
+        val futureResult = action.callTransform(new IdentifierRequest(fakeRequest, OrganisationUser("id")))
 
         whenReady(futureResult) { result =>
           result.userAnswers.isDefined mustBe true

@@ -17,7 +17,6 @@
 package controllers.actions
 
 import javax.inject.Inject
-import models.UserAnswers
 import models.requests.{IdentifierRequest, OptionalDataRequest}
 import play.api.mvc.ActionTransformer
 import repositories.SessionRepository
@@ -33,11 +32,11 @@ class DataRetrievalActionImpl @Inject()(
 
     implicit val hc = HeaderCarrierConverter.fromHeadersAndSession(request.headers, Some(request.session))
 
-    sessionRepository.get(request.identifier).map {
+    sessionRepository.get(request.user.internalId).map {
       case None =>
-        OptionalDataRequest(request.request, request.identifier, None)
+        OptionalDataRequest(request.request, None, request.user)
       case Some(userAnswers) =>
-        OptionalDataRequest(request.request, request.identifier, Some(userAnswers))
+        OptionalDataRequest(request.request, Some(userAnswers), request.user)
     }
   }
 }

@@ -20,6 +20,7 @@ import controllers.actions._
 import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import uk.gov.hmrc.estates.controllers.actions.IdentifierAction
 import uk.gov.hmrc.play.bootstrap.controller.FrontendBaseController
 import views.html.YouNeedToRegisterView
 
@@ -36,6 +37,7 @@ class YouNeedToRegisterController @Inject()(
 
   def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
+
       Ok(view())
   }
 }

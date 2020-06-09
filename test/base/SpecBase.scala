@@ -27,13 +27,17 @@ import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.inject.{Injector, bind}
 import play.api.libs.json.Json
+import play.api.mvc.BodyParsers
 import play.api.test.FakeRequest
+import uk.gov.hmrc.estates.controllers.actions.IdentifierAction
 
 trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with TryValues with ScalaFutures with IntegrationPatience {
 
   val userAnswersId = "id"
 
   def emptyUserAnswers = UserAnswers(userAnswersId, Json.obj())
+
+  val bodyParsers = injector.instanceOf[BodyParsers.Default]
 
   def injector: Injector = app.injector
 
