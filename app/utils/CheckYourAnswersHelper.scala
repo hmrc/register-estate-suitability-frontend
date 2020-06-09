@@ -16,15 +16,12 @@
 
 package utils
 
-import java.time.format.DateTimeFormatter
-
 import controllers.routes
 import models.UserAnswers
 import pages._
 import play.api.i18n.Messages
 import play.twirl.api.{Html, HtmlFormat}
 import viewmodels.AnswerRow
-import CheckYourAnswersHelper._
 
 class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messages) {
 
@@ -46,12 +43,12 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
       )
   }
 
-  def moreThanQuaterMill: Option[AnswerRow] = userAnswers.get(MoreThanQuaterMillPage) map {
+  def moreThanQuaterMill: Option[AnswerRow] = userAnswers.get(MoreThanQuarterMillPage) map {
     x =>
       AnswerRow(
-        HtmlFormat.escape(messages("moreThanQuaterMill.checkYourAnswersLabel")),
+        HtmlFormat.escape(messages("moreThanQuarterMill.checkYourAnswersLabel")),
         yesOrNo(x),
-        routes.MoreThanQuaterMillController.onPageLoad().url
+        routes.MoreThanQuarterMillController.onPageLoad().url
       )
   }
 
@@ -81,7 +78,4 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
     }
 }
 
-object CheckYourAnswersHelper {
 
-  private val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
-}

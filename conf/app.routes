@@ -17,11 +17,11 @@ GET        /logout                                      controllers.LogoutContro
 GET        /date-of-death-before                        controllers.DateOfDeathBeforeController.onPageLoad()
 POST       /date-of-death-before                        controllers.DateOfDeathBeforeController.onSubmit()
 
-GET        /more-than-quater-million                    controllers.MoreThanHalfMillController.onPageLoad()
-POST       /more-than-quater-million                    controllers.MoreThanHalfMillController.onSubmit()
+GET        /more-than-quarter-million                   controllers.MoreThanQuarterMillController.onPageLoad()
+POST       /more-than-quarter-million                   controllers.MoreThanQuarterMillController.onSubmit()
 
-GET        /more-than-half-million                      controllers.MoreThanQuaterMillController.onPageLoad()
-POST       /more-than-half-million                      controllers.MoreThanQuaterMillController.onSubmit()
+GET        /more-than-half-million                      controllers.MoreThanHalfMillController.onPageLoad()
+POST       /more-than-half-million                      controllers.MoreThanHalfMillController.onSubmit()
 
 GET        /more-than-ten-thousand                      controllers.MoreThanTenThousandController.onPageLoad()
 POST       /more-than-ten-thousand                      controllers.MoreThanTenThousandController.onSubmit()

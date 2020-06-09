@@ -18,12 +18,12 @@ package controllers
 
 import base.SpecBase
 import forms.YesNoFormProvider
-import models.{NormalMode, UserAnswers}
+import models.UserAnswers
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.Matchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.MoreThanQuaterMillPage
+import pages.MoreThanHalfMillPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -64,7 +64,7 @@ class MoreThanHalfMillControllerSpec extends SpecBase with MockitoSugar {
 
     "populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(MoreThanQuaterMillPage, true).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(MoreThanHalfMillPage, true).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 

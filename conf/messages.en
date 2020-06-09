@@ -50,10 +50,10 @@ dateOfDeathBefore.heading = Was the date of death before 6th April 2016?
 dateOfDeathBefore.checkYourAnswersLabel = Was the date of death before 6th April 2016?
 dateOfDeathBefore.error.required = Select yes if the date of death was before 6th April 2016
 
-moreThanQuaterMill.title = Did more than £250,000 come from the sale of the estate’s assets by administrators or executors in any one tax year?
-moreThanQuaterMill.heading = Did more than £250,000 come from the sale of the estate’s assets by administrators or executors in any one tax year?
-moreThanQuaterMill.checkYourAnswersLabel = Did more than £250,000 come from the sale of the estate’s assets by administrators or executors in any one tax year?
-moreThanQuaterMill.error.required = Select yes if more than £250,000 came from the sale of the estate's assets by administrators or executors in any one tax year
+moreThanQuarterMill.title = Did more than £250,000 come from the sale of the estate’s assets by administrators or executors in any one tax year?
+moreThanQuarterMill.heading = Did more than £250,000 come from the sale of the estate’s assets by administrators or executors in any one tax year?
+moreThanQuarterMill.checkYourAnswersLabel = Did more than £250,000 come from the sale of the estate’s assets by administrators or executors in any one tax year?
+moreThanQuarterMill.error.required = Select yes if more than £250,000 came from the sale of the estate's assets by administrators or executors in any one tax year
 
 moreThanHalfMill.title = Did more than £500,000 come from the sale of the estate’s assets by administrators or executors in any one tax year?
 moreThanHalfMill.heading = Did more than £500,000 come from the sale of the estate’s assets by administrators or executors in any one tax year?

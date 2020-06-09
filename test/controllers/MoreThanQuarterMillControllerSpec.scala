@@ -18,29 +18,29 @@ package controllers
 
 import base.SpecBase
 import forms.YesNoFormProvider
-import models.{NormalMode, UserAnswers}
+import models.UserAnswers
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.Matchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.MoreThanHalfMillPage
+import pages.MoreThanQuarterMillPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import views.html.MoreThanQuaterMillView
+import views.html.MoreThanQuarterMillView
 
 import scala.concurrent.Future
 
-class MoreThanQuaterMillControllerSpec extends SpecBase with MockitoSugar {
+class MoreThanQuarterMillControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new YesNoFormProvider()
-  val form = formProvider.withPrefix("moreThanQuaterMill")
+  val form = formProvider.withPrefix("moreThanQuarterMill")
 
-  lazy val mRoute = routes.MoreThanQuaterMillController.onPageLoad().url
+  lazy val mRoute = routes.MoreThanQuarterMillController.onPageLoad().url
 
   "MoreThanQuaterMill Controller" must {
 
@@ -52,7 +52,7 @@ class MoreThanQuaterMillControllerSpec extends SpecBase with MockitoSugar {
 
       val result = route(application, request).value
 
-      val view = application.injector.instanceOf[MoreThanQuaterMillView]
+      val view = application.injector.instanceOf[MoreThanQuarterMillView]
 
       status(result) mustEqual OK
 
@@ -64,13 +64,13 @@ class MoreThanQuaterMillControllerSpec extends SpecBase with MockitoSugar {
 
     "populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(MoreThanHalfMillPage, true).success.value
+      val userAnswers = UserAnswers(userAnswersId).set(MoreThanQuarterMillPage, true).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       val request = FakeRequest(GET, mRoute)
 
-      val view = application.injector.instanceOf[MoreThanQuaterMillView]
+      val view = application.injector.instanceOf[MoreThanQuarterMillView]
 
       val result = route(application, request).value
 
@@ -119,7 +119,7 @@ class MoreThanQuaterMillControllerSpec extends SpecBase with MockitoSugar {
 
       val boundForm = form.bind(Map("value" -> ""))
 
-      val view = application.injector.instanceOf[MoreThanQuaterMillView]
+      val view = application.injector.instanceOf[MoreThanQuarterMillView]
 
       val result = route(application, request).value
 

@@ -16,16 +16,24 @@
 
 package pages
 
-import pages.behaviours.PageBehaviours
+import models.UserAnswers
+import play.api.libs.json.JsPath
 
-class MoreThanQuaterMillPageSpec extends PageBehaviours {
+import scala.util.Try
 
-  "MoreThanQuaterMillPage" must {
+case object MoreThanQuarterMillPage extends QuestionPage[Boolean] {
 
-    beRetrievable[Boolean](MoreThanQuaterMillPage)
+  override def path: JsPath = JsPath \ toString
 
-    beSettable[Boolean](MoreThanQuaterMillPage)
+  override def toString: String = "moreThanQuarterMill"
 
-    beRemovable[Boolean](MoreThanQuaterMillPage)
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] = {
+    value match {
+    case Some(true) =>
+      userAnswers.remove(MoreThanTenThousandPage)
+        .flatMap(_.remove(MoreThanTwoHalfMillPage))
+      case _ =>
+        super.cleanup(value, userAnswers)
+    }
   }
 }

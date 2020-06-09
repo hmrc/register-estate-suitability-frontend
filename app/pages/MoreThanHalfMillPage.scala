@@ -16,11 +16,24 @@
 
 package pages
 
+import models.UserAnswers
 import play.api.libs.json.JsPath
+
+import scala.util.Try
 
 case object MoreThanHalfMillPage extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ toString
 
   override def toString: String = "moreThanHalfMill"
+
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] = {
+    value match {
+      case Some(true) =>
+        userAnswers.remove(MoreThanTenThousandPage)
+        .flatMap(_.remove(MoreThanTwoHalfMillPage))
+      case _ =>
+        super.cleanup(value, userAnswers)
+    }
+  }
 }

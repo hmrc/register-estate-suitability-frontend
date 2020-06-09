@@ -18,7 +18,7 @@ package navigation
 
 import base.SpecBase
 import controllers.routes
-import pages.{DateOfDeathBeforePage, MoreThanHalfMillPage, MoreThanQuaterMillPage, MoreThanTenThousandPage, MoreThanTwoHalfMillPage}
+import pages.{DateOfDeathBeforePage, MoreThanHalfMillPage, MoreThanQuarterMillPage, MoreThanTenThousandPage, MoreThanTwoHalfMillPage}
 
 class EstateSuitabilityNavigatorSpec extends SpecBase {
 
@@ -34,7 +34,7 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
          .set(DateOfDeathBeforePage, true).success.value
 
       navigator.nextPage(page, userAnswers)
-         .mustBe(routes.MoreThanQuaterMillController.onPageLoad())
+         .mustBe(routes.MoreThanQuarterMillController.onPageLoad())
     }
 
     "DateOfDeathBeforePage -> no -> MoreThanHalfMillPage" in {
@@ -50,11 +50,10 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
 
     "MoreThanQuaterMillPage -> yes -> YouNeedToRegister" in {
 
-      val page = MoreThanQuaterMillPage
+      val page = MoreThanQuarterMillPage
 
       val userAnswers = emptyUserAnswers
-        .set(DateOfDeathBeforePage,true).success.value
-        .set(MoreThanQuaterMillPage, true).success.value
+        .set(MoreThanQuarterMillPage, true).success.value
 
       navigator.nextPage(page, userAnswers)
         .mustBe(routes.YouNeedToRegisterController.onPageLoad())
@@ -62,11 +61,10 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
 
     "MoreThanQuaterMillPage -> No -> MoreThan10K" in {
 
-      val page = MoreThanQuaterMillPage
+      val page = MoreThanQuarterMillPage
 
       val userAnswers = emptyUserAnswers
-        .set(DateOfDeathBeforePage,true).success.value
-        .set(MoreThanQuaterMillPage, false).success.value
+        .set(MoreThanQuarterMillPage, false).success.value
 
       navigator.nextPage(page, userAnswers)
         .mustBe(routes.MoreThanTenThousandController.onPageLoad())
@@ -77,7 +75,6 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
       val page = MoreThanHalfMillPage
 
       val userAnswers = emptyUserAnswers
-        .set(DateOfDeathBeforePage,false).success.value
         .set(MoreThanHalfMillPage, true).success.value
 
       navigator.nextPage(page, userAnswers)
@@ -89,7 +86,6 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
       val page = MoreThanHalfMillPage
 
       val userAnswers = emptyUserAnswers
-        .set(DateOfDeathBeforePage,false).success.value
         .set(MoreThanHalfMillPage, false).success.value
 
       navigator.nextPage(page, userAnswers)
@@ -101,8 +97,6 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
       val page = MoreThanTenThousandPage
 
       val userAnswers = emptyUserAnswers
-        .set(DateOfDeathBeforePage,true).success.value
-        .set(MoreThanQuaterMillPage,false).success.value
         .set(MoreThanTenThousandPage, true).success.value
 
       navigator.nextPage(page, userAnswers)
@@ -114,8 +108,6 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
       val page = MoreThanTenThousandPage
 
       val userAnswers = emptyUserAnswers
-        .set(DateOfDeathBeforePage,false).success.value
-        .set(MoreThanHalfMillPage,false).success.value
         .set(MoreThanTenThousandPage, false).success.value
 
       navigator.nextPage(page, userAnswers)
@@ -128,9 +120,6 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
       val page = MoreThanTwoHalfMillPage
 
       val userAnswers = emptyUserAnswers
-        .set(DateOfDeathBeforePage,true).success.value
-        .set(MoreThanQuaterMillPage,false).success.value
-        .set(MoreThanTenThousandPage,false).success.value
         .set(MoreThanTwoHalfMillPage, true).success.value
 
       navigator.nextPage(page, userAnswers)
@@ -142,9 +131,6 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
       val page = MoreThanTwoHalfMillPage
 
       val userAnswers = emptyUserAnswers
-        .set(DateOfDeathBeforePage,false).success.value
-        .set(MoreThanQuaterMillPage,false).success.value
-        .set(MoreThanTenThousandPage,false).success.value
         .set(MoreThanTwoHalfMillPage, false).success.value
 
       navigator.nextPage(page, userAnswers)

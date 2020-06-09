@@ -20,7 +20,7 @@ import controllers.actions._
 import forms.YesNoFormProvider
 import javax.inject.Inject
 import navigation.Navigator
-import pages.MoreThanQuaterMillPage
+import pages.{MoreThanHalfMillPage, MoreThanQuarterMillPage}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -35,9 +35,7 @@ class MoreThanHalfMillController @Inject()(
                                             override val messagesApi: MessagesApi,
                                             sessionRepository: SessionRepository,
                                             navigator: Navigator,
-                                            identify: IdentifierAction,
-                                            getData: DataRetrievalAction,
-                                            requireData: DataRequiredAction,
+                                            actions: RegisterEstateActions,
                                             formProvider: YesNoFormProvider,
                                             val controllerComponents: MessagesControllerComponents,
                                             view: MoreThanHalfMillView
@@ -45,10 +43,10 @@ class MoreThanHalfMillController @Inject()(
 
   val form: Form[Boolean] = formProvider.withPrefix("moreThanHalfMill")
 
-  def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData) {
+  def onPageLoad(): Action[AnyContent] = actions.authWithData {
     implicit request =>
 
-      val preparedForm = request.userAnswers.get(MoreThanQuaterMillPage) match {
+      val preparedForm = request.userAnswers.get(MoreThanHalfMillPage) match {
         case None => form
         case Some(value) => form.fill(value)
       }
@@ -56,7 +54,7 @@ class MoreThanHalfMillController @Inject()(
       Ok(view(preparedForm))
   }
 
-  def onSubmit(): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+  def onSubmit(): Action[AnyContent] = actions.authWithData.async {
     implicit request =>
 
       form.bindFromRequest().fold(
@@ -65,9 +63,9 @@ class MoreThanHalfMillController @Inject()(
 
         value =>
           for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(MoreThanQuaterMillPage, value))
+            updatedAnswers <- Future.fromTry(request.userAnswers.set(MoreThanHalfMillPage, value))
             _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(MoreThanQuaterMillPage, updatedAnswers))
+          } yield Redirect(navigator.nextPage(MoreThanHalfMillPage, updatedAnswers))
       )
   }
 }

@@ -21,17 +21,17 @@ import forms.YesNoFormProvider
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 import views.behaviours.YesNoViewBehaviours
-import views.html.MoreThanQuaterMillView
+import views.html.MoreThanQuarterMillView
 
 class MoreThanQuaterMillViewSpec extends YesNoViewBehaviours {
 
-  val messageKeyPrefix = "moreThanQuaterMill"
+  val messageKeyPrefix = "moreThanQuarterMill"
 
   val form = new YesNoFormProvider().withPrefix(messageKeyPrefix)
 
-  "MoreThanQuaterMill view" must {
+  "MoreThanQuarterMill view" must {
 
-    val view = viewFor[MoreThanQuaterMillView](Some(emptyUserAnswers))
+    val view = viewFor[MoreThanQuarterMillView](Some(emptyUserAnswers))
 
     def applyView(form: Form[_]): HtmlFormat.Appendable =
       view.apply(form)(fakeRequest, messages)
@@ -40,6 +40,6 @@ class MoreThanQuaterMillViewSpec extends YesNoViewBehaviours {
 
     behave like pageWithBackLink(applyView(form))
 
-    behave like yesNoPage(form, applyView, messageKeyPrefix, routes.MoreThanQuaterMillController.onSubmit().url)
+    behave like yesNoPage(form, applyView, messageKeyPrefix, routes.MoreThanQuarterMillController.onSubmit().url)
   }
 }

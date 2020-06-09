@@ -28,14 +28,12 @@ import scala.concurrent.ExecutionContext
 
 class YouNeedToRegisterController @Inject()(
                                         override val messagesApi: MessagesApi,
-                                        identify: IdentifierAction,
-                                        getData: DataRetrievalAction,
-                                        requireData: DataRequiredAction,
+                                        actions: RegisterEstateActions,
                                         val controllerComponents: MessagesControllerComponents,
                                         view: YouNeedToRegisterView
                                     )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
-  def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData) {
+  def onPageLoad(): Action[AnyContent] = actions.authWithData {
     implicit request =>
 
       Ok(view())

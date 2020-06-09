@@ -35,9 +35,7 @@ class MoreThanTwoHalfMillController @Inject()(
                                                override val messagesApi: MessagesApi,
                                                sessionRepository: SessionRepository,
                                                navigator: Navigator,
-                                               identify: IdentifierAction,
-                                               getData: DataRetrievalAction,
-                                               requireData: DataRequiredAction,
+                                               actions: RegisterEstateActions,
                                                formProvider: YesNoFormProvider,
                                                val controllerComponents: MessagesControllerComponents,
                                                view: MoreThanTwoHalfMillView
@@ -45,7 +43,7 @@ class MoreThanTwoHalfMillController @Inject()(
 
   val form: Form[Boolean] = formProvider.withPrefix("moreThanTwoHalfMill")
 
-  def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData) {
+  def onPageLoad(): Action[AnyContent] = actions.authWithData {
     implicit request =>
 
       val preparedForm = request.userAnswers.get(MoreThanTwoHalfMillPage) match {
@@ -56,7 +54,7 @@ class MoreThanTwoHalfMillController @Inject()(
       Ok(view(preparedForm))
   }
 
-  def onSubmit(): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+  def onSubmit(): Action[AnyContent] = actions.authWithData.async {
     implicit request =>
 
       form.bindFromRequest().fold(

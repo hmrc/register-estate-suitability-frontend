@@ -16,11 +16,16 @@
 
 package pages
 
-import play.api.libs.json.JsPath
+import pages.behaviours.PageBehaviours
 
-case object MoreThanQuaterMillPage extends QuestionPage[Boolean] {
+class MoreThanQuarterMillPageSpec extends PageBehaviours {
 
-  override def path: JsPath = JsPath \ toString
+  "MoreThanQuarterMillPage" must {
 
-  override def toString: String = "moreThanQuaterMill"
+    beRetrievable[Boolean](MoreThanQuarterMillPage)
+
+    beSettable[Boolean](MoreThanQuarterMillPage)
+
+    beRemovable[Boolean](MoreThanQuarterMillPage)
+  }
 }

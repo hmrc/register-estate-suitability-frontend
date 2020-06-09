@@ -18,7 +18,6 @@ package models.requests
 
 import models.UserAnswers
 import play.api.mvc.{Request, WrappedRequest}
-import uk.gov.hmrc.auth.core.{AffinityGroup, Enrolments}
 
 sealed trait User {
   val internalId: String
