@@ -31,9 +31,10 @@ class MoreThanTenThousandPageSpec extends PageBehaviours {
 
   "implement cleanup logic when YES selected" in {
     val userAnswers = emptyUserAnswers
-      .set(MoreThanTwoHalfMillPage, false).success.value
-      .set(MoreThanTenThousandPage, true).success.value
+      .set(MoreThanTwoHalfMillPage, true).success.value
 
-    userAnswers.get(MoreThanTwoHalfMillPage) mustNot be(defined)
+    val cleaned = userAnswers.set(MoreThanTenThousandPage, true).success.value
+
+    cleaned.get(MoreThanTwoHalfMillPage) mustNot be(defined)
   }
 }
