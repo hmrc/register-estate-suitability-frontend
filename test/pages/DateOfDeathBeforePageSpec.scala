@@ -31,17 +31,19 @@ class DateOfDeathBeforePageSpec extends PageBehaviours {
 
   "implement cleanup logic when NO selected" in {
     val userAnswers = emptyUserAnswers
-      .set(DateOfDeathBeforePage, true)
-      .flatMap(_.set(MoreThanHalfMillPage, false))
+      .set(MoreThanQuarterMillPage, true).success.value
 
-    userAnswers.get.get(MoreThanHalfMillPage) mustNot be(defined)
+    val cleaned = userAnswers.set(DateOfDeathBeforePage, false).success.value
+
+    cleaned.get(MoreThanHalfMillPage) mustNot be(defined)
   }
 
   "implement cleanup logic when YES selected" in {
     val userAnswers = emptyUserAnswers
-      .set(DateOfDeathBeforePage, false)
-      .flatMap(_.set(MoreThanQuarterMillPage, false))
+      .set(MoreThanHalfMillPage, true).success.value
 
-    userAnswers.get.get(MoreThanQuarterMillPage) mustNot be(defined)
+    val cleaned = userAnswers.set(DateOfDeathBeforePage, true).success.value
+
+    cleaned.get(MoreThanHalfMillPage) mustNot be(defined)
   }
 }

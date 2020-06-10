@@ -16,7 +16,7 @@
 
 package controllers
 
-import controllers.actions.DataRetrievalAction
+import controllers.actions.{DataRetrievalAction, RegisterEstateActions}
 import javax.inject.Inject
 import models.UserAnswers
 import play.api.i18n.I18nSupport
@@ -32,10 +32,11 @@ class IndexController @Inject()(
                                  val controllerComponents: MessagesControllerComponents,
                                  identify: IdentifierAction,
                                  getData: DataRetrievalAction,
-                                 repository: SessionRepository
+                                 repository: SessionRepository,
+                                 actions: RegisterEstateActions
                                ) extends FrontendBaseController with I18nSupport {
 
-  def onPageLoad: Action[AnyContent] = (identify andThen getData).async { implicit request =>
+  def onPageLoad: Action[AnyContent] = actions.authWithSession.async { implicit request =>
     request.userAnswers match {
       case Some(_) =>
         Future.successful(Redirect(routes.DateOfDeathBeforeController.onPageLoad()))
