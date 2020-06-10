@@ -23,11 +23,13 @@ class YouNeedToRegisterViewSpec extends ViewBehaviours {
 
   val messageKeyPrefix = "youNeedToRegister"
 
+  val continueUrl = ""
+
   "YouNeedToRegisterViewSpec view" must {
 
     val view = viewFor[YouNeedToRegisterView](Some(emptyUserAnswers))
 
-    val applyView = view.apply()(fakeRequest, messages)
+    val applyView = view.apply(continueUrl)(fakeRequest, messages)
 
     behave like normalPage(applyView, messageKeyPrefix)
 
