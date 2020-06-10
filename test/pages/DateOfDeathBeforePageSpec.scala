@@ -35,7 +35,7 @@ class DateOfDeathBeforePageSpec extends PageBehaviours {
 
     val cleaned = userAnswers.set(DateOfDeathBeforePage, false).success.value
 
-    cleaned.get(MoreThanHalfMillPage) mustNot be(defined)
+    cleaned.get(MoreThanQuarterMillPage) mustNot be(defined)
   }
 
   "implement cleanup logic when YES selected" in {
