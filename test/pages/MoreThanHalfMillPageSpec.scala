@@ -28,4 +28,12 @@ class MoreThanHalfMillPageSpec extends PageBehaviours {
 
     beRemovable[Boolean](MoreThanHalfMillPage)
   }
+
+  "implement cleanup logic when YES selected" in {
+    val userAnswers = emptyUserAnswers
+      .set(MoreThanHalfMillPage, true)
+
+    userAnswers.get.get(MoreThanTenThousandPage) mustNot be(defined)
+    userAnswers.get.get(MoreThanTwoHalfMillPage) mustNot be(defined)
+  }
 }

@@ -28,4 +28,20 @@ class DateOfDeathBeforePageSpec extends PageBehaviours {
 
     beRemovable[Boolean](DateOfDeathBeforePage)
   }
+
+  "implement cleanup logic when NO selected" in {
+    val userAnswers = emptyUserAnswers
+      .set(DateOfDeathBeforePage, true)
+      .flatMap(_.set(MoreThanHalfMillPage, false))
+
+    userAnswers.get.get(MoreThanHalfMillPage) mustNot be(defined)
+  }
+
+  "implement cleanup logic when YES selected" in {
+    val userAnswers = emptyUserAnswers
+      .set(DateOfDeathBeforePage, false)
+      .flatMap(_.set(MoreThanQuarterMillPage, false))
+
+    userAnswers.get.get(MoreThanQuarterMillPage) mustNot be(defined)
+  }
 }
