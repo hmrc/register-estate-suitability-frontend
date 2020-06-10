@@ -27,6 +27,8 @@ class YouNeedToRegisterControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
+  lazy val continueUrl = "http://localhost:8822/register-an-estate/registration-progress"
+
   lazy val youNeedToRegisterRoute = routes.YouNeedToRegisterController.onPageLoad().url
 
   "YouNeedToRegister Controller" must {
@@ -44,7 +46,7 @@ class YouNeedToRegisterControllerSpec extends SpecBase with MockitoSugar {
       status(result) mustEqual OK
 
       contentAsString(result) mustEqual
-        view()(fakeRequest, messages).toString
+        view(continueUrl)(fakeRequest, messages).toString
 
       application.stop()
     }

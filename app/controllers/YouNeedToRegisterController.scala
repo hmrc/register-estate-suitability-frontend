@@ -16,11 +16,12 @@
 
 package controllers
 
+import config.FrontendAppConfig
 import controllers.actions._
 import javax.inject.Inject
+import models.requests.{AgentUser, OrganisationUser}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.estates.controllers.actions.IdentifierAction
 import uk.gov.hmrc.play.bootstrap.controller.FrontendBaseController
 import views.html.YouNeedToRegisterView
 
@@ -30,12 +31,18 @@ class YouNeedToRegisterController @Inject()(
                                         override val messagesApi: MessagesApi,
                                         actions: RegisterEstateActions,
                                         val controllerComponents: MessagesControllerComponents,
-                                        view: YouNeedToRegisterView
+                                        view: YouNeedToRegisterView,
+                                        config: FrontendAppConfig
                                     )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
-  def onPageLoad(): Action[AnyContent] = actions.authWithData {
+  def onPageLoad(): Action[AnyContent] = actions.auth {
     implicit request =>
 
-      Ok(view())
+      val continueUrl = request.user match {
+        case AgentUser(_) => config.agentDetails
+        case OrganisationUser(_) => config.registrationProgress
+      }
+
+      Ok(view(continueUrl))
   }
 }
