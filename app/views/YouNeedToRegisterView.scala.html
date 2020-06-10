@@ -1,4 +1,4 @@
-/*
+@*
  * Copyright 2020 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,25 +12,24 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *@
 
-package navigation
+@import controllers.routes._
 
-import controllers.routes
-import javax.inject.{Inject, Singleton}
-import models.UserAnswers
-import pages.Page
-import play.api.mvc.Call
+@this(
+    main_template: MainTemplate
+)
 
-@Singleton
-class Navigator @Inject()() {
+@()(implicit request: Request[_], messages: Messages)
 
-  private val normalRoutes: Page => UserAnswers => Call =
-    EstateSuitabilityNavigator.normalRoutes orElse {
-      case _ => _ => routes.IndexController.onPageLoad()
-    }
+@main_template(
+    title = messages("youNeedToRegister.title")
+    ) {
 
-  def nextPage(page: Page, userAnswers: UserAnswers): Call = {
-    normalRoutes(page)(userAnswers)
-  }
-}
+        @components.back_link()
+
+        @components.heading("youNeedToRegister.heading")
+
+        @components.button_link(messages("site.estate.continue"), controllers.routes.YouNeedToRegisterController.onPageLoad().url)
+
+       }

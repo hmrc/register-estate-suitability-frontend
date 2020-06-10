@@ -16,17 +16,59 @@
 
 package utils
 
-import java.time.format.DateTimeFormatter
-
 import controllers.routes
-import models.{CheckMode, UserAnswers}
+import models.UserAnswers
 import pages._
 import play.api.i18n.Messages
 import play.twirl.api.{Html, HtmlFormat}
 import viewmodels.AnswerRow
-import CheckYourAnswersHelper._
 
 class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messages) {
+
+  def moreThanTwoHalfMill: Option[AnswerRow] = userAnswers.get(MoreThanTwoHalfMillPage) map {
+    x =>
+      AnswerRow(
+        HtmlFormat.escape(messages("moreThanTwoHalfMill.checkYourAnswersLabel")),
+        yesOrNo(x),
+        routes.MoreThanTwoHalfMillController.onPageLoad().url
+      )
+  }
+
+  def moreThanTenThousand: Option[AnswerRow] = userAnswers.get(MoreThanTenThousandPage) map {
+    x =>
+      AnswerRow(
+        HtmlFormat.escape(messages("moreThanTenThousand.checkYourAnswersLabel")),
+        yesOrNo(x),
+        routes.MoreThanTenThousandController.onPageLoad().url
+      )
+  }
+
+  def moreThanQuarterMill: Option[AnswerRow] = userAnswers.get(MoreThanQuarterMillPage) map {
+    x =>
+      AnswerRow(
+        HtmlFormat.escape(messages("moreThanQuarterMill.checkYourAnswersLabel")),
+        yesOrNo(x),
+        routes.MoreThanQuarterMillController.onPageLoad().url
+      )
+  }
+
+  def moreThanHalfMill: Option[AnswerRow] = userAnswers.get(MoreThanHalfMillPage) map {
+    x =>
+      AnswerRow(
+        HtmlFormat.escape(messages("moreThanHalfMill.checkYourAnswersLabel")),
+        yesOrNo(x),
+        routes.MoreThanHalfMillController.onPageLoad().url
+      )
+  }
+
+  def dateOfDeathBefore: Option[AnswerRow] = userAnswers.get(DateOfDeathBeforePage) map {
+    x =>
+      AnswerRow(
+        HtmlFormat.escape(messages("dateOfDeathBefore.checkYourAnswersLabel")),
+        yesOrNo(x),
+        routes.DateOfDeathBeforeController.onPageLoad().url
+      )
+  }
 
   private def yesOrNo(answer: Boolean)(implicit messages: Messages): Html =
     if (answer) {
@@ -36,7 +78,4 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
     }
 }
 
-object CheckYourAnswersHelper {
 
-  private val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
-}

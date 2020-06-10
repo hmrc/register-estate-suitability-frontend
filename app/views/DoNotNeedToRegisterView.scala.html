@@ -1,4 +1,4 @@
-/*
+@*
  * Copyright 2020 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,23 +12,31 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *@
 
-package views
+@import controllers.routes._
 
-import views.behaviours.ViewBehaviours
-import views.html.IndexView
+@this(
+    main_template: MainTemplate
+)
 
-class IndexViewSpec extends ViewBehaviours {
+@()(implicit request: Request[_], messages: Messages)
 
-  "Index view" must {
+@main_template(
+    title = messages("doNotNeedToRegister.title")
+    ) {
 
-    val application = applicationBuilder().build()
+        @components.back_link()
 
-    val view = application.injector.instanceOf[IndexView]
+        @components.heading("doNotNeedToRegister.heading")
 
-    val applyView = view.apply()(fakeRequest, messages)
+    <p>@messages("doNotNeedToRegister.p1")</p>
 
-    behave like normalPage(applyView, "index", "guidance")
-  }
-}
+    <ul class="bullet-list">
+     <li>@messages("doNotNeedToRegister.b1")</li>
+     <li>@messages("doNotNeedToRegister.b2")</li>
+    </ul>
+
+    <p>@messages("doNotNeedToRegister.p2")</p>
+
+       }

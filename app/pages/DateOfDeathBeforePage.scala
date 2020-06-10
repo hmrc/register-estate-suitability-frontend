@@ -14,23 +14,25 @@
  * limitations under the License.
  */
 
-package navigation
+package pages
 
-import controllers.routes
-import javax.inject.{Inject, Singleton}
 import models.UserAnswers
-import pages.Page
-import play.api.mvc.Call
+import play.api.libs.json.JsPath
 
-@Singleton
-class Navigator @Inject()() {
+import scala.util.Try
 
-  private val normalRoutes: Page => UserAnswers => Call =
-    EstateSuitabilityNavigator.normalRoutes orElse {
-      case _ => _ => routes.IndexController.onPageLoad()
-    }
+case object DateOfDeathBeforePage extends QuestionPage[Boolean] {
 
-  def nextPage(page: Page, userAnswers: UserAnswers): Call = {
-    normalRoutes(page)(userAnswers)
+  override def path: JsPath = JsPath \ toString
+
+  override def toString: String = "dateOfDeathBefore"
+
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] = value match {
+    case Some(true) =>
+      userAnswers.remove(MoreThanHalfMillPage)
+    case Some(false) =>
+      userAnswers.remove(MoreThanQuarterMillPage)
+    case _ =>
+      super.cleanup(value, userAnswers)
   }
 }

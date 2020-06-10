@@ -17,28 +17,57 @@
 package controllers
 
 import base.SpecBase
+import org.mockito.Matchers.any
+import org.mockito.Mockito.when
+import org.scalatestplus.mockito.MockitoSugar
+import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import views.html.IndexView
+import repositories.SessionRepository
 
-class IndexControllerSpec extends SpecBase {
+import scala.concurrent.Future
+
+class IndexControllerSpec extends SpecBase with MockitoSugar {
+
+  val mockSessionRepository = mock[SessionRepository]
 
   "Index Controller" must {
 
-    "return OK and the correct view for a GET" in {
+    "redirect for an existing session" in {
 
-      val application = applicationBuilder(userAnswers = None).build()
+      val application = applicationBuilder(userAnswers = None)
+        .overrides(
+          bind[SessionRepository].toInstance(mockSessionRepository)
+        )
+        .build()
+
+      when(mockSessionRepository.set(any())).thenReturn(Future.successful(true))
 
       val request = FakeRequest(GET, routes.IndexController.onPageLoad().url)
 
       val result = route(application, request).value
 
-      val view = application.injector.instanceOf[IndexView]
+      status(result) mustEqual SEE_OTHER
 
-      status(result) mustEqual OK
+      redirectLocation(result).value mustBe routes.DateOfDeathBeforeController.onPageLoad().url
 
-      contentAsString(result) mustEqual
-        view()(fakeRequest, messages).toString
+      application.stop()
+    }
+
+    "create a new session and redirect" in {
+
+      val application = applicationBuilder(userAnswers = None)
+        .build()
+
+      when(mockSessionRepository.set(any())).thenReturn(Future.successful(true))
+
+      val request = FakeRequest(GET, routes.IndexController.onPageLoad().url)
+
+      val result = route(application, request).value
+
+      status(result) mustEqual SEE_OTHER
+
+      redirectLocation(result).value mustBe routes.DateOfDeathBeforeController.onPageLoad().url
 
       application.stop()
     }

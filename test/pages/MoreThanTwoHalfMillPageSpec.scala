@@ -14,23 +14,18 @@
  * limitations under the License.
  */
 
-package navigation
+package pages
 
-import controllers.routes
-import javax.inject.{Inject, Singleton}
-import models.UserAnswers
-import pages.Page
-import play.api.mvc.Call
+import pages.behaviours.PageBehaviours
 
-@Singleton
-class Navigator @Inject()() {
+class MoreThanTwoHalfMillPageSpec extends PageBehaviours {
 
-  private val normalRoutes: Page => UserAnswers => Call =
-    EstateSuitabilityNavigator.normalRoutes orElse {
-      case _ => _ => routes.IndexController.onPageLoad()
-    }
+  "MoreThanTwoHalfMillPage" must {
 
-  def nextPage(page: Page, userAnswers: UserAnswers): Call = {
-    normalRoutes(page)(userAnswers)
+    beRetrievable[Boolean](MoreThanTwoHalfMillPage)
+
+    beSettable[Boolean](MoreThanTwoHalfMillPage)
+
+    beRemovable[Boolean](MoreThanTwoHalfMillPage)
   }
 }

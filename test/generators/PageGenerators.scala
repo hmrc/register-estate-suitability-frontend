@@ -20,4 +20,19 @@ import org.scalacheck.Arbitrary
 import pages._
 
 trait PageGenerators {
+
+  implicit lazy val arbitraryMoreThanTwoHalfMillPage: Arbitrary[MoreThanTwoHalfMillPage.type] =
+    Arbitrary(MoreThanTwoHalfMillPage)
+
+  implicit lazy val arbitraryMoreThanTenThousandPage: Arbitrary[MoreThanTenThousandPage.type] =
+    Arbitrary(MoreThanTenThousandPage)
+
+  implicit lazy val arbitraryMoreThanQuarterMillPage: Arbitrary[MoreThanQuarterMillPage.type] =
+    Arbitrary(MoreThanQuarterMillPage)
+
+  implicit lazy val arbitraryMoreThanHalfMillPage: Arbitrary[MoreThanHalfMillPage.type] =
+    Arbitrary(MoreThanHalfMillPage)
+
+  implicit lazy val arbitraryDateOfDeathBeforePage: Arbitrary[DateOfDeathBeforePage.type] =
+    Arbitrary(DateOfDeathBeforePage)
 }

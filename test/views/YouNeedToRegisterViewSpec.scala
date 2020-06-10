@@ -1,4 +1,4 @@
-@*
+/*
  * Copyright 2020 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,19 +12,25 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@this(
-    main_template: MainTemplate
-)
+package views
 
-@()(implicit request: Request[_], messages: Messages)
+import views.behaviours.ViewBehaviours
+import views.html.YouNeedToRegisterView
 
-@main_template(
-    title = messages("index.title")
-    ) {
+class YouNeedToRegisterViewSpec extends ViewBehaviours {
 
-    @components.heading("index.heading")
+  val messageKeyPrefix = "youNeedToRegister"
 
-    <p>@messages("index.guidance")</p>
+  "YouNeedToRegisterViewSpec view" must {
+
+    val view = viewFor[YouNeedToRegisterView](Some(emptyUserAnswers))
+
+    val applyView = view.apply()(fakeRequest, messages)
+
+    behave like normalPage(applyView, messageKeyPrefix)
+
+    behave like pageWithBackLink(applyView)
+  }
 }

@@ -23,4 +23,44 @@ import pages._
 import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
+
+  implicit lazy val arbitraryMoreThanTwoHalfMillUserAnswersEntry: Arbitrary[(MoreThanTwoHalfMillPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[MoreThanTwoHalfMillPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryMoreThanTenThousandUserAnswersEntry: Arbitrary[(MoreThanTenThousandPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[MoreThanTenThousandPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryMoreThanQuarterMillPageUserAnswersEntry: Arbitrary[(MoreThanQuarterMillPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[MoreThanQuarterMillPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryMoreThanHalfMillUserAnswersEntry: Arbitrary[(MoreThanHalfMillPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[MoreThanHalfMillPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryDateOfDeathBeforeUserAnswersEntry: Arbitrary[(DateOfDeathBeforePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[DateOfDeathBeforePage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
 }

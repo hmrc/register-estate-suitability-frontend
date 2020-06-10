@@ -14,23 +14,16 @@
  * limitations under the License.
  */
 
-package navigation
+package forms
 
-import controllers.routes
-import javax.inject.{Inject, Singleton}
-import models.UserAnswers
-import pages.Page
-import play.api.mvc.Call
+import forms.mappings.Mappings
+import javax.inject.Inject
+import play.api.data.Form
 
-@Singleton
-class Navigator @Inject()() {
+class YesNoFormProvider @Inject() extends Mappings {
 
-  private val normalRoutes: Page => UserAnswers => Call =
-    EstateSuitabilityNavigator.normalRoutes orElse {
-      case _ => _ => routes.IndexController.onPageLoad()
-    }
-
-  def nextPage(page: Page, userAnswers: UserAnswers): Call = {
-    normalRoutes(page)(userAnswers)
-  }
+  def withPrefix(prefix: String): Form[Boolean] =
+    Form(
+      "value" -> boolean(s"$prefix.error.required")
+    )
 }

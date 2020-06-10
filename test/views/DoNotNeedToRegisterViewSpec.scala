@@ -14,23 +14,23 @@
  * limitations under the License.
  */
 
-package navigation
+package views
 
-import controllers.routes
-import javax.inject.{Inject, Singleton}
-import models.UserAnswers
-import pages.Page
-import play.api.mvc.Call
+import views.behaviours.ViewBehaviours
+import views.html.DoNotNeedToRegisterView
 
-@Singleton
-class Navigator @Inject()() {
+class DoNotNeedToRegisterViewSpec extends ViewBehaviours {
 
-  private val normalRoutes: Page => UserAnswers => Call =
-    EstateSuitabilityNavigator.normalRoutes orElse {
-      case _ => _ => routes.IndexController.onPageLoad()
-    }
+  val messageKeyPrefix = "doNotNeedToRegister"
 
-  def nextPage(page: Page, userAnswers: UserAnswers): Call = {
-    normalRoutes(page)(userAnswers)
+  "DoNotNeedToRegisterView view" must {
+
+    val view = viewFor[DoNotNeedToRegisterView](Some(emptyUserAnswers))
+
+    val applyView = view.apply()(fakeRequest, messages)
+
+    behave like normalPage(applyView, messageKeyPrefix)
+
+    behave like pageWithBackLink(applyView)
   }
 }
