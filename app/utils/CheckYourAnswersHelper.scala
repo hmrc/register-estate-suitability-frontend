@@ -43,7 +43,7 @@ class CheckYourAnswersHelper(userAnswers: UserAnswers)(implicit messages: Messag
       )
   }
 
-  def moreThanQuaterMill: Option[AnswerRow] = userAnswers.get(MoreThanQuarterMillPage) map {
+  def moreThanQuarterMill: Option[AnswerRow] = userAnswers.get(MoreThanQuarterMillPage) map {
     x =>
       AnswerRow(
         HtmlFormat.escape(messages("moreThanQuarterMill.checkYourAnswersLabel")),

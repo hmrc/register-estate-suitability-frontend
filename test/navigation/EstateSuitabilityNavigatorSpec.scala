@@ -26,7 +26,7 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
 
   "Navigator" when {
 
-    "DateOfDeathBeforePage -> yes -> MoreThanQuaterMillPage" in {
+    "DateOfDeathBeforePage -> yes -> MoreThanQuarterMillPage" in {
 
       val page = DateOfDeathBeforePage
 
@@ -48,7 +48,7 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
         .mustBe(routes.MoreThanHalfMillController.onPageLoad())
     }
 
-    "MoreThanQuaterMillPage -> yes -> YouNeedToRegister" in {
+    "MoreThanQuarterMillPage -> yes -> YouNeedToRegister" in {
 
       val page = MoreThanQuarterMillPage
 
@@ -59,7 +59,7 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
         .mustBe(routes.YouNeedToRegisterController.onPageLoad())
     }
 
-    "MoreThanQuaterMillPage -> No -> MoreThan10K" in {
+    "MoreThanQuarterMillPage -> No -> MoreThan10K" in {
 
       val page = MoreThanQuarterMillPage
 

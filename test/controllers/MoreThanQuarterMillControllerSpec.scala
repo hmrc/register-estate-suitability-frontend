@@ -42,7 +42,7 @@ class MoreThanQuarterMillControllerSpec extends SpecBase with MockitoSugar {
 
   lazy val mRoute = routes.MoreThanQuarterMillController.onPageLoad().url
 
-  "MoreThanQuaterMill Controller" must {
+  "MoreThanQuarterMill Controller" must {
 
     "return OK and the correct view for a GET" in {
 

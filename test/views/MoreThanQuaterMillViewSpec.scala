@@ -23,7 +23,7 @@ import play.twirl.api.HtmlFormat
 import views.behaviours.YesNoViewBehaviours
 import views.html.MoreThanQuarterMillView
 
-class MoreThanQuaterMillViewSpec extends YesNoViewBehaviours {
+class MoreThanQuarterMillViewSpec extends YesNoViewBehaviours {
 
   val messageKeyPrefix = "moreThanQuarterMill"
 
