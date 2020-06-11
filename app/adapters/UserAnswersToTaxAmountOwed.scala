@@ -19,9 +19,9 @@ package adapters
 import models.UserAnswers
 import pages.{MoreThanHalfMillPage, MoreThanQuarterMillPage, MoreThanTenThousandPage, MoreThanTwoHalfMillPage}
 
-case class UserAnswersToTaxAmountOwed(userAnswers: UserAnswers) {
+class UserAnswersToTaxAmountOwed {
 
-  def convert(): Option[String] = {
+  def convert(userAnswers: UserAnswers): Option[String] = {
     val answers = (userAnswers.get(MoreThanHalfMillPage),
                    userAnswers.get(MoreThanQuarterMillPage),
                    userAnswers.get(MoreThanTenThousandPage),
