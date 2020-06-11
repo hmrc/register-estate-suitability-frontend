@@ -19,7 +19,6 @@ package controllers
 import config.FrontendAppConfig
 import controllers.actions._
 import javax.inject.Inject
-import models.requests.{AgentUser, OrganisationUser}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendBaseController
@@ -38,11 +37,17 @@ class YouNeedToRegisterController @Inject()(
   def onPageLoad(): Action[AnyContent] = actions.auth {
     implicit request =>
 
-      val continueUrl = request.user match {
-        case AgentUser(_) => config.agentDetails
-        case OrganisationUser(_) => config.registrationProgress
-      }
+//      val continueUrl = request.user match {
+//        case AgentUser(_) => config.agentDetails
+//        case OrganisationUser(_) => config.registrationProgress
+//      }
 
-      Ok(view(continueUrl))
+      Ok(view())
+  }
+
+  def onSubmit(): Action[AnyContent] = actions.auth {
+    implicit request =>
+
+      ???
   }
 }
