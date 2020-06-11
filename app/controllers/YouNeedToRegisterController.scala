@@ -17,8 +17,10 @@
 package controllers
 
 import config.FrontendAppConfig
+import connectors.EstatesConnector
 import controllers.actions._
 import javax.inject.Inject
+import models.requests.{AgentUser, OrganisationUser}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendBaseController
@@ -31,23 +33,23 @@ class YouNeedToRegisterController @Inject()(
                                         actions: RegisterEstateActions,
                                         val controllerComponents: MessagesControllerComponents,
                                         view: YouNeedToRegisterView,
-                                        config: FrontendAppConfig
+                                        config: FrontendAppConfig,
+                                        connector: EstatesConnector
                                     )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
-  def onPageLoad(): Action[AnyContent] = actions.auth {
+  def onPageLoad(): Action[AnyContent] = actions.authWithData {
     implicit request =>
-
-//      val continueUrl = request.user match {
-//        case AgentUser(_) => config.agentDetails
-//        case OrganisationUser(_) => config.registrationProgress
-//      }
-
       Ok(view())
   }
 
-  def onSubmit(): Action[AnyContent] = actions.auth {
+  def onSubmit(): Action[AnyContent] = actions.authWithData.async {
     implicit request =>
 
-      ???
+      connector.saveTaxAmountOwed(request.userAnswers) map { _ =>
+        request.user match {
+          case AgentUser(_) => Redirect(config.agentDetails)
+          case OrganisationUser(_) => Redirect(config.registrationProgress)
+        }
+      }
   }
 }
