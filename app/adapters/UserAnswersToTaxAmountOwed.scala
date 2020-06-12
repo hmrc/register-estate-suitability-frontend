@@ -21,20 +21,31 @@ import pages.{MoreThanHalfMillPage, MoreThanQuarterMillPage, MoreThanTenThousand
 
 class UserAnswersToTaxAmountOwed {
 
-  def convert(userAnswers: UserAnswers): Option[String] = {
-    val answers = (userAnswers.get(MoreThanHalfMillPage),
-                   userAnswers.get(MoreThanQuarterMillPage),
-                   userAnswers.get(MoreThanTenThousandPage),
-                   userAnswers.get(MoreThanTwoHalfMillPage))
+  case class TaxOwedQuestions(is500Thousand: Boolean, is250Thousand: Boolean, is10Thousand: Boolean, is2AndHalfMission: Boolean) {
 
-    answers match {
-
-      case (None, Some(false), Some(true), None) => Some("01")
-      case (None, Some(true), None, None) => Some("02")
-      case (Some(true), None, None, None) => Some("03")
-      case (None, Some(false), Some(false), Some(true)) => Some("04")
-      case _ => None
+    def convert : Option[String] = {
+      this match {
+        case TaxOwedQuestions(true, false, false, false) => Some("03")
+        case TaxOwedQuestions(false, true, false, false) => Some("02")
+        case TaxOwedQuestions(false, false, true, false) => Some("01")
+        case TaxOwedQuestions(false, false, false, true) => Some("04")
+        case _ => None
+      }
     }
+
+  }
+
+  def convert(userAnswers: UserAnswers): Option[String] = {
+
+    val questions = TaxOwedQuestions(
+      is500Thousand = userAnswers.get(MoreThanHalfMillPage).contains(true),
+      is250Thousand = userAnswers.get(MoreThanQuarterMillPage).contains(true),
+      is10Thousand = userAnswers.get(MoreThanTenThousandPage).contains(true),
+      is2AndHalfMission = userAnswers.get(MoreThanTwoHalfMillPage).contains(true)
+    )
+
+    questions.convert
+
   }
 
 }
