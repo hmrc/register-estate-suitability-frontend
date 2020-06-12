@@ -27,7 +27,7 @@ class UserAnswersToTaxAmountOwedSpec extends SpecBase {
                                       .set(MoreThanTenThousandPage, true).success.value
 
 
-    val result = UserAnswersToTaxAmountOwed(userAnswers).convert()
+    val result = new UserAnswersToTaxAmountOwed().convert(userAnswers)
 
     result.value mustBe "01"
   }
@@ -36,7 +36,7 @@ class UserAnswersToTaxAmountOwedSpec extends SpecBase {
 
     val userAnswers = emptyUserAnswers.set(MoreThanQuarterMillPage, true).success.value
 
-    val result = UserAnswersToTaxAmountOwed(userAnswers).convert()
+    val result = new UserAnswersToTaxAmountOwed().convert(userAnswers)
 
     result.value mustBe "02"
   }
@@ -45,7 +45,7 @@ class UserAnswersToTaxAmountOwedSpec extends SpecBase {
 
     val userAnswers = emptyUserAnswers.set(MoreThanHalfMillPage, true).success.value
 
-    val result = UserAnswersToTaxAmountOwed(userAnswers).convert()
+    val result = new UserAnswersToTaxAmountOwed().convert(userAnswers)
 
     result.value mustBe "03"
   }
@@ -56,7 +56,7 @@ class UserAnswersToTaxAmountOwedSpec extends SpecBase {
       .set(MoreThanTenThousandPage, false).success.value
       .set(MoreThanTwoHalfMillPage, true).success.value
 
-    val result = UserAnswersToTaxAmountOwed(userAnswers).convert()
+    val result = new UserAnswersToTaxAmountOwed().convert(userAnswers)
 
     result.value mustBe "04"
   }
@@ -65,7 +65,7 @@ class UserAnswersToTaxAmountOwedSpec extends SpecBase {
 
     val userAnswers = emptyUserAnswers
 
-    val result = UserAnswersToTaxAmountOwed(userAnswers).convert()
+    val result = new UserAnswersToTaxAmountOwed().convert(userAnswers)
 
     result mustBe None
   }
