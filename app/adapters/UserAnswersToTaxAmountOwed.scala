@@ -21,7 +21,7 @@ import pages.{MoreThanHalfMillPage, MoreThanQuarterMillPage, MoreThanTenThousand
 
 class UserAnswersToTaxAmountOwed {
 
-  case class TaxOwedQuestions(is500Thousand: Boolean, is250Thousand: Boolean, is10Thousand: Boolean, is2AndHalfMission: Boolean) {
+  case class TaxOwedQuestions(is500Thousand: Boolean, is250Thousand: Boolean, is10Thousand: Boolean, is2AndHalfMillion: Boolean) {
 
     def convert : Option[String] = {
       this match {
@@ -41,7 +41,7 @@ class UserAnswersToTaxAmountOwed {
       is500Thousand = userAnswers.get(MoreThanHalfMillPage).contains(true),
       is250Thousand = userAnswers.get(MoreThanQuarterMillPage).contains(true),
       is10Thousand = userAnswers.get(MoreThanTenThousandPage).contains(true),
-      is2AndHalfMission = userAnswers.get(MoreThanTwoHalfMillPage).contains(true)
+      is2AndHalfMillion = userAnswers.get(MoreThanTwoHalfMillPage).contains(true)
     )
 
     questions.convert
