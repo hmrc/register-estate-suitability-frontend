@@ -60,8 +60,7 @@ moreThanTenThousand.title = Is the total tax due for the administration period f
 moreThanTenThousand.heading = Is the total tax due for the administration period for this estate more than £10,000?
 moreThanTenThousand.checkYourAnswersLabel = Is the total tax due for the administration period for this estate more than £10,000?
 moreThanTenThousand.error.required = Select yes if the total tax due was more than £10,000 for the administration period
-moreThanTenThousand.hint = The administration period is the day after someone’s death and the date that all the assets are distributed.
-moreThanTenThousand.p1 = This only includes Income Tax and/or Capital Gains Tax
+moreThanTenThousand.p1 = The administration period is the day after someone’s death and the date that all the assets are distributed. This only includes Income Tax and/or Capital Gains Tax.
 
 moreThanTwoHalfMill.title = Was the estate worth more than £2.5 million at the date of death?
 moreThanTwoHalfMill.heading = Was the estate worth more than £2.5 million at the date of death?
