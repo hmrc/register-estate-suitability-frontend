@@ -82,3 +82,6 @@ doNotNeedToRegister.contact.link = contact the deceased estate helpline (opens i
 youNeedToRegister.title = Based on your answers, you need to register this estate
 youNeedToRegister.heading = Based on your answers, you need to register this estate
 youNeedToRegister.checkYourAnswersLabel = Based on your answers, you need to register this estate
+youNeedToRegister.p1 = If you need help with this service
+youNeedToRegister.contact.link = contact the deceased estate helpline (opens in a new window or tab)
+
