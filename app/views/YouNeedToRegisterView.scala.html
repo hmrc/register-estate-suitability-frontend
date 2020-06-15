@@ -17,22 +17,24 @@
 @import controllers.routes._
 
 @this(
-    main_template: MainTemplate
+main_template: MainTemplate,
+formHelper: FormWithCSRF
 )
 
-@(continueUrl: String)(implicit request: Request[_], messages: Messages)
+@()(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("youNeedToRegister.title")
-    ) {
+title = messages("youNeedToRegister.title")
+) {
 
-        @components.back_link()
+@formHelper(action = YouNeedToRegisterController.onSubmit(), 'autoComplete -> "off") {
 
-        @components.heading("youNeedToRegister.heading")
+@components.back_link()
 
-        @components.button_link(messages("site.estate.continue"), continueUrl)
+@components.heading("youNeedToRegister.heading")
 
-        <p>@messages("youNeedToRegister.p1") <a id="help-link" href="https://www.gov.uk/government/organisations/hm-revenue-customs/contact/bereavement-and-deceased-estate" target="_blank">@messages("youNeedToRegister.contact.link")</a>.</p>
+@components.submit_button(Some("site.estate.continue"))
 
+<p>@messages("youNeedToRegister.p1") <a id="help-link" href="https://www.gov.uk/government/organisations/hm-revenue-customs/contact/bereavement-and-deceased-estate" target="_blank">@messages("youNeedToRegister.contact.link")</a>.</p>
 
-       }
+ }
