@@ -17,56 +17,107 @@
 package adapters
 
 import base.SpecBase
-import pages.{MoreThanHalfMillPage, MoreThanQuarterMillPage, MoreThanTenThousandPage, MoreThanTwoHalfMillPage}
+import pages.{DateOfDeathBeforePage, MoreThanHalfMillPage, MoreThanQuarterMillPage, MoreThanTenThousandPage, MoreThanTwoHalfMillPage}
 
 class UserAnswersToTaxAmountOwedSpec extends SpecBase {
 
-  "When user answers up to 10 thousand" in {
+  "death was before 6 April 2016" must {
 
-    val userAnswers = emptyUserAnswers.set(MoreThanQuarterMillPage, false).success.value
-                                      .set(MoreThanTenThousandPage, true).success.value
+    "when user answers more than 250 thousand" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(DateOfDeathBeforePage, true).success.value
+        .set(MoreThanQuarterMillPage, true).success.value
+
+      val result = new UserAnswersToTaxAmountOwed().convert(userAnswers)
+
+      result.value mustBe "02"
+    }
+
+    "when user answers more than 10 thousand" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(DateOfDeathBeforePage, true).success.value
+        .set(MoreThanQuarterMillPage, false).success.value
+        .set(MoreThanTenThousandPage, true).success.value
 
 
-    val result = UserAnswersToTaxAmountOwed(userAnswers).convert()
+      val result = new UserAnswersToTaxAmountOwed().convert(userAnswers)
 
-    result.value mustBe "01"
+      result.value mustBe "01"
+    }
+
+    "when user answers more than 2.5 million" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(DateOfDeathBeforePage, true).success.value
+        .set(MoreThanQuarterMillPage, false).success.value
+        .set(MoreThanTenThousandPage, false).success.value
+        .set(MoreThanTwoHalfMillPage, true).success.value
+
+      val result = new UserAnswersToTaxAmountOwed().convert(userAnswers)
+
+      result.value mustBe "04"
+    }
+
+    "when user has not answered enough questions" in {
+
+      val userAnswers = emptyUserAnswers
+
+      val result = new UserAnswersToTaxAmountOwed().convert(userAnswers)
+
+      result mustBe None
+    }
+
   }
 
-  "When user answers up to 250 thousand" in {
+  "death was after 6 April 2016" must {
 
-    val userAnswers = emptyUserAnswers.set(MoreThanQuarterMillPage, true).success.value
+    "when user answers more than 500 thousand" in {
 
-    val result = UserAnswersToTaxAmountOwed(userAnswers).convert()
+      val userAnswers = emptyUserAnswers
+        .set(DateOfDeathBeforePage, false).success.value
+        .set(MoreThanHalfMillPage, true).success.value
 
-    result.value mustBe "02"
+      val result = new UserAnswersToTaxAmountOwed().convert(userAnswers)
+
+      result.value mustBe "03"
+    }
+
+    "when user answers more than 10 thousand" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(DateOfDeathBeforePage, false).success.value
+        .set(MoreThanTenThousandPage, true).success.value
+
+      val result = new UserAnswersToTaxAmountOwed().convert(userAnswers)
+
+      result.value mustBe "01"
+    }
+
+    "when user answers more than 2.5 million" in {
+
+      val userAnswers = emptyUserAnswers
+        .set(DateOfDeathBeforePage, false).success.value
+        .set(MoreThanHalfMillPage, false).success.value
+        .set(MoreThanTenThousandPage, false).success.value
+        .set(MoreThanTwoHalfMillPage, true).success.value
+
+      val result = new UserAnswersToTaxAmountOwed().convert(userAnswers)
+
+      result.value mustBe "04"
+    }
+
+    "when user has not answered enough questions" in {
+
+      val userAnswers = emptyUserAnswers
+
+      val result = new UserAnswersToTaxAmountOwed().convert(userAnswers)
+
+      result mustBe None
+    }
+
   }
 
-  "When user answers up to quarter million" in {
 
-    val userAnswers = emptyUserAnswers.set(MoreThanHalfMillPage, true).success.value
-
-    val result = UserAnswersToTaxAmountOwed(userAnswers).convert()
-
-    result.value mustBe "03"
-  }
-
-  "When user answers up to 2.5 million" in {
-
-    val userAnswers = emptyUserAnswers.set(MoreThanQuarterMillPage, false).success.value
-      .set(MoreThanTenThousandPage, false).success.value
-      .set(MoreThanTwoHalfMillPage, true).success.value
-
-    val result = UserAnswersToTaxAmountOwed(userAnswers).convert()
-
-    result.value mustBe "04"
-  }
-
-  "When user has not answered enough questions" in {
-
-    val userAnswers = emptyUserAnswers
-
-    val result = UserAnswersToTaxAmountOwed(userAnswers).convert()
-
-    result mustBe None
-  }
 }

@@ -1,4 +1,4 @@
-@*
+/*
  * Copyright 2020 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,14 +12,16 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@(messageKey: Option[String] = None)(implicit messages: Messages)
+package models
 
-<div class="section">
-    @if(messageKey.isDefined){
-      <button id="submit" class="button">@messages(messageKey.get)</button>
-    } else {
-    <button id="submit" class="button">@messages("site.continue")</button>
-    }
-</div>
+import play.api.libs.json.{Format, Json}
+
+case class AmountOfTaxOwed(amount: String)
+
+object AmountOfTaxOwed {
+
+  implicit val format : Format[AmountOfTaxOwed] = Json.format[AmountOfTaxOwed]
+
+}
