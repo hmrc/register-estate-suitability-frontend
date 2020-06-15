@@ -30,8 +30,12 @@ case object DateOfDeathBeforePage extends QuestionPage[Boolean] {
   override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] = value match {
     case Some(true) =>
       userAnswers.remove(MoreThanHalfMillPage)
+       .flatMap(_.remove(MoreThanTenThousandPage))
+       .flatMap(_.remove(MoreThanTwoHalfMillPage))
     case Some(false) =>
       userAnswers.remove(MoreThanQuarterMillPage)
+       .flatMap(_.remove(MoreThanTenThousandPage))
+       .flatMap(_.remove(MoreThanTwoHalfMillPage))
     case _ =>
       super.cleanup(value, userAnswers)
   }
