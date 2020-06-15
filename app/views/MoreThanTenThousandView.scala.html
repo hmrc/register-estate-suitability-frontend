@@ -33,9 +33,12 @@
 
         @components.error_summary(form.errors)
 
+        <p>@messages("moreThanTenThousand.p1")</p>
+
         @components.input_yes_no(
             field = form("value"),
             legend = messages("moreThanTenThousand.heading"),
+            hint = messages("moreThanTenThousand.hint"),
             headingIsLegend = true
         )
 
