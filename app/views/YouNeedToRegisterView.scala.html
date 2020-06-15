@@ -24,17 +24,17 @@ formHelper: FormWithCSRF
 @()(implicit request: Request[_], messages: Messages)
 
 @main_template(
-title = messages("youNeedToRegister.title")
+    title = messages("youNeedToRegister.title")
 ) {
 
-@formHelper(action = YouNeedToRegisterController.onSubmit(), 'autoComplete -> "off") {
+    @formHelper(action = YouNeedToRegisterController.onSubmit(), 'autoComplete -> "off") {
 
-@components.back_link()
+        @components.back_link()
 
-@components.heading("youNeedToRegister.heading")
+        @components.heading("youNeedToRegister.heading")
 
-@components.submit_button(Some("site.estate.continue"))
+        @components.submit_button(Some("site.estate.continue"))
 
-<p>@messages("youNeedToRegister.p1") <a id="help-link" href="https://www.gov.uk/government/organisations/hm-revenue-customs/contact/bereavement-and-deceased-estate" target="_blank">@messages("youNeedToRegister.contact.link")</a>.</p>
-
- }
+        <p>@messages("youNeedToRegister.p1") <a id="help-link" href="https://www.gov.uk/government/organisations/hm-revenue-customs/contact/bereavement-and-deceased-estate" target="_blank">@messages("youNeedToRegister.contact.link")</a>.</p>
+    }
+}
