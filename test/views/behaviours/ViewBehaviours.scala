@@ -74,4 +74,16 @@ trait ViewBehaviours extends ViewSpecBase {
       }
     }
   }
+
+  def pageWithNonHintText(view: HtmlFormat.Appendable): Unit = {
+
+    "behave like a page with non-hint text" must {
+
+      "have non-hint text" in {
+
+        val doc = asDocument(view)
+        assertRenderedById(doc, "text-value")
+      }
+    }
+  }
 }
