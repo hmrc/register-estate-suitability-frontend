@@ -25,7 +25,7 @@
 
 @main_template(
     title = s"${errorPrefix(form)} ${messages("moreThanTenThousand.title")}"
-    ) {
+) {
 
     @formHelper(action = MoreThanTenThousandController.onSubmit(), 'autoComplete -> "off") {
 
@@ -36,10 +36,9 @@
         @components.input_yes_no(
             field = form("value"),
             legend = messages("moreThanTenThousand.heading"),
-            headingIsLegend = true
+            headingIsLegend = true,
+            nonHintText = Some(messages("moreThanTenThousand.p1"))
         )
-
-        <p>@messages("moreThanTenThousand.p1")</p>
 
         @components.submit_button()
     }

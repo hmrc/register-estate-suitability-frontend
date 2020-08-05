@@ -41,5 +41,7 @@ class MoreThanTenThousandViewSpec extends YesNoViewBehaviours {
     behave like pageWithBackLink(applyView(form))
 
     behave like yesNoPage(form, applyView, messageKeyPrefix, routes.MoreThanTenThousandController.onSubmit().url)
+
+    behave like pageWithNonHintText(applyView(form))
   }
 }

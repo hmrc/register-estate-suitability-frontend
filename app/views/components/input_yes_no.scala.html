@@ -15,13 +15,13 @@
  *@
 
 @(
-        field: Field,
-        legend: String,
-        hint: Option[String] = None,
-        legendClass: Option[String] = None,
-        headingIsLegend: Boolean = false
+    field: Field,
+    legend: String,
+    hint: Option[String] = None,
+    legendClass: Option[String] = None,
+    headingIsLegend: Boolean = false,
+    nonHintText: Option[String] = None
 )(implicit messages: Messages)
-
 
 <div class="form-group @if(field.hasErrors){form-group-error}">
     <fieldset class="inline" id="@{field.id}" @if(field.hasErrors || hint.nonEmpty){aria-describedby="@if(field.hasErrors){error-message-@{field.id}-input}@if(field.hasErrors && hint.nonEmpty){ }@if(hint.nonEmpty){hint-@{field.id}}"}>
@@ -38,6 +38,9 @@
 
         @if(hint.nonEmpty){
             <div class="form-hint" id="hint-@{field.id}">@hint</div>
+        }
+        @if(nonHintText.nonEmpty){
+            <p id="text-@{field.id}">@nonHintText</p>
         }
         @field.errors.map { error =>
             <div class="error-message" id="error-message-@field.id-input">
@@ -61,4 +64,3 @@
 
     </fieldset>
 </div>
-
