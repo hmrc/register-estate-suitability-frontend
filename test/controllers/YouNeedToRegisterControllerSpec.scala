@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import connectors.EstatesConnector
-import controllers.actions.{DataRequiredAction, DataRequiredActionImpl, DataRetrievalAction, FakeDataRetrievalAction, FakeIdentifierAction, FakeIdentifierActionAsAgent}
+import controllers.actions._
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.Matchers.any
 import org.mockito.Mockito.when
@@ -29,10 +29,9 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.SessionRepository
 import uk.gov.hmrc.estates.controllers.actions.IdentifierAction
 import uk.gov.hmrc.http.HttpResponse
-import views.html.{MoreThanTenThousandView, YouNeedToRegisterView}
+import views.html.YouNeedToRegisterView
 
 import scala.concurrent.Future
 
@@ -66,7 +65,8 @@ class YouNeedToRegisterControllerSpec extends SpecBase with MockitoSugar {
 
       val mockConnector = mock[EstatesConnector]
 
-      when(mockConnector.saveTaxAmountOwed(any())(any(), any())).thenReturn(Future.successful(HttpResponse(OK)))
+      when(mockConnector.saveTaxAmountOwed(any())(any(), any()))
+        .thenReturn(Future.successful(HttpResponse.apply(OK, "")))
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -93,7 +93,8 @@ class YouNeedToRegisterControllerSpec extends SpecBase with MockitoSugar {
 
       val mockConnector = mock[EstatesConnector]
 
-      when(mockConnector.saveTaxAmountOwed(any())(any(), any())).thenReturn(Future.successful(HttpResponse(OK)))
+      when(mockConnector.saveTaxAmountOwed(any())(any(), any()))
+        .thenReturn(Future.successful(HttpResponse.apply(OK, "")))
 
       val userAnswers = emptyUserAnswers.set(MoreThanHalfMillPage, true).success.value
 
