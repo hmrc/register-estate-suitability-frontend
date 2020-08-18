@@ -16,8 +16,6 @@
 
 package connectors
 
-import java.time.LocalDate
-
 import base.SpecBase
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock.{badRequest, ok, post, urlEqualTo}
@@ -26,10 +24,10 @@ import generators.Generators
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.{BeforeAndAfterAll, BeforeAndAfterEach, Inside}
 import pages.MoreThanHalfMillPage
-import uk.gov.hmrc.http.{BadRequestException, HeaderCarrier}
+import play.api.test.Helpers._
+import uk.gov.hmrc.http.{HeaderCarrier, UpstreamErrorResponse}
 
 import scala.concurrent.ExecutionContext.Implicits._
-import play.api.test.Helpers._
 
 class EstatesConnectorSpec extends SpecBase with Generators with ScalaFutures
   with Inside with BeforeAndAfterAll with BeforeAndAfterEach with IntegrationPatience {
@@ -101,7 +99,11 @@ class EstatesConnectorSpec extends SpecBase with Generators with ScalaFutures
 
       val result = connector.saveTaxAmountOwed(userAnswers)
 
-      result.map(_.status mustBe BAD_REQUEST)
+      whenReady(result.failed) {
+        case UpstreamErrorResponse.Upstream4xxResponse(upstream) =>
+          upstream.statusCode mustBe BAD_REQUEST
+        case _ => fail()
+      }
 
       application.stop()
     }

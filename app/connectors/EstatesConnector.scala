@@ -21,12 +21,17 @@ import config.FrontendAppConfig
 import javax.inject.Inject
 import models.{AmountOfTaxOwed, UserAnswers}
 import play.api.libs.json.{JsValue, Json}
-import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
+import uk.gov.hmrc.http.HttpReads.Implicits
+import uk.gov.hmrc.http.{HeaderCarrier, HttpReads, HttpResponse}
 import uk.gov.hmrc.play.bootstrap.http.HttpClient
+import uk.gov.hmrc.http.HttpReads.Implicits.{readEitherOf, throwOnFailure}
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class EstatesConnector @Inject()(http: HttpClient, config : FrontendAppConfig, adapter: UserAnswersToTaxAmountOwed) {
+
+  implicit def httpResponse: HttpReads[HttpResponse] =
+    throwOnFailure(readEitherOf[HttpResponse](Implicits.readRaw))
 
   private val postTaxAmountOwed = s"${config.estatesUrl}/estates/amount-tax-owed"
 
