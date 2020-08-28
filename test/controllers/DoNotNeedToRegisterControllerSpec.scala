@@ -44,7 +44,7 @@ class DoNotNeedToRegisterControllerSpec extends SpecBase with MockitoSugar {
       status(result) mustEqual OK
 
       contentAsString(result) mustEqual
-        view()(fakeRequest, messages).toString
+        view()(request, messages).toString
 
       application.stop()
     }
