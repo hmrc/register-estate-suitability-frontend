@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import connectors.EstatesConnector
-import controllers.actions._
+import controllers.actions.{IdentifierAction, _}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.Matchers.any
 import org.mockito.Mockito.when
@@ -29,7 +29,6 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import uk.gov.hmrc.estates.controllers.actions.IdentifierAction
 import uk.gov.hmrc.http.HttpResponse
 import views.html.YouNeedToRegisterView
 

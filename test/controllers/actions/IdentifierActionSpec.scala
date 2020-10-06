@@ -25,7 +25,6 @@ import play.api.mvc.{Action, AnyContent, BodyParsers, Results}
 import play.api.test.Helpers._
 import uk.gov.hmrc.auth.core._
 import uk.gov.hmrc.auth.core.retrieve.{Retrieval, ~}
-import uk.gov.hmrc.estates.controllers.actions.{AuthenticatedIdentifierAction, IdentifierAction}
 
 import scala.concurrent.ExecutionContext.Implicits._
 import scala.concurrent.Future
@@ -63,7 +62,7 @@ class IdentifierActionSpec extends SpecBase with MockitoSugar {
         when(mockAuthConnector.authorise(any(), any[Retrieval[RetrievalType]]())(any(), any()))
           .thenReturn(authRetrievals(AffinityGroup.Agent))
 
-        val action = new AuthenticatedIdentifierAction(trustsAuth, appConfig, bodyParsers)
+        val action = new AuthenticatedIdentifierAction(trustsAuth, bodyParsers)
 
         val controller = new Harness(action)
         val result = controller.onPageLoad()(fakeRequest)
@@ -81,7 +80,7 @@ class IdentifierActionSpec extends SpecBase with MockitoSugar {
         when(mockAuthConnector.authorise(any(), any[Retrieval[RetrievalType]]())(any(), any()))
           .thenReturn(authRetrievals(AffinityGroup.Organisation))
 
-        val action = new AuthenticatedIdentifierAction(trustsAuth, appConfig, bodyParsers)
+        val action = new AuthenticatedIdentifierAction(trustsAuth, bodyParsers)
 
         val controller = new Harness(action)
         val result = controller.onPageLoad()(fakeRequest)
@@ -98,7 +97,7 @@ class IdentifierActionSpec extends SpecBase with MockitoSugar {
 
         when(mockAuthConnector.authorise(any(), any[Retrieval[RetrievalType]]())(any(), any())) thenReturn (Future failed UnsupportedAffinityGroup())
 
-        val action = new AuthenticatedIdentifierAction(trustsAuth, appConfig, bodyParsers)
+        val action = new AuthenticatedIdentifierAction(trustsAuth, bodyParsers)
 
         val controller = new Harness(action)
         val result = controller.onPageLoad()(fakeRequest)
@@ -117,7 +116,7 @@ class IdentifierActionSpec extends SpecBase with MockitoSugar {
 
         when(mockAuthConnector.authorise(any(), any[Retrieval[RetrievalType]]())(any(), any())) thenReturn (Future failed MissingBearerToken())
 
-        val action = new AuthenticatedIdentifierAction(trustsAuth, appConfig, bodyParsers)
+        val action = new AuthenticatedIdentifierAction(trustsAuth, bodyParsers)
 
         val controller = new Harness(action)
         val result = controller.onPageLoad()(fakeRequest)
@@ -136,7 +135,7 @@ class IdentifierActionSpec extends SpecBase with MockitoSugar {
 
         when(mockAuthConnector.authorise(any(), any[Retrieval[RetrievalType]]())(any(), any())) thenReturn (Future failed BearerTokenExpired())
 
-        val action = new AuthenticatedIdentifierAction(trustsAuth, appConfig, bodyParsers)
+        val action = new AuthenticatedIdentifierAction(trustsAuth, bodyParsers)
 
         val controller = new Harness(action)
         val result = controller.onPageLoad()(fakeRequest)
@@ -156,7 +155,7 @@ class IdentifierActionSpec extends SpecBase with MockitoSugar {
         when(mockAuthConnector.authorise(any(), any[Retrieval[RetrievalType]]())(any(), any()))
           .thenReturn(authRetrievals(AffinityGroup.Organisation))
 
-        val action = new AuthenticatedIdentifierAction(trustsAuth, appConfig, bodyParsers)
+        val action = new AuthenticatedIdentifierAction(trustsAuth, bodyParsers)
 
         val controller = new ThrowingHarness(action)
         val result = controller.onPageLoad()(fakeRequest)

@@ -16,13 +16,12 @@
 
 package controllers
 
-import controllers.actions.{DataRetrievalAction, RegisterEstateActions}
+import controllers.actions.{DataRetrievalAction, IdentifierAction, RegisterEstateActions}
 import javax.inject.Inject
 import models.UserAnswers
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
-import uk.gov.hmrc.estates.controllers.actions.IdentifierAction
 import uk.gov.hmrc.play.bootstrap.controller.FrontendBaseController
 
 import scala.concurrent.ExecutionContext.Implicits._

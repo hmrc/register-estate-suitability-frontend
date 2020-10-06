@@ -25,7 +25,6 @@ import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
-import uk.gov.hmrc.estates.controllers.actions.IdentifierAction
 import uk.gov.hmrc.play.bootstrap.controller.FrontendBaseController
 import views.html.MoreThanTenThousandView
 

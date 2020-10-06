@@ -20,18 +20,15 @@ import controllers.actions._
 import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import uk.gov.hmrc.estates.controllers.actions.IdentifierAction
 import uk.gov.hmrc.play.bootstrap.controller.FrontendBaseController
 import views.html.DoNotNeedToRegisterView
-
-import scala.concurrent.ExecutionContext
 
 class DoNotNeedToRegisterController @Inject()(
                                         override val messagesApi: MessagesApi,
                                         actions: RegisterEstateActions,
                                         val controllerComponents: MessagesControllerComponents,
                                         view: DoNotNeedToRegisterView
-                                    )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+                                    ) extends FrontendBaseController with I18nSupport {
 
   def onPageLoad(): Action[AnyContent] = actions.auth {
     implicit request =>

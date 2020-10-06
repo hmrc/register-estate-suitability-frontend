@@ -17,7 +17,7 @@
 package base
 
 import config.FrontendAppConfig
-import controllers.actions._
+import controllers.actions.{IdentifierAction, _}
 import models.UserAnswers
 import org.scalatest.TryValues
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
@@ -29,7 +29,6 @@ import play.api.inject.{Injector, bind}
 import play.api.libs.json.Json
 import play.api.mvc.BodyParsers
 import play.api.test.FakeRequest
-import uk.gov.hmrc.estates.controllers.actions.IdentifierAction
 
 trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with TryValues with ScalaFutures with IntegrationPatience {
 

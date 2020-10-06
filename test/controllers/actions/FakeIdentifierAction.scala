@@ -19,7 +19,6 @@ package controllers.actions
 import javax.inject.Inject
 import models.requests.{AgentUser, IdentifierRequest, OrganisationUser}
 import play.api.mvc._
-import uk.gov.hmrc.estates.controllers.actions.IdentifierAction
 
 import scala.concurrent.{ExecutionContext, Future}
 

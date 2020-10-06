@@ -19,7 +19,6 @@ package controllers.actions
 import com.google.inject.Inject
 import models.requests.{DataRequest, IdentifierRequest, OptionalDataRequest}
 import play.api.mvc.{ActionBuilder, AnyContent}
-import uk.gov.hmrc.estates.controllers.actions.IdentifierAction
 
 class RegisterEstateActions @Inject()(
                                        identify: IdentifierAction,
