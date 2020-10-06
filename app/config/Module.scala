@@ -19,7 +19,7 @@ package config
 import com.google.inject.AbstractModule
 import controllers.actions._
 import repositories.{DefaultSessionRepository, SessionRepository}
-import uk.gov.hmrc.estates.controllers.actions.{AuthenticatedIdentifierAction, IdentifierAction}
+import controllers.actions.{AuthenticatedIdentifierAction, IdentifierAction}
 
 class Module extends AbstractModule {
 

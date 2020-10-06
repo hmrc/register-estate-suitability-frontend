@@ -17,7 +17,7 @@
 package adapters
 
 import base.SpecBase
-import pages.{DateOfDeathBeforePage, MoreThanHalfMillPage, MoreThanQuarterMillPage, MoreThanTenThousandPage, MoreThanTwoHalfMillPage}
+import pages._
 
 class UserAnswersToTaxAmountOwedSpec extends SpecBase {
 
