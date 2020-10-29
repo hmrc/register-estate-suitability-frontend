@@ -26,12 +26,14 @@ import uk.gov.hmrc.auth.core.retrieve.v2.Retrievals
 import uk.gov.hmrc.auth.core.retrieve.~
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.HeaderCarrierConverter
+import utils.Session
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class AuthenticatedIdentifierAction @Inject()(val trustsAuth: TrustsAuthorisedFunctions,
                                               val parser: BodyParsers.Default
                                              )(implicit val executionContext: ExecutionContext) extends IdentifierAction {
+  private val logger: Logger = Logger(getClass)
 
   def invokeBlock[A](request: Request[A],
                      block: IdentifierRequest[A] => Future[Result]) : Future[Result] = {
@@ -47,7 +49,7 @@ class AuthenticatedIdentifierAction @Inject()(val trustsAuth: TrustsAuthorisedFu
       case Some(internalId) ~ Some(Organisation) =>
         block(IdentifierRequest(request, OrganisationUser(internalId)))
       case _ =>
-        Logger.info(s"[IdentifierAction] Insufficient enrolment")
+        logger.info(s"[Session ID: ${Session.id(hc)}] Insufficient enrolment")
         Future.successful(Redirect(controllers.routes.UnauthorisedController.onPageLoad()))
     } recover trustsAuth.recoverFromAuthorisation
   }
