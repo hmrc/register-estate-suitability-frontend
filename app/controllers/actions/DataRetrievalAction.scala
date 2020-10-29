@@ -18,8 +18,12 @@ package controllers.actions
 
 import javax.inject.Inject
 import models.requests.{IdentifierRequest, OptionalDataRequest}
+import play.api.Logger
 import play.api.mvc.ActionTransformer
 import repositories.SessionRepository
+import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.play.HeaderCarrierConverter
+import utils.Session
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -27,14 +31,15 @@ class DataRetrievalActionImpl @Inject()(
                                          val sessionRepository: SessionRepository
                                        )(implicit val executionContext: ExecutionContext) extends DataRetrievalAction {
 
-  override protected def transform[A](request: IdentifierRequest[A]): Future[OptionalDataRequest[A]] = {
+  private val logger: Logger = Logger(getClass)
 
-    sessionRepository.get(request.user.internalId).map {
-      case None =>
-        OptionalDataRequest(request.request, None, request.user)
-      case Some(userAnswers) =>
-        OptionalDataRequest(request.request, Some(userAnswers), request.user)
-    }
+  override protected def transform[A](request: IdentifierRequest[A]): Future[OptionalDataRequest[A]] = {
+    sessionRepository.get(request.user.internalId).map (OptionalDataRequest(request.request, _, request.user))
+  } recover {
+    case e: Throwable =>
+      implicit val hc : HeaderCarrier = HeaderCarrierConverter.fromHeadersAndSession(request.headers, Some(request.session))
+      logger.warn(s"[Session ID: ${Session.id(hc)}] unable to retrieve data due to exception ${e.getMessage}")
+      throw e
   }
 }
 
