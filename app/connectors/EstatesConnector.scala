@@ -23,7 +23,7 @@ import models.{AmountOfTaxOwed, UserAnswers}
 import play.api.libs.json.{JsValue, Json}
 import uk.gov.hmrc.http.HttpReads.Implicits
 import uk.gov.hmrc.http.{HeaderCarrier, HttpReads, HttpResponse}
-import uk.gov.hmrc.play.bootstrap.http.HttpClient
+import uk.gov.hmrc.http.HttpClient
 import uk.gov.hmrc.http.HttpReads.Implicits.{readEitherOf, throwOnFailure}
 
 import scala.concurrent.{ExecutionContext, Future}
