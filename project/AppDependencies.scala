@@ -11,7 +11,8 @@ object AppDependencies {
     "uk.gov.hmrc"       %% "play-health"                    % "3.15.0-play-27",
     "uk.gov.hmrc"       %% "play-ui"                        % "8.12.0-play-27",
     "uk.gov.hmrc"       %% "play-conditional-form-mapping"  % "1.4.0-play-26",
-    "uk.gov.hmrc"       %% "bootstrap-frontend-play-27"     % "2.25.0"
+    "uk.gov.hmrc"       %% "bootstrap-frontend-play-27"     % "2.25.0",
+    "uk.gov.hmrc"       %% "play-language"                  % "4.10.0-play-27"
   )
 
   val test = Seq(
@@ -23,7 +24,7 @@ object AppDependencies {
     "org.mockito"                 %  "mockito-all"        % "1.10.19",
     "org.scalacheck"              %% "scalacheck"         % "1.14.3",
     "com.github.tomakehurst"      % "wiremock-standalone" % "2.17.0",
-    "wolfendale"                  %% "scalacheck-gen-regexp"  % "0.1.2",
+    "wolfendale"                  %% "scalacheck-gen-regexp"  % "0.1.2"
   ).map(_ % Test)
 
   def apply(): Seq[ModuleID] = compile ++ test
