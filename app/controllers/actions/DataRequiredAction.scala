@@ -23,7 +23,7 @@ import play.api.Logger
 import play.api.mvc.Results.Redirect
 import play.api.mvc.{ActionRefiner, Result}
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.play.HeaderCarrierConverter
+import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import utils.Session
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -35,7 +35,7 @@ class DataRequiredActionImpl @Inject()(implicit val executionContext: ExecutionC
 
     request.userAnswers match {
       case None =>
-        implicit val hc : HeaderCarrier = HeaderCarrierConverter.fromHeadersAndSession(request.headers, Some(request.session))
+        implicit val hc : HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
         logger.warn(s"[Session ID: ${Session.id(hc)}] UserAnswers required but don't exist")
         Future.successful(Left(Redirect(routes.SessionExpiredController.onPageLoad())))
       case Some(data) =>
