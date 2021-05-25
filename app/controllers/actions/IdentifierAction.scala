@@ -46,9 +46,9 @@ class AuthenticatedIdentifierAction @Inject()(val trustsAuth: TrustsAuthorisedFu
 
     trustsAuth.authorised().retrieve(retrievals) {
       case Some(internalId) ~ Some(Agent) =>
-        block(IdentifierRequest(request, AgentUser(internalId), AffinityGroup.Organisation))
+        block(IdentifierRequest(request, AgentUser(internalId)))
       case Some(internalId) ~ Some(Organisation) =>
-        block(IdentifierRequest(request, OrganisationUser(internalId), AffinityGroup.Organisation))
+        block(IdentifierRequest(request, OrganisationUser(internalId)))
       case _ =>
         logger.info(s"[Session ID: ${Session.id(hc)}] Insufficient enrolment")
         Future.successful(Redirect(controllers.routes.UnauthorisedController.onPageLoad()))
