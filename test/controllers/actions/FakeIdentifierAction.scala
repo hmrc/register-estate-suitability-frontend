@@ -19,13 +19,14 @@ package controllers.actions
 import javax.inject.Inject
 import models.requests.{AgentUser, IdentifierRequest, OrganisationUser}
 import play.api.mvc._
+import uk.gov.hmrc.auth.core.AffinityGroup
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class FakeIdentifierAction @Inject()(bodyParsers: PlayBodyParsers) extends IdentifierAction {
 
   override def invokeBlock[A](request: Request[A], block: IdentifierRequest[A] => Future[Result]): Future[Result] =
-    block(IdentifierRequest(request, OrganisationUser("id")))
+    block(IdentifierRequest(request, OrganisationUser("id"), AffinityGroup.Organisation))
 
   override def parser: BodyParser[AnyContent] =
     bodyParsers.default
@@ -37,7 +38,7 @@ class FakeIdentifierAction @Inject()(bodyParsers: PlayBodyParsers) extends Ident
 class FakeIdentifierActionAsAgent @Inject()(bodyParsers: PlayBodyParsers) extends IdentifierAction {
 
   override def invokeBlock[A](request: Request[A], block: IdentifierRequest[A] => Future[Result]): Future[Result] =
-    block(IdentifierRequest(request, AgentUser("id")))
+    block(IdentifierRequest(request, AgentUser("id"), AffinityGroup.Organisation))
 
   override def parser: BodyParser[AnyContent] =
     bodyParsers.default

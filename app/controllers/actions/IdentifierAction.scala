@@ -21,6 +21,7 @@ import models.requests.{AgentUser, IdentifierRequest, OrganisationUser}
 import play.api.Logger
 import play.api.mvc.Results._
 import play.api.mvc.{Request, Result, _}
+import uk.gov.hmrc.auth.core.AffinityGroup
 import uk.gov.hmrc.auth.core.AffinityGroup.{Agent, Organisation}
 import uk.gov.hmrc.auth.core.retrieve.v2.Retrievals
 import uk.gov.hmrc.auth.core.retrieve.~
@@ -45,9 +46,9 @@ class AuthenticatedIdentifierAction @Inject()(val trustsAuth: TrustsAuthorisedFu
 
     trustsAuth.authorised().retrieve(retrievals) {
       case Some(internalId) ~ Some(Agent) =>
-        block(IdentifierRequest(request, AgentUser(internalId)))
+        block(IdentifierRequest(request, AgentUser(internalId), AffinityGroup.Organisation))
       case Some(internalId) ~ Some(Organisation) =>
-        block(IdentifierRequest(request, OrganisationUser(internalId)))
+        block(IdentifierRequest(request, OrganisationUser(internalId), AffinityGroup.Organisation))
       case _ =>
         logger.info(s"[Session ID: ${Session.id(hc)}] Insufficient enrolment")
         Future.successful(Redirect(controllers.routes.UnauthorisedController.onPageLoad()))
