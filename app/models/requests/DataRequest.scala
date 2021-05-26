@@ -18,15 +18,19 @@ package models.requests
 
 import models.UserAnswers
 import play.api.mvc.{Request, WrappedRequest}
+import uk.gov.hmrc.auth.core.AffinityGroup
 
 sealed trait User {
   val internalId: String
+  val affinityGroup: AffinityGroup
 }
 
 case class AgentUser(internalId: String) extends User {
+  override val affinityGroup: AffinityGroup = AffinityGroup.Agent
 }
 
 case class OrganisationUser(internalId: String) extends User {
+  override val affinityGroup: AffinityGroup = AffinityGroup.Organisation
 }
 
 case class OptionalDataRequest[A](request: Request[A],
