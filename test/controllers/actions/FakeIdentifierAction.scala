@@ -16,11 +16,10 @@
 
 package controllers.actions
 
-import javax.inject.Inject
 import models.requests.{AgentUser, IdentifierRequest, OrganisationUser}
 import play.api.mvc._
-import uk.gov.hmrc.auth.core.AffinityGroup
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class FakeIdentifierAction @Inject()(bodyParsers: PlayBodyParsers) extends IdentifierAction {
