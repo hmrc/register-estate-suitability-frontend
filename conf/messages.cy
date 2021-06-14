@@ -84,8 +84,8 @@ doNotNeedToRegister.b2 = mae treth sy’n ddyledus o gynilion yn fwy na £100 me
 doNotNeedToRegister.p3 = Os oes angen help arnoch gyda’r gwasanaeth, cysylltwch â
 doNotNeedToRegister.contact.link = Gwasanaeth Cwsmeriaid Cymraeg CThEM (yn agor ffenestr neu dab newydd)
 
-youNeedToRegister.title = Ar sail eich atebion, does dim angen i chi gofrestru’r ystâd hon
-youNeedToRegister.heading = Ar sail eich atebion, does dim angen i chi gofrestru’r ystâd hon
-youNeedToRegister.checkYourAnswersLabel = Ar sail eich atebion, does dim angen i chi gofrestru’r ystâd hon
+youNeedToRegister.title = Ar sail eich atebion, mae angen i chi gofrestru’r ystâd hon
+youNeedToRegister.heading = Ar sail eich atebion, mae angen i chi gofrestru’r ystâd hon
+youNeedToRegister.checkYourAnswersLabel = Ar sail eich atebion, mae angen i chi gofrestru’r ystâd hon
 youNeedToRegister.p1 = Os oes angen help arnoch gyda’r gwasanaeth hwn
 youNeedToRegister.contact.link = cysylltwch â Gwasanaeth Cwsmeriaid Cymraeg CThEM (yn agor ffenestr neu dab newydd)
