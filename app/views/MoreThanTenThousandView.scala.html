@@ -39,12 +39,13 @@
 
         @heading("moreThanTenThousand.heading")
 
-        <p id="text-@{form("value").id}">messages("moreThanTenThousand.p1")</p>
+        <p id="text-@{form("value").id}">@messages("moreThanTenThousand.p1")</p>
 
         @inputYesNo(
             field = form("value"),
             label = messages("moreThanTenThousand.heading"),
             legendAsHeading = false,
+            legendClass = Some("govuk-visually-hidden")
         )
 
         @submitButton()
