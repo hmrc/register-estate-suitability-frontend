@@ -15,27 +15,35 @@
  *@
 
 @import controllers.routes._
+@import views.html.components.{Heading, BulletList, SubmitButton}
 
 @this(
-    main_template: MainTemplate
+    mainTemplate: MainTemplate,
+    formHelper: FormWithCSRF,
+    heading: Heading,
+    bulletList: BulletList,
+    submitButton: SubmitButton
 )
 
 @()(implicit request: Request[_], messages: Messages)
 
-@main_template(
+@mainTemplate(
     title = messages("doNotNeedToRegister.title")
     ) {
 
-        @components.heading("doNotNeedToRegister.heading")
+    @heading("doNotNeedToRegister.heading")
 
     <p>@messages("doNotNeedToRegister.p1") <a id="information-payment-arrangements-link" target="_blank" href="https://www.gov.uk/self-assessment-tax-returns/returns-for-someone-who-has-died#if-you-do-not-need-to-send-a-tax-return">@messages("doNotNeedToRegister.payment.link")</a> @messages("doNotNeedToRegister.p2")</p>
 
-    <ul class="bullet-list">
-     <li>@messages("doNotNeedToRegister.b1")</li>
-     <li>@messages("doNotNeedToRegister.b2")</li>
-    </ul>
+    @bulletList("doNotNeedToRegister", Seq(
+        "b1",
+        "b2"
+    ))
 
     <p>@messages("doNotNeedToRegister.p3") <a id="help-link" target="_blank" href="https://www.gov.uk/government/organisations/hm-revenue-customs/contact/bereavement-and-deceased-estate">@messages("doNotNeedToRegister.contact.link")</a>.</p>
 
-    @components.button_link("site.sign_out", routes.LogoutController.logout.url)
-     }
+    @formHelper(action = DoNotNeedToRegisterController.onSubmit, 'autoComplete -> "off") {
+        @submitButton(Some(messages("site.sign_out")))
+    }
+
+}

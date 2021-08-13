@@ -18,7 +18,7 @@ package controllers.actions
 
 import javax.inject.Inject
 import models.requests.{IdentifierRequest, OptionalDataRequest}
-import play.api.Logger
+import play.api.Logging
 import play.api.mvc.ActionTransformer
 import repositories.SessionRepository
 import uk.gov.hmrc.http.HeaderCarrier
@@ -29,9 +29,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class DataRetrievalActionImpl @Inject()(
                                          val sessionRepository: SessionRepository
-                                       )(implicit val executionContext: ExecutionContext) extends DataRetrievalAction {
-
-  private val logger: Logger = Logger(getClass)
+                                       )(implicit val executionContext: ExecutionContext) extends DataRetrievalAction with Logging {
 
   override protected def transform[A](request: IdentifierRequest[A]): Future[OptionalDataRequest[A]] = {
     sessionRepository.get(request.user.internalId).map (OptionalDataRequest(request.request, _, request.user))

@@ -1,4 +1,6 @@
 # microservice specific routes
+->         /govuk-frontend                              govuk.Routes
+->         /hmrc-frontend                               hmrcfrontend.Routes
 
 GET        /                                            controllers.IndexController.onPageLoad
 
@@ -7,8 +9,7 @@ GET        /assets/*file                                controllers.Assets.versi
 GET        /language/:lang                              controllers.LanguageSwitchController.switchToLanguage(lang: String)
 
 GET        /this-service-has-been-reset                 controllers.SessionExpiredController.onPageLoad
-
-GET        /check-your-answers                          controllers.CheckYourAnswersController.onPageLoad
+POST       /this-service-has-been-reset                 controllers.SessionExpiredController.onSubmit
 
 GET        /unauthorised                                controllers.UnauthorisedController.onPageLoad
 
@@ -33,6 +34,7 @@ GET        /more-than-two-half-mill                     controllers.MoreThanTwoH
 POST       /more-than-two-half-mill                     controllers.MoreThanTwoHalfMillController.onSubmit()
 
 GET        /do-not-need-to-register                     controllers.DoNotNeedToRegisterController.onPageLoad()
+POST       /do-not-need-to-register                     controllers.DoNotNeedToRegisterController.onSubmit()
 
 GET        /you-need-to-register                        controllers.YouNeedToRegisterController.onPageLoad()
 POST       /you-need-to-register                        controllers.YouNeedToRegisterController.onSubmit()

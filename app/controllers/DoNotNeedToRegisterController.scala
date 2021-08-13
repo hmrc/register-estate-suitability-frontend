@@ -34,4 +34,8 @@ class DoNotNeedToRegisterController @Inject()(
     implicit request =>
       Ok(view())
   }
+
+  def onSubmit: Action[AnyContent] = Action { _ =>
+    Redirect(routes.LogoutController.logout())
+  }
 }
