@@ -82,7 +82,7 @@ trait ViewSpecBase extends SpecBase {
     assert(label.text().contains(expectedText), s"\n\nLabel for $forElement was not $expectedText")
 
     if (expectedHintText.isDefined) {
-      assert(label.getElementsByClass("form-hint").first.text == expectedHintText.get,
+      assert(label.getElementsByClass("govuk-hint").first.text == expectedHintText.get,
         s"\n\nLabel for $forElement did not contain hint text $expectedHintText")
     }
   }
@@ -97,8 +97,8 @@ trait ViewSpecBase extends SpecBase {
     assert(radio.attr("name") == name, s"\n\nElement $id does not have name $name")
     assert(radio.attr("value") == value, s"\n\nElement $id does not have value $value")
     isChecked match {
-      case true => assert(radio.attr("checked") == "checked", s"\n\nElement $id is not checked")
-      case _ => assert(!radio.hasAttr("checked") && radio.attr("checked") != "checked", s"\n\nElement $id is checked")
+      case true => assert(radio.hasAttr("checked"), s"\n\nElement $id is not checked")
+      case _ => assert(!radio.hasAttr("checked"), s"\n\nElement $id is checked")
     }
   }
 }

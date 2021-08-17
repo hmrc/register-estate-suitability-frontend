@@ -15,31 +15,39 @@
  *@
 
 @import controllers.routes._
+@import views.html.components.{InputYesNo, Heading, ErrorSummary, SubmitButton}
 
 @this(
-    main_template: MainTemplate,
-    formHelper: FormWithCSRF
+    mainTemplate: MainTemplate,
+    formHelper: FormWithCSRF,
+    errorSummary: ErrorSummary,
+    heading: Heading,
+    inputYesNo: InputYesNo,
+    submitButton: SubmitButton
 )
 
 @(form: Form[_])(implicit request: Request[_], messages: Messages)
 
-@main_template(
-    title = s"${errorPrefix(form)}${messages("moreThanTenThousand.title")}"
+@mainTemplate(
+    title = s"${errorPrefix(form)}${messages("moreThanTenThousand.title")}",
+    showBackLink = true
 ) {
 
     @formHelper(action = MoreThanTenThousandController.onSubmit(), 'autoComplete -> "off") {
 
-        @components.back_link()
+        @errorSummary(form.errors, isYesNo = true)
 
-        @components.error_summary(form.errors)
+        @heading("moreThanTenThousand.heading")
 
-        @components.input_yes_no(
+        <p id="text-@{form("value").id}">@messages("moreThanTenThousand.p1")</p>
+
+        @inputYesNo(
             field = form("value"),
-            legend = messages("moreThanTenThousand.heading"),
-            headingIsLegend = true,
-            nonHintText = Some(messages("moreThanTenThousand.p1"))
+            label = messages("moreThanTenThousand.heading"),
+            legendAsHeading = false,
+            legendClass = Some("govuk-visually-hidden")
         )
 
-        @components.submit_button()
+        @submitButton()
     }
 }

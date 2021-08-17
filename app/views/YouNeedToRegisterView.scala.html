@@ -15,25 +15,28 @@
  *@
 
 @import controllers.routes._
+@import views.html.components.{Heading, SubmitButton}
 
 @this(
-main_template: MainTemplate,
-formHelper: FormWithCSRF
+        mainTemplate: MainTemplate,
+        formHelper: FormWithCSRF,
+        heading: Heading,
+        submitButton: SubmitButton
 )
+
 
 @()(implicit request: Request[_], messages: Messages)
 
-@main_template(
-    title = messages("youNeedToRegister.title")
+@mainTemplate(
+    title = messages("youNeedToRegister.title"),
+    showBackLink = true
 ) {
 
     @formHelper(action = YouNeedToRegisterController.onSubmit(), 'autoComplete -> "off") {
 
-        @components.back_link()
+        @heading("youNeedToRegister.heading")
 
-        @components.heading("youNeedToRegister.heading")
-
-        @components.submit_button(Some("site.estate.continue"))
+        @submitButton(Some("site.estate.continue"))
 
         <p>@messages("youNeedToRegister.p1") <a id="help-link" href="https://www.gov.uk/government/organisations/hm-revenue-customs/contact/bereavement-and-deceased-estate" target="_blank">@messages("youNeedToRegister.contact.link")</a>.</p>
     }
