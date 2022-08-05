@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,7 +49,7 @@ class AuthenticatedIdentifierAction @Inject()(val trustsAuth: TrustsAuthorisedFu
         block(IdentifierRequest(request, OrganisationUser(internalId)))
       case _ =>
         logger.info(s"[Session ID: ${Session.id(hc)}] Insufficient enrolment")
-        Future.successful(Redirect(controllers.routes.UnauthorisedController.onPageLoad()))
+        Future.successful(Redirect(controllers.routes.UnauthorisedController.onPageLoad))
     } recover trustsAuth.recoverFromAuthorisation
   }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,30 +34,30 @@ object EstateSuitabilityNavigator {
   private def dateOfDeathBeforeRoute(answers: UserAnswers) = answers.get(DateOfDeathBeforePage) match {
     case Some(true)  => controllers.routes.MoreThanQuarterMillController.onPageLoad()
     case Some(false) => controllers.routes.MoreThanHalfMillController.onPageLoad()
-    case None        => controllers.routes.SessionExpiredController.onPageLoad()
+    case None        => controllers.routes.SessionExpiredController.onPageLoad
   }
 
   private def moreThanQuarterRoute(answers: UserAnswers) = answers.get(MoreThanQuarterMillPage) match {
     case Some(true)  => controllers.routes.YouNeedToRegisterController.onPageLoad()
     case Some(false) => controllers.routes.MoreThanTenThousandController.onPageLoad()
-    case None        => controllers.routes.SessionExpiredController.onPageLoad()
+    case None        => controllers.routes.SessionExpiredController.onPageLoad
   }
 
   private def moreThanHalfMillRoute(answers: UserAnswers) = answers.get(MoreThanHalfMillPage) match {
     case Some(true)  => controllers.routes.YouNeedToRegisterController.onPageLoad()
     case Some(false) => controllers.routes.MoreThanTenThousandController.onPageLoad()
-    case None        => controllers.routes.SessionExpiredController.onPageLoad()
+    case None        => controllers.routes.SessionExpiredController.onPageLoad
   }
 
   private def moreThanTenThousandRoute(answers: UserAnswers) = answers.get(MoreThanTenThousandPage) match {
     case Some(true)  => controllers.routes.YouNeedToRegisterController.onPageLoad()
     case Some(false) => controllers.routes.MoreThanTwoHalfMillController.onPageLoad()
-    case None        => controllers.routes.SessionExpiredController.onPageLoad()
+    case None        => controllers.routes.SessionExpiredController.onPageLoad
   }
 
   private def moreThanTwoHalfMillRoute(answers: UserAnswers) = answers.get(MoreThanTwoHalfMillPage) match {
     case Some(true)  => controllers.routes.YouNeedToRegisterController.onPageLoad()
     case Some(false) => controllers.routes.DoNotNeedToRegisterController.onPageLoad()
-    case None        => controllers.routes.SessionExpiredController.onPageLoad()
+    case None        => controllers.routes.SessionExpiredController.onPageLoad
   }
 }
