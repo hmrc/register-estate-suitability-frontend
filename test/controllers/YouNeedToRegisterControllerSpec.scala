@@ -18,11 +18,10 @@ package controllers
 
 import base.SpecBase
 import connectors.EstatesConnector
-import controllers.actions.{IdentifierAction, _}
+import controllers.actions._
 import navigation.{FakeNavigator, Navigator}
-import org.mockito.Matchers.any
-import org.mockito.Mockito.when
-import org.scalatestplus.mockito.MockitoSugar
+import org.mockito.ArgumentMatchers.any
+import org.mockito.MockitoSugar
 import pages.MoreThanHalfMillPage
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder

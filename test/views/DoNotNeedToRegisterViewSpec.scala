@@ -30,6 +30,5 @@ class DoNotNeedToRegisterViewSpec extends ViewBehaviours {
     val applyView = view.apply()(fakeRequest, messages)
 
     behave like normalPage(applyView, messageKeyPrefix)
-    
   }
 }
