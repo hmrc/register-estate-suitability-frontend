@@ -17,6 +17,7 @@
 package controllers
 
 import controllers.actions.{DataRetrievalAction, IdentifierAction, RegisterEstateActions}
+
 import javax.inject.Inject
 import models.UserAnswers
 import play.api.i18n.I18nSupport
@@ -24,7 +25,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 
-import scala.concurrent.ExecutionContext.Implicits._
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 class IndexController @Inject()(
