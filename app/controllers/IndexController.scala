@@ -24,9 +24,7 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class IndexController @Inject()(
                                  val controllerComponents: MessagesControllerComponents,
@@ -34,7 +32,7 @@ class IndexController @Inject()(
                                  getData: DataRetrievalAction,
                                  repository: SessionRepository,
                                  actions: RegisterEstateActions
-                               ) extends FrontendBaseController with I18nSupport {
+                               ) (implicit ex: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = actions.authWithSession.async { implicit request =>
     request.userAnswers match {
