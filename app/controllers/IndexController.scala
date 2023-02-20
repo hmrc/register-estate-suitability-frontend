@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,15 +17,14 @@
 package controllers
 
 import controllers.actions.{DataRetrievalAction, IdentifierAction, RegisterEstateActions}
+
 import javax.inject.Inject
 import models.UserAnswers
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-
-import scala.concurrent.ExecutionContext.Implicits._
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class IndexController @Inject()(
                                  val controllerComponents: MessagesControllerComponents,
@@ -33,7 +32,7 @@ class IndexController @Inject()(
                                  getData: DataRetrievalAction,
                                  repository: SessionRepository,
                                  actions: RegisterEstateActions
-                               ) extends FrontendBaseController with I18nSupport {
+                               ) (implicit ex: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = actions.authWithSession.async { implicit request =>
     request.userAnswers match {
