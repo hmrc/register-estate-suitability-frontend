@@ -42,7 +42,7 @@
 
     <p>@messages("doNotNeedToRegister.p3") <a id="help-link" target="_blank" rel="noopener noreferrer" href="https://www.gov.uk/government/organisations/hm-revenue-customs/contact/bereavement-and-deceased-estate">@messages("doNotNeedToRegister.contact.link")</a>.</p>
 
-    @formHelper(action = DoNotNeedToRegisterController.onSubmit, 'autoComplete -> "off") {
+    @formHelper(action = DoNotNeedToRegisterController.onSubmit(), Symbol("autoComplete") -> "off") {
         @submitButton(Some(messages("site.sign_out")))
     }
 

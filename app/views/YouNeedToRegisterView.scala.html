@@ -32,7 +32,7 @@
     showBackLink = true
 ) {
 
-    @formHelper(action = YouNeedToRegisterController.onSubmit(), 'autoComplete -> "off") {
+    @formHelper(action = YouNeedToRegisterController.onSubmit(), Symbol("autoComplete") -> "off") {
 
         @heading("youNeedToRegister.heading")
 
