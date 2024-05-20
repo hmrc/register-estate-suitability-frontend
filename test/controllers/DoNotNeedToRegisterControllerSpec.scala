@@ -17,15 +17,14 @@
 package controllers
 
 import base.SpecBase
-import org.mockito.MockitoSugar
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import views.html.DoNotNeedToRegisterView
 
-class DoNotNeedToRegisterControllerSpec extends SpecBase with MockitoSugar {
+class DoNotNeedToRegisterControllerSpec extends SpecBase {
 
-  def onwardRoute = Call("GET", "/foo")
+  def onwardRoute: Call = Call("GET", "/foo")
 
   lazy val doNotNeedToRegisterRoute = routes.DoNotNeedToRegisterController.onPageLoad().url
 
@@ -43,8 +42,7 @@ class DoNotNeedToRegisterControllerSpec extends SpecBase with MockitoSugar {
 
       status(result) mustEqual OK
 
-      contentAsString(result) mustEqual
-        view()(request, messages).toString
+      contentAsString(result) mustEqual view()(request, messages).toString
 
       application.stop()
     }

@@ -21,8 +21,10 @@ import forms.YesNoFormProvider
 import models.UserAnswers
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
-import org.mockito.MockitoSugar
+import org.mockito.Mockito
+import org.mockito.Mockito.when
 import pages.DateOfDeathBeforePage
+import play.api.data.Form
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -32,12 +34,12 @@ import views.html.DateOfDeathBeforeView
 
 import scala.concurrent.Future
 
-class DateOfDeathBeforeControllerSpec extends SpecBase with MockitoSugar {
+class DateOfDeathBeforeControllerSpec extends SpecBase {
 
-  def onwardRoute = Call("GET", "/foo")
+  def onwardRoute: Call = Call("GET", "/foo")
 
-  val formProvider = new YesNoFormProvider()
-  val form = formProvider.withPrefix("dateOfDeathBefore")
+  val formProvider: YesNoFormProvider = new YesNoFormProvider()
+  val form: Form[Boolean]             = formProvider.withPrefix("dateOfDeathBefore")
 
   lazy val myNewPageRoute = routes.DateOfDeathBeforeController.onPageLoad().url
 
@@ -83,7 +85,7 @@ class DateOfDeathBeforeControllerSpec extends SpecBase with MockitoSugar {
 
     "redirect to the next page when valid data is submitted" in {
 
-      val mockSessionRepository = mock[SessionRepository]
+      val mockSessionRepository = Mockito.mock(classOf[SessionRepository])
 
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
@@ -95,9 +97,7 @@ class DateOfDeathBeforeControllerSpec extends SpecBase with MockitoSugar {
           )
           .build()
 
-      val request =
-        FakeRequest(POST, myNewPageRoute)
-          .withFormUrlEncodedBody(("value", "true"))
+      val request = FakeRequest(POST, myNewPageRoute).withFormUrlEncodedBody(("value", "true"))
 
       val result = route(application, request).value
 
@@ -112,9 +112,7 @@ class DateOfDeathBeforeControllerSpec extends SpecBase with MockitoSugar {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
-      val request =
-        FakeRequest(POST, myNewPageRoute)
-          .withFormUrlEncodedBody(("value", ""))
+      val request = FakeRequest(POST, myNewPageRoute).withFormUrlEncodedBody(("value", ""))
 
       val boundForm = form.bind(Map("value" -> ""))
 
@@ -149,9 +147,7 @@ class DateOfDeathBeforeControllerSpec extends SpecBase with MockitoSugar {
 
       val application = applicationBuilder(userAnswers = None).build()
 
-      val request =
-        FakeRequest(POST, myNewPageRoute)
-          .withFormUrlEncodedBody(("value", "true"))
+      val request = FakeRequest(POST, myNewPageRoute).withFormUrlEncodedBody(("value", "true"))
 
       val result = route(application, request).value
 

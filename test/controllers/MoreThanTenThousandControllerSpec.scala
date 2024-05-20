@@ -21,8 +21,10 @@ import forms.YesNoFormProvider
 import models.UserAnswers
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
-import org.mockito.MockitoSugar
+import org.mockito.Mockito
+import org.mockito.Mockito.when
 import pages.MoreThanTenThousandPage
+import play.api.data.Form
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -32,12 +34,12 @@ import views.html.MoreThanTenThousandView
 
 import scala.concurrent.Future
 
-class MoreThanTenThousandControllerSpec extends SpecBase with MockitoSugar {
+class MoreThanTenThousandControllerSpec extends SpecBase {
 
-  def onwardRoute = Call("GET", "/foo")
+  def onwardRoute: Call = Call("GET", "/foo")
 
-  val formProvider = new YesNoFormProvider()
-  val form = formProvider.withPrefix("moreThanTenThousand")
+  val formProvider: YesNoFormProvider = new YesNoFormProvider()
+  val form: Form[Boolean]             = formProvider.withPrefix("moreThanTenThousand")
 
   lazy val moreThanTenThousandRoute = routes.MoreThanTenThousandController.onPageLoad().url
 
@@ -83,21 +85,18 @@ class MoreThanTenThousandControllerSpec extends SpecBase with MockitoSugar {
 
     "redirect to the next page when valid data is submitted" in {
 
-      val mockSessionRepository = mock[SessionRepository]
+      val mockSessionRepository = Mockito.mock(classOf[SessionRepository])
 
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+      when(mockSessionRepository.set(any())).thenReturn(Future.successful(true))
 
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        .overrides(
+          bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+          bind[SessionRepository].toInstance(mockSessionRepository)
+        )
+        .build()
 
-      val request =
-        FakeRequest(POST, moreThanTenThousandRoute)
-          .withFormUrlEncodedBody(("value", "true"))
+      val request = FakeRequest(POST, moreThanTenThousandRoute).withFormUrlEncodedBody(("value", "true"))
 
       val result = route(application, request).value
 
@@ -112,9 +111,7 @@ class MoreThanTenThousandControllerSpec extends SpecBase with MockitoSugar {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
-      val request =
-        FakeRequest(POST, moreThanTenThousandRoute)
-          .withFormUrlEncodedBody(("value", ""))
+      val request = FakeRequest(POST, moreThanTenThousandRoute).withFormUrlEncodedBody(("value", ""))
 
       val boundForm = form.bind(Map("value" -> ""))
 
@@ -149,9 +146,7 @@ class MoreThanTenThousandControllerSpec extends SpecBase with MockitoSugar {
 
       val application = applicationBuilder(userAnswers = None).build()
 
-      val request =
-        FakeRequest(POST, moreThanTenThousandRoute)
-          .withFormUrlEncodedBody(("value", "true"))
+      val request = FakeRequest(POST, moreThanTenThousandRoute).withFormUrlEncodedBody(("value", "true"))
 
       val result = route(application, request).value
 

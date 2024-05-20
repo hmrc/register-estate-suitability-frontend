@@ -18,7 +18,8 @@ package controllers
 
 import base.SpecBase
 import org.mockito.ArgumentMatchers.any
-import org.mockito.MockitoSugar
+import org.mockito.Mockito
+import org.mockito.Mockito.when
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -26,9 +27,9 @@ import repositories.SessionRepository
 
 import scala.concurrent.Future
 
-class IndexControllerSpec extends SpecBase with MockitoSugar {
+class IndexControllerSpec extends SpecBase {
 
-  val mockSessionRepository = mock[SessionRepository]
+  val mockSessionRepository: SessionRepository = Mockito.mock(classOf[SessionRepository])
 
   "Index Controller" must {
 

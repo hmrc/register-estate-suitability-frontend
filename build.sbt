@@ -30,7 +30,6 @@ lazy val microservice = Project(appName, file("."))
       "-Wconf:src=routes/.*:s",
       "-Wconf:cat=unused-imports&src=views/.*:s"
     ),
-    Test / javaOptions ++= Seq("-Dconfig.resource=test.application.conf"),
     libraryDependencies ++= AppDependencies(),
     // concatenate js
     Concat.groups := Seq(

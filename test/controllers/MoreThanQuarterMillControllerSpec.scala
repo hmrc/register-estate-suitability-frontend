@@ -21,8 +21,10 @@ import forms.YesNoFormProvider
 import models.UserAnswers
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
-import org.mockito.MockitoSugar
+import org.mockito.Mockito
+import org.mockito.Mockito.when
 import pages.MoreThanQuarterMillPage
+import play.api.data.Form
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -32,12 +34,12 @@ import views.html.MoreThanQuarterMillView
 
 import scala.concurrent.Future
 
-class MoreThanQuarterMillControllerSpec extends SpecBase with MockitoSugar {
+class MoreThanQuarterMillControllerSpec extends SpecBase {
 
-  def onwardRoute = Call("GET", "/foo")
+  def onwardRoute: Call = Call("GET", "/foo")
 
-  val formProvider = new YesNoFormProvider()
-  val form = formProvider.withPrefix("moreThanQuarterMill")
+  val formProvider: YesNoFormProvider = new YesNoFormProvider()
+  val form: Form[Boolean]             = formProvider.withPrefix("moreThanQuarterMill")
 
   lazy val mRoute = routes.MoreThanQuarterMillController.onPageLoad().url
 
@@ -83,9 +85,9 @@ class MoreThanQuarterMillControllerSpec extends SpecBase with MockitoSugar {
 
     "redirect to the next page when valid data is submitted" in {
 
-      val mockSessionRepository = mock[SessionRepository]
+      val mockSessionRepository = Mockito.mock(classOf[SessionRepository])
 
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+      when(mockSessionRepository.set(any())).thenReturn(Future.successful(true))
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -95,9 +97,7 @@ class MoreThanQuarterMillControllerSpec extends SpecBase with MockitoSugar {
           )
           .build()
 
-      val request =
-        FakeRequest(POST, mRoute)
-          .withFormUrlEncodedBody(("value", "true"))
+      val request = FakeRequest(POST, mRoute).withFormUrlEncodedBody(("value", "true"))
 
       val result = route(application, request).value
 
@@ -149,9 +149,7 @@ class MoreThanQuarterMillControllerSpec extends SpecBase with MockitoSugar {
 
       val application = applicationBuilder(userAnswers = None).build()
 
-      val request =
-        FakeRequest(POST, mRoute)
-          .withFormUrlEncodedBody(("value", "true"))
+      val request = FakeRequest(POST, mRoute).withFormUrlEncodedBody(("value", "true"))
 
       val result = route(application, request).value
 
