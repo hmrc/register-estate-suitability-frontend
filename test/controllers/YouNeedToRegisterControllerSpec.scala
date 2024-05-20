@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,8 @@ import connectors.EstatesConnector
 import controllers.actions._
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
-import org.mockito.MockitoSugar
+import org.mockito.Mockito
+import org.mockito.Mockito.when
 import pages.MoreThanHalfMillPage
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
@@ -33,9 +34,9 @@ import views.html.YouNeedToRegisterView
 
 import scala.concurrent.Future
 
-class YouNeedToRegisterControllerSpec extends SpecBase with MockitoSugar {
+class YouNeedToRegisterControllerSpec extends SpecBase {
 
-  def onwardRoute = Call("GET", "/foo")
+  def onwardRoute: Call = Call("GET", "/foo")
 
   lazy val youNeedToRegisterRoute = routes.YouNeedToRegisterController.onPageLoad().url
 
@@ -61,22 +62,19 @@ class YouNeedToRegisterControllerSpec extends SpecBase with MockitoSugar {
 
     "redirect to the estate hub service when user is an organisation" in {
 
-      val mockConnector = mock[EstatesConnector]
+      val mockConnector = Mockito.mock(classOf[EstatesConnector])
 
       when(mockConnector.saveTaxAmountOwed(any())(any(), any()))
         .thenReturn(Future.successful(HttpResponse.apply(OK, "")))
 
-      val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
-            bind[EstatesConnector].toInstance(mockConnector)
-          )
-          .build()
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        .overrides(
+          bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+          bind[EstatesConnector].toInstance(mockConnector)
+        )
+        .build()
 
-      val request =
-        FakeRequest(POST, youNeedToRegisterRoute)
-          .withFormUrlEncodedBody()
+      val request = FakeRequest(POST, youNeedToRegisterRoute).withFormUrlEncodedBody()
 
       val result = route(application, request).value
 
@@ -89,23 +87,23 @@ class YouNeedToRegisterControllerSpec extends SpecBase with MockitoSugar {
 
     "redirect to the agent details service when user is an agent" in {
 
-      val mockConnector = mock[EstatesConnector]
+      val mockConnector = Mockito.mock(classOf[EstatesConnector])
 
       when(mockConnector.saveTaxAmountOwed(any())(any(), any()))
         .thenReturn(Future.successful(HttpResponse.apply(OK, "")))
 
       val userAnswers = emptyUserAnswers.set(MoreThanHalfMillPage, true).success.value
 
-      val application = new GuiceApplicationBuilder().overrides(
-        bind[DataRequiredAction].to[DataRequiredActionImpl],
-        bind[IdentifierAction].to[FakeIdentifierActionAsAgent],
-        bind[DataRetrievalAction].toInstance(new FakeDataRetrievalAction(Some(userAnswers))),
-        bind[EstatesConnector].toInstance(mockConnector)
-      ).build()
+      val application = new GuiceApplicationBuilder()
+        .overrides(
+          bind[DataRequiredAction].to[DataRequiredActionImpl],
+          bind[IdentifierAction].to[FakeIdentifierActionAsAgent],
+          bind[DataRetrievalAction].toInstance(new FakeDataRetrievalAction(Some(userAnswers))),
+          bind[EstatesConnector].toInstance(mockConnector)
+        )
+        .build()
 
-      val request =
-        FakeRequest(POST, youNeedToRegisterRoute)
-          .withFormUrlEncodedBody()
+      val request = FakeRequest(POST, youNeedToRegisterRoute).withFormUrlEncodedBody()
 
       val result = route(application, request).value
 
@@ -135,9 +133,7 @@ class YouNeedToRegisterControllerSpec extends SpecBase with MockitoSugar {
 
       val application = applicationBuilder(userAnswers = None).build()
 
-      val request =
-        FakeRequest(POST, youNeedToRegisterRoute)
-          .withFormUrlEncodedBody()
+      val request = FakeRequest(POST, youNeedToRegisterRoute).withFormUrlEncodedBody()
 
       val result = route(application, request).value
 

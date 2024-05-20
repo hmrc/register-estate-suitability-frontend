@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,8 +29,14 @@ import uk.gov.hmrc.http.{HeaderCarrier, UpstreamErrorResponse}
 
 import scala.concurrent.ExecutionContext.Implicits._
 
-class EstatesConnectorSpec extends SpecBase with Generators with ScalaFutures
-  with Inside with BeforeAndAfterAll with BeforeAndAfterEach with IntegrationPatience {
+class EstatesConnectorSpec
+    extends SpecBase
+    with Generators
+    with ScalaFutures
+    with Inside
+    with BeforeAndAfterAll
+    with BeforeAndAfterEach
+    with IntegrationPatience {
   implicit lazy val hc: HeaderCarrier = HeaderCarrier()
 
   protected val server: WireMockServer = new WireMockServer(wireMockConfig().dynamicPort())
@@ -55,12 +61,8 @@ class EstatesConnectorSpec extends SpecBase with Generators with ScalaFutures
     "return OK when the request is successful" in {
 
       val application = applicationBuilder()
-        .configure(
-          Seq(
-            "microservice.services.estates.port" -> server.port(),
-            "auditing.enabled" -> false
-          ): _*
-        ).build()
+        .configure(defaultAppConfigurations ++ Map("microservice.services.estates.port" -> server.port()))
+        .build()
 
       val connector = application.injector.instanceOf[EstatesConnector]
 
@@ -81,12 +83,8 @@ class EstatesConnectorSpec extends SpecBase with Generators with ScalaFutures
     "return Bad Request when the request is unsuccessful" in {
 
       val application = applicationBuilder()
-        .configure(
-          Seq(
-            "microservice.services.estates.port" -> server.port(),
-            "auditing.enabled" -> false
-          ): _*
-        ).build()
+        .configure(defaultAppConfigurations ++ Map("microservice.services.estates.port" -> server.port()))
+        .build()
 
       val connector = application.injector.instanceOf[EstatesConnector]
 
@@ -102,7 +100,7 @@ class EstatesConnectorSpec extends SpecBase with Generators with ScalaFutures
       whenReady(result.failed) {
         case UpstreamErrorResponse.Upstream4xxResponse(upstream) =>
           upstream.statusCode mustBe BAD_REQUEST
-        case _ => fail()
+        case _                                                   => fail()
       }
 
       application.stop()
@@ -111,12 +109,8 @@ class EstatesConnectorSpec extends SpecBase with Generators with ScalaFutures
     "return an exception when adapter fails to convert" in {
 
       val application = applicationBuilder()
-        .configure(
-          Seq(
-            "microservice.services.estates.port" -> server.port(),
-            "auditing.enabled" -> false
-          ): _*
-        ).build()
+        .configure(defaultAppConfigurations ++ Map("microservice.services.estates.port" -> server.port()))
+        .build()
 
       val connector = application.injector.instanceOf[EstatesConnector]
 

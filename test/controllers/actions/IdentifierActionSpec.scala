@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,8 @@ package controllers.actions
 import base.SpecBase
 import config.FrontendAppConfig
 import org.mockito.ArgumentMatchers.any
-import org.mockito.MockitoSugar
+import org.mockito.Mockito
+import org.mockito.Mockito.when
 import play.api.mvc.{Action, AnyContent, BodyParsers, Results}
 import play.api.test.Helpers._
 import uk.gov.hmrc.auth.core._
@@ -28,19 +29,19 @@ import uk.gov.hmrc.auth.core.retrieve.{Retrieval, ~}
 import scala.concurrent.ExecutionContext.Implicits._
 import scala.concurrent.Future
 
-class IdentifierActionSpec extends SpecBase with MockitoSugar {
+class IdentifierActionSpec extends SpecBase {
 
   type RetrievalType = Option[String] ~ Option[AffinityGroup]
 
-  val mockAuthConnector: AuthConnector = mock[AuthConnector]
-  val appConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
+  val mockAuthConnector: AuthConnector = Mockito.mock(classOf[AuthConnector])
+  val appConfig: FrontendAppConfig     = injector.instanceOf[FrontendAppConfig]
 
   class Harness(authAction: IdentifierAction) {
-    def onPageLoad(): Action[AnyContent] = authAction { _ => Results.Ok }
+    def onPageLoad(): Action[AnyContent] = authAction(_ => Results.Ok)
   }
 
   class ThrowingHarness(authAction: IdentifierAction) {
-    def onPageLoad(): Action[AnyContent] = authAction { _ => throw new RuntimeException("Thrown by test") }
+    def onPageLoad(): Action[AnyContent] = authAction(_ => throw new RuntimeException("Thrown by test"))
   }
 
   lazy val trustsAuth = new TrustsAuthorisedFunctions(mockAuthConnector, appConfig)
@@ -64,7 +65,7 @@ class IdentifierActionSpec extends SpecBase with MockitoSugar {
         val action = new AuthenticatedIdentifierAction(trustsAuth, bodyParsers)
 
         val controller = new Harness(action)
-        val result = controller.onPageLoad()(fakeRequest)
+        val result     = controller.onPageLoad()(fakeRequest)
 
         status(result) mustBe OK
         application.stop()
@@ -82,7 +83,7 @@ class IdentifierActionSpec extends SpecBase with MockitoSugar {
         val action = new AuthenticatedIdentifierAction(trustsAuth, bodyParsers)
 
         val controller = new Harness(action)
-        val result = controller.onPageLoad()(fakeRequest)
+        val result     = controller.onPageLoad()(fakeRequest)
 
         status(result) mustBe OK
         application.stop()
@@ -94,12 +95,14 @@ class IdentifierActionSpec extends SpecBase with MockitoSugar {
 
         val application = applicationBuilder(userAnswers = None).build()
 
-        when(mockAuthConnector.authorise(any(), any[Retrieval[RetrievalType]]())(any(), any())) thenReturn (Future failed UnsupportedAffinityGroup())
+        when(
+          mockAuthConnector.authorise(any(), any[Retrieval[RetrievalType]]())(any(), any())
+        ) thenReturn (Future failed UnsupportedAffinityGroup())
 
         val action = new AuthenticatedIdentifierAction(trustsAuth, bodyParsers)
 
         val controller = new Harness(action)
-        val result = controller.onPageLoad()(fakeRequest)
+        val result     = controller.onPageLoad()(fakeRequest)
 
         status(result) mustBe SEE_OTHER
         redirectLocation(result) mustBe Some(controllers.routes.UnauthorisedController.onPageLoad.url)
@@ -113,12 +116,13 @@ class IdentifierActionSpec extends SpecBase with MockitoSugar {
 
         val application = applicationBuilder(userAnswers = None).build()
 
-        when(mockAuthConnector.authorise(any(), any[Retrieval[RetrievalType]]())(any(), any())) thenReturn (Future failed MissingBearerToken())
+        when(mockAuthConnector.authorise(any(), any[Retrieval[RetrievalType]]())(any(), any()))
+          .thenReturn(Future.failed(MissingBearerToken()))
 
         val action = new AuthenticatedIdentifierAction(trustsAuth, bodyParsers)
 
         val controller = new Harness(action)
-        val result = controller.onPageLoad()(fakeRequest)
+        val result     = controller.onPageLoad()(fakeRequest)
 
         status(result) mustBe SEE_OTHER
 
@@ -132,12 +136,13 @@ class IdentifierActionSpec extends SpecBase with MockitoSugar {
 
         val application = applicationBuilder(userAnswers = None).build()
 
-        when(mockAuthConnector.authorise(any(), any[Retrieval[RetrievalType]]())(any(), any())) thenReturn (Future failed BearerTokenExpired())
+        when(mockAuthConnector.authorise(any(), any[Retrieval[RetrievalType]]())(any(), any()))
+          .thenReturn(Future.failed(BearerTokenExpired()))
 
         val action = new AuthenticatedIdentifierAction(trustsAuth, bodyParsers)
 
         val controller = new Harness(action)
-        val result = controller.onPageLoad()(fakeRequest)
+        val result     = controller.onPageLoad()(fakeRequest)
 
         status(result) mustBe SEE_OTHER
 
@@ -157,7 +162,7 @@ class IdentifierActionSpec extends SpecBase with MockitoSugar {
         val action = new AuthenticatedIdentifierAction(trustsAuth, bodyParsers)
 
         val controller = new ThrowingHarness(action)
-        val result = controller.onPageLoad()(fakeRequest)
+        val result     = controller.onPageLoad()(fakeRequest)
 
         assertThrows[RuntimeException](status(result))
         application.stop()
@@ -165,4 +170,3 @@ class IdentifierActionSpec extends SpecBase with MockitoSugar {
     }
   }
 }
-
