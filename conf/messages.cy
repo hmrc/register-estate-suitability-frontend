@@ -73,16 +73,17 @@ moreThanTwoHalfMill.heading = A oedd yr ystâd yn werth mwy na £2.5 miliwn ar d
 moreThanTwoHalfMill.checkYourAnswersLabel = A oedd yr ystâd yn werth mwy na £2.5 miliwn ar ddyddiad y farwolaeth?
 moreThanTwoHalfMill.error.required = Dewiswch ‘Iawn’ os oedd yr ystâd yn werth mwy na £2.5 miliwn ar ddyddiad y farwolaeth
 
-doNotNeedToRegister.title = Ar sail eich atebion, does dim angen i chi gofrestru’r ystâd hon
-doNotNeedToRegister.heading = Ar sail eich atebion, does dim angen i chi gofrestru’r ystâd hon
-doNotNeedToRegister.checkYourAnswersLabel = Ar sail eich atebion, does dim angen i chi gofrestru’r ystâd hon
-doNotNeedToRegister.p1 = Bydd angen i chi ddefnyddio’r
-doNotNeedToRegister.payment.link = trefniadau talu anffurfiol (yn agor tab neu ffenestr newydd)
-doNotNeedToRegister.p2 = os yw’r canlynol yn wir:
-doNotNeedToRegister.b1 = mae llai na £10,000 o dreth yn ddyledus o incwm heblaw am gynilion
-doNotNeedToRegister.b2 = mae treth sy’n ddyledus o gynilion yn fwy na £100 mewn unrhyw flwyddyn dreth unigol
-doNotNeedToRegister.p3 = Os oes angen help arnoch gyda’r gwasanaeth, cysylltwch â
-doNotNeedToRegister.contact.link = Gwasanaeth Cwsmeriaid Cymraeg CThEF (yn agor ffenestr neu dab newydd)
+doNotNeedToRegister.title = Nid oes angen i chi gofrestru’r ystâd hon
+doNotNeedToRegister.heading = Nid oes angen i chi gofrestru’r ystâd hon
+doNotNeedToRegister.p1 = Mae’ch ystâd yn ‘ystâd syml’, gallwch roi gwybod i CThEF am dreth drwy ddefnyddio
+doNotNeedToRegister.payment.link = trefniadau talu anffurfiol (yn agor tab neu ffenestr newydd).
+doNotNeedToRegister.p2 = Mae’r ystâd yn ‘ystâd syml’ os yw’r canlynol yn wir:
+doNotNeedToRegister.b1 = cafodd gwerth yr ystâd ei nodi fel llai na £2.5 miliwn pan fu’r person farw
+doNotNeedToRegister.b2 = mae cyfanswm y Dreth Incwm a’r Dreth Enillion Cyfalaf sy’n ddyledus yn llai na £10,000
+doNotNeedToRegister.b3 = ni wnaethoch werthu mwy na werth £500,000 o asedion mewn unrhyw flwyddyn dreth sengl yn ystod y cyfnod gweinyddu
+doNotNeedToRegister.b4 = mae treth sy’n ddyledus o gynilion yn fwy na £100 mewn unrhyw flwyddyn dreth unigol
+doNotNeedToRegister.p3 = Os oes angen help arnoch gyda’r gwasanaeth
+doNotNeedToRegister.contact.link = cysylltwch â Gwasanaeth Cwsmeriaid Cymraeg CThEF (yn agor tab neu ffenestr newydd)
 
 youNeedToRegister.title = Ar sail eich atebion, mae angen i chi gofrestru’r ystâd hon
 youNeedToRegister.heading = Ar sail eich atebion, mae angen i chi gofrestru’r ystâd hon
