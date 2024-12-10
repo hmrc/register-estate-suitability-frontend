@@ -91,6 +91,6 @@ youNeedToRegister.heading = You need to register this estate
 youNeedToRegister.checkYourAnswersLabel = Based on your answers, you need to register this estate
 youNeedToRegister.p1 = You cannot save this registration and come back later. If you do not complete this registration now, your information will not be saved.
 youNeedToRegister.p2 = We will delete your answers if you do not do anything for 15 minutes and you will have to start again. This is to protect your information.
-youNeedToRegister.p3 = If you need help with this service
+youNeedToRegister.p3 = If you need help with this service,
 youNeedToRegister.contact.link = contact the deceased estate helpline (opens in a new window or tab)
 
