@@ -39,7 +39,7 @@ service.name = Register and Maintain an Estate
 site.textarea.char_limit = (Limit is {0} characters)
 site.sign_out = Sign out
 site.sign_in = Sign in
-site.estate.continue = Continue to register an estate
+site.estate.continue = Continue to registration
 
 #timeout dialog
 timeout.title=Your application will time out soon
@@ -86,9 +86,11 @@ doNotNeedToRegister.b3 = you did not sell more than £500,000 worth of assets in
 doNotNeedToRegister.p3 = If you need help with the service
 doNotNeedToRegister.contact.link = contact the deceased estate helpline (opens in a new tab or window)
 
-youNeedToRegister.title = Based on your answers, you need to register this estate
-youNeedToRegister.heading = Based on your answers, you need to register this estate
+youNeedToRegister.title = You need to register this estate
+youNeedToRegister.heading = You need to register this estate
 youNeedToRegister.checkYourAnswersLabel = Based on your answers, you need to register this estate
-youNeedToRegister.p1 = If you need help with this service
-youNeedToRegister.contact.link = contact the deceased estate helpline (opens in a new window or tab)
+youNeedToRegister.p1 = You cannot save this registration and come back later. If you do not complete this registration now, your information will not be saved.
+youNeedToRegister.p2 = We will delete your answers if you do not do anything for 15 minutes and you will have to start again. This is to protect your information.
+youNeedToRegister.p3 = If you need help with this service,
+youNeedToRegister.contact.link = contact the deceased estate helpline (opens in new tab)
 

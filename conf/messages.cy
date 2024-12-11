@@ -38,7 +38,7 @@ service.name = Cofrestru Ystâd a’i Chynnal
 site.textarea.char_limit = (Y terfyn yw {0} o gymeriadau)
 site.sign_out = Allgofnodi
 site.sign_in = Mewngofnodi
-site.estate.continue = Parhau i gofrestru ystâd
+site.estate.continue = Parhau i gofrestru
 
 timeout.title = Bydd eich cais yn dod i ben cyn hir
 timeout.message = Byddwn yn ailosod eich cais os na fyddwch yn ymateb cyn pen
@@ -84,8 +84,10 @@ doNotNeedToRegister.b3 = ni wnaethoch werthu mwy na werth £500,000 o asedion me
 doNotNeedToRegister.p3 = Os oes angen help arnoch gyda’r gwasanaeth
 doNotNeedToRegister.contact.link = cysylltwch â Gwasanaeth Cwsmeriaid Cymraeg CThEF (yn agor tab neu ffenestr newydd)
 
-youNeedToRegister.title = Ar sail eich atebion, mae angen i chi gofrestru’r ystâd hon
-youNeedToRegister.heading = Ar sail eich atebion, mae angen i chi gofrestru’r ystâd hon
+youNeedToRegister.title = Mae angen i chi gofrestru’r ystâd hon
+youNeedToRegister.heading = Mae angen i chi gofrestru’r ystâd hon
 youNeedToRegister.checkYourAnswersLabel = Ar sail eich atebion, mae angen i chi gofrestru’r ystâd hon
-youNeedToRegister.p1 = Os oes angen help arnoch gyda’r gwasanaeth hwn
-youNeedToRegister.contact.link = cysylltwch â Gwasanaeth Cwsmeriaid Cymraeg CThEF (yn agor ffenestr neu dab newydd)
+youNeedToRegister.p1 = Ni allwch gadw’r cofrestriad hwn a dod yn ôl yn nes ymlaen. Os nad ydych yn cwblhau’r cofrestriad hwn nawr, ni fydd eich gwybodaeth yn cael ei chadw.
+youNeedToRegister.p2 = Os nad ydych yn gwneud unrhyw beth am 15 munud byddwn yn dileu’ch atebion a bydd yn rhaid i chi ddechrau o’r dechrau. Mae hyn er mwyn diogelu’ch gwybodaeth.
+youNeedToRegister.p3 = Os oes angen help arnoch gyda’r gwasanaeth hwn,
+youNeedToRegister.contact.link = cysylltwch â Gwasanaeth cwsmeriaid Cymraeg CThEF (yn agor tab newydd)
