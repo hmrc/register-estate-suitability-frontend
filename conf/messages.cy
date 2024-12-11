@@ -90,4 +90,4 @@ youNeedToRegister.checkYourAnswersLabel = Ar sail eich atebion, mae angen i chi 
 youNeedToRegister.p1 = Ni allwch gadw’r cofrestriad hwn a dod yn ôl yn nes ymlaen. Os nad ydych yn cwblhau’r cofrestriad hwn nawr, ni fydd eich gwybodaeth yn cael ei chadw.
 youNeedToRegister.p2 = Os nad ydych yn gwneud unrhyw beth am 15 munud byddwn yn dileu’ch atebion a bydd yn rhaid i chi ddechrau o’r dechrau. Mae hyn er mwyn diogelu’ch gwybodaeth.
 youNeedToRegister.p3 = Os oes angen help arnoch gyda’r gwasanaeth hwn,
-youNeedToRegister.contact.link = cysylltwch â Gwasanaeth Cwsmeriaid Cymraeg CThEF (yn agor ffenestr neu dab newydd)
+youNeedToRegister.contact.link = cysylltwch â Gwasanaeth cwsmeriaid Cymraeg CThEF (yn agor tab newydd)
