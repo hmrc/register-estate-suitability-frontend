@@ -18,27 +18,30 @@ package connectors
 
 import adapters.UserAnswersToTaxAmountOwed
 import config.FrontendAppConfig
+
 import javax.inject.Inject
 import models.{AmountOfTaxOwed, UserAnswers}
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.Json
 import uk.gov.hmrc.http.HttpReads.Implicits
-import uk.gov.hmrc.http.{HeaderCarrier, HttpReads, HttpResponse}
-import uk.gov.hmrc.http.HttpClient
+import uk.gov.hmrc.http.{HeaderCarrier, HttpReads, HttpResponse, StringContextOps}
 import uk.gov.hmrc.http.HttpReads.Implicits.{readEitherOf, throwOnFailure}
+import uk.gov.hmrc.http.client.HttpClientV2
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class EstatesConnector @Inject()(http: HttpClient, config : FrontendAppConfig, adapter: UserAnswersToTaxAmountOwed) {
+class EstatesConnector @Inject()(http: HttpClientV2, config : FrontendAppConfig, adapter: UserAnswersToTaxAmountOwed) {
 
   implicit def httpResponse: HttpReads[HttpResponse] =
     throwOnFailure(readEitherOf[HttpResponse](Implicits.readRaw))
 
-  private val postTaxAmountOwed = s"${config.estatesUrl}/estates/amount-tax-owed"
-
   def saveTaxAmountOwed(userAnswers: UserAnswers)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] = {
+    val postTaxAmountOwedUrl = s"${config.estatesUrl}/estates/amount-tax-owed"
     adapter.convert(userAnswers) match {
       case Some(amount) =>
-        http.POST[JsValue, HttpResponse](postTaxAmountOwed, Json.toJson(AmountOfTaxOwed(amount)))
+        http
+          .post(url"$postTaxAmountOwedUrl")
+          .withBody(Json.toJson(AmountOfTaxOwed(amount)))
+          .execute[HttpResponse]
       case None =>
         Future.failed(new RuntimeException("Unable to determine amount of tax owed"))
     }
