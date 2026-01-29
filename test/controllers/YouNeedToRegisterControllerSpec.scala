@@ -144,4 +144,5 @@ class YouNeedToRegisterControllerSpec extends SpecBase {
       application.stop()
     }
   }
+
 }

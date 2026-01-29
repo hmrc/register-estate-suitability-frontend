@@ -47,4 +47,5 @@ class DoNotNeedToRegisterControllerSpec extends SpecBase {
       application.stop()
     }
   }
+
 }

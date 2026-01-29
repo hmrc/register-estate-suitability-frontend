@@ -20,11 +20,11 @@ import com.google.inject.Inject
 import models.requests.{DataRequest, IdentifierRequest, OptionalDataRequest}
 import play.api.mvc.{ActionBuilder, AnyContent}
 
-class RegisterEstateActions @Inject()(
-                                       identify: IdentifierAction,
-                                       getData: DataRetrievalAction,
-                                       requireData: DataRequiredAction
-                                     ) {
+class RegisterEstateActions @Inject() (
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  requireData: DataRequiredAction
+) {
 
   def auth: ActionBuilder[IdentifierRequest, AnyContent] = identify
 

@@ -28,28 +28,27 @@ import views.html.YouNeedToRegisterView
 
 import scala.concurrent.ExecutionContext
 
-class YouNeedToRegisterController @Inject()(
-                                        override val messagesApi: MessagesApi,
-                                        actions: RegisterEstateActions,
-                                        val controllerComponents: MessagesControllerComponents,
-                                        view: YouNeedToRegisterView,
-                                        config: FrontendAppConfig,
-                                        connector: EstatesConnector
-                                    )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class YouNeedToRegisterController @Inject() (
+  override val messagesApi: MessagesApi,
+  actions: RegisterEstateActions,
+  val controllerComponents: MessagesControllerComponents,
+  view: YouNeedToRegisterView,
+  config: FrontendAppConfig,
+  connector: EstatesConnector
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController with I18nSupport {
 
-  def onPageLoad(): Action[AnyContent] = actions.authWithData {
-    implicit request =>
-      Ok(view())
+  def onPageLoad(): Action[AnyContent] = actions.authWithData { implicit request =>
+    Ok(view())
   }
 
-  def onSubmit(): Action[AnyContent] = actions.authWithData.async {
-    implicit request =>
-
-      connector.saveTaxAmountOwed(request.userAnswers) map { _ =>
-        request.user match {
-          case AgentUser(_) => Redirect(config.agentDetails)
-          case OrganisationUser(_) => Redirect(config.registrationProgress)
-        }
+  def onSubmit(): Action[AnyContent] = actions.authWithData.async { implicit request =>
+    connector.saveTaxAmountOwed(request.userAnswers) map { _ =>
+      request.user match {
+        case AgentUser(_)        => Redirect(config.agentDetails)
+        case OrganisationUser(_) => Redirect(config.registrationProgress)
       }
+    }
   }
+
 }

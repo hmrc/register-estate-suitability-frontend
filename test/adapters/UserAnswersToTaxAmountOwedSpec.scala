@@ -26,8 +26,12 @@ class UserAnswersToTaxAmountOwedSpec extends SpecBase {
     "when user answers more than 250 thousand" in {
 
       val userAnswers = emptyUserAnswers
-        .set(DateOfDeathBeforePage, true).success.value
-        .set(MoreThanQuarterMillPage, true).success.value
+        .set(DateOfDeathBeforePage, true)
+        .success
+        .value
+        .set(MoreThanQuarterMillPage, true)
+        .success
+        .value
 
       val result = new UserAnswersToTaxAmountOwed().convert(userAnswers)
 
@@ -37,10 +41,15 @@ class UserAnswersToTaxAmountOwedSpec extends SpecBase {
     "when user answers more than 10 thousand" in {
 
       val userAnswers = emptyUserAnswers
-        .set(DateOfDeathBeforePage, true).success.value
-        .set(MoreThanQuarterMillPage, false).success.value
-        .set(MoreThanTenThousandPage, true).success.value
-
+        .set(DateOfDeathBeforePage, true)
+        .success
+        .value
+        .set(MoreThanQuarterMillPage, false)
+        .success
+        .value
+        .set(MoreThanTenThousandPage, true)
+        .success
+        .value
 
       val result = new UserAnswersToTaxAmountOwed().convert(userAnswers)
 
@@ -50,10 +59,18 @@ class UserAnswersToTaxAmountOwedSpec extends SpecBase {
     "when user answers more than 2.5 million" in {
 
       val userAnswers = emptyUserAnswers
-        .set(DateOfDeathBeforePage, true).success.value
-        .set(MoreThanQuarterMillPage, false).success.value
-        .set(MoreThanTenThousandPage, false).success.value
-        .set(MoreThanTwoHalfMillPage, true).success.value
+        .set(DateOfDeathBeforePage, true)
+        .success
+        .value
+        .set(MoreThanQuarterMillPage, false)
+        .success
+        .value
+        .set(MoreThanTenThousandPage, false)
+        .success
+        .value
+        .set(MoreThanTwoHalfMillPage, true)
+        .success
+        .value
 
       val result = new UserAnswersToTaxAmountOwed().convert(userAnswers)
 
@@ -76,8 +93,12 @@ class UserAnswersToTaxAmountOwedSpec extends SpecBase {
     "when user answers more than 500 thousand" in {
 
       val userAnswers = emptyUserAnswers
-        .set(DateOfDeathBeforePage, false).success.value
-        .set(MoreThanHalfMillPage, true).success.value
+        .set(DateOfDeathBeforePage, false)
+        .success
+        .value
+        .set(MoreThanHalfMillPage, true)
+        .success
+        .value
 
       val result = new UserAnswersToTaxAmountOwed().convert(userAnswers)
 
@@ -87,8 +108,12 @@ class UserAnswersToTaxAmountOwedSpec extends SpecBase {
     "when user answers more than 10 thousand" in {
 
       val userAnswers = emptyUserAnswers
-        .set(DateOfDeathBeforePage, false).success.value
-        .set(MoreThanTenThousandPage, true).success.value
+        .set(DateOfDeathBeforePage, false)
+        .success
+        .value
+        .set(MoreThanTenThousandPage, true)
+        .success
+        .value
 
       val result = new UserAnswersToTaxAmountOwed().convert(userAnswers)
 
@@ -98,10 +123,18 @@ class UserAnswersToTaxAmountOwedSpec extends SpecBase {
     "when user answers more than 2.5 million" in {
 
       val userAnswers = emptyUserAnswers
-        .set(DateOfDeathBeforePage, false).success.value
-        .set(MoreThanHalfMillPage, false).success.value
-        .set(MoreThanTenThousandPage, false).success.value
-        .set(MoreThanTwoHalfMillPage, true).success.value
+        .set(DateOfDeathBeforePage, false)
+        .success
+        .value
+        .set(MoreThanHalfMillPage, false)
+        .success
+        .value
+        .set(MoreThanTenThousandPage, false)
+        .success
+        .value
+        .set(MoreThanTwoHalfMillPage, true)
+        .success
+        .value
 
       val result = new UserAnswersToTaxAmountOwed().convert(userAnswers)
 
@@ -118,6 +151,5 @@ class UserAnswersToTaxAmountOwedSpec extends SpecBase {
     }
 
   }
-
 
 }

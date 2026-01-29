@@ -26,23 +26,25 @@ import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import scala.concurrent.{ExecutionContext, Future}
 
-class IndexController @Inject()(
-                                 val controllerComponents: MessagesControllerComponents,
-                                 identify: IdentifierAction,
-                                 getData: DataRetrievalAction,
-                                 repository: SessionRepository,
-                                 actions: RegisterEstateActions
-                               ) (implicit ex: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class IndexController @Inject() (
+  val controllerComponents: MessagesControllerComponents,
+  identify: IdentifierAction,
+  getData: DataRetrievalAction,
+  repository: SessionRepository,
+  actions: RegisterEstateActions
+)(implicit ex: ExecutionContext)
+    extends FrontendBaseController with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = actions.authWithSession.async { implicit request =>
     request.userAnswers match {
       case Some(_) =>
         Future.successful(Redirect(routes.DateOfDeathBeforeController.onPageLoad()))
-      case None =>
+      case None    =>
         val userAnswers: UserAnswers = UserAnswers(request.user.internalId)
         repository.set(userAnswers).map { _ =>
           Redirect(routes.DateOfDeathBeforeController.onPageLoad())
         }
     }
   }
+
 }

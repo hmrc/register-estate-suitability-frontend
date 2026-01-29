@@ -30,36 +30,33 @@ import views.html.MoreThanHalfMillView
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class MoreThanHalfMillController @Inject()(
-                                            override val messagesApi: MessagesApi,
-                                            sessionRepository: SessionRepository,
-                                            navigator: Navigator,
-                                            actions: RegisterEstateActions,
-                                            formProvider: YesNoFormProvider,
-                                            val controllerComponents: MessagesControllerComponents,
-                                            view: MoreThanHalfMillView
-                                 )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class MoreThanHalfMillController @Inject() (
+  override val messagesApi: MessagesApi,
+  sessionRepository: SessionRepository,
+  navigator: Navigator,
+  actions: RegisterEstateActions,
+  formProvider: YesNoFormProvider,
+  val controllerComponents: MessagesControllerComponents,
+  view: MoreThanHalfMillView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController with I18nSupport {
 
   val form: Form[Boolean] = formProvider.withPrefix("moreThanHalfMill")
 
-  def onPageLoad(): Action[AnyContent] = actions.authWithData {
-    implicit request =>
+  def onPageLoad(): Action[AnyContent] = actions.authWithData { implicit request =>
+    val preparedForm = request.userAnswers.get(MoreThanHalfMillPage) match {
+      case None        => form
+      case Some(value) => form.fill(value)
+    }
 
-      val preparedForm = request.userAnswers.get(MoreThanHalfMillPage) match {
-        case None => form
-        case Some(value) => form.fill(value)
-      }
-
-      Ok(view(preparedForm))
+    Ok(view(preparedForm))
   }
 
-  def onSubmit(): Action[AnyContent] = actions.authWithData.async {
-    implicit request =>
-
-      form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors))),
-
+  def onSubmit(): Action[AnyContent] = actions.authWithData.async { implicit request =>
+    form
+      .bindFromRequest()
+      .fold(
+        formWithErrors => Future.successful(BadRequest(view(formWithErrors))),
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(MoreThanHalfMillPage, value))
@@ -67,4 +64,5 @@ class MoreThanHalfMillController @Inject()(
           } yield Redirect(navigator.nextPage(MoreThanHalfMillPage, updatedAnswers))
       )
   }
+
 }

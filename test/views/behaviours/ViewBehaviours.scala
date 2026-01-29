@@ -21,12 +21,10 @@ import views.ViewSpecBase
 
 trait ViewBehaviours extends ViewSpecBase {
 
-  private def findBannerTitle(view: HtmlFormat.Appendable):String =
+  private def findBannerTitle(view: HtmlFormat.Appendable): String =
     asDocument(view).getElementsByClass("govuk-service-navigation__service-name").text().trim
 
-  def normalPage(view: HtmlFormat.Appendable,
-                 messageKeyPrefix: String,
-                 expectedGuidanceKeys: String*): Unit = {
+  def normalPage(view: HtmlFormat.Appendable, messageKeyPrefix: String, expectedGuidanceKeys: String*): Unit =
 
     "behave like a normal page" when {
 
@@ -61,9 +59,8 @@ trait ViewBehaviours extends ViewSpecBase {
         }
       }
     }
-  }
 
-  def pageWithBackLink(view: HtmlFormat.Appendable): Unit = {
+  def pageWithBackLink(view: HtmlFormat.Appendable): Unit =
 
     "behave like a page with a back link" must {
 
@@ -73,9 +70,8 @@ trait ViewBehaviours extends ViewSpecBase {
         assertRenderedById(doc, "back-link")
       }
     }
-  }
 
-  def pageWithNonHintText(view: HtmlFormat.Appendable): Unit = {
+  def pageWithNonHintText(view: HtmlFormat.Appendable): Unit =
 
     "behave like a page with non-hint text" must {
 
@@ -85,9 +81,8 @@ trait ViewBehaviours extends ViewSpecBase {
         assertRenderedById(doc, "text-value")
       }
     }
-  }
 
-  def pageWithoutLogoutButton(view: HtmlFormat.Appendable): Unit = {
+  def pageWithoutLogoutButton(view: HtmlFormat.Appendable): Unit =
 
     "behave like a page without a logout button" must {
       "not have a logout button" in {
@@ -95,5 +90,5 @@ trait ViewBehaviours extends ViewSpecBase {
         assertNotRenderedById(doc, "logOut")
       }
     }
-  }
+
 }

@@ -42,4 +42,5 @@ class MoreThanQuarterMillViewSpec extends YesNoViewBehaviours {
 
     behave like yesNoPage(form, applyView, messageKeyPrefix, routes.MoreThanQuarterMillController.onSubmit().url)
   }
+
 }

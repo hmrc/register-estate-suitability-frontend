@@ -17,16 +17,19 @@
 package navigation
 
 import models.UserAnswers
-import pages.{DateOfDeathBeforePage, MoreThanHalfMillPage, MoreThanQuarterMillPage, MoreThanTenThousandPage, MoreThanTwoHalfMillPage, Page}
+import pages.{
+  DateOfDeathBeforePage, MoreThanHalfMillPage, MoreThanQuarterMillPage, MoreThanTenThousandPage,
+  MoreThanTwoHalfMillPage, Page
+}
 import play.api.mvc.Call
 
 object EstateSuitabilityNavigator {
 
   val normalRoutes: PartialFunction[Page, UserAnswers => Call] = {
 
-    case DateOfDeathBeforePage => dateOfDeathBeforeRoute
+    case DateOfDeathBeforePage   => dateOfDeathBeforeRoute
     case MoreThanQuarterMillPage => moreThanQuarterRoute
-    case MoreThanHalfMillPage => moreThanHalfMillRoute
+    case MoreThanHalfMillPage    => moreThanHalfMillRoute
     case MoreThanTenThousandPage => moreThanTenThousandRoute
     case MoreThanTwoHalfMillPage => moreThanTwoHalfMillRoute
   }
@@ -60,4 +63,5 @@ object EstateSuitabilityNavigator {
     case Some(false) => controllers.routes.DoNotNeedToRegisterController.onPageLoad()
     case None        => controllers.routes.SessionExpiredController.onPageLoad
   }
+
 }

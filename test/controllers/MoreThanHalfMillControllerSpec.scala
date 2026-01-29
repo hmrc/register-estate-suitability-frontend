@@ -163,4 +163,5 @@ class MoreThanHalfMillControllerSpec extends SpecBase {
       application.stop()
     }
   }
+
 }

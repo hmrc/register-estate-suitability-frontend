@@ -31,10 +31,13 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
       val page = DateOfDeathBeforePage
 
       val userAnswers = emptyUserAnswers
-         .set(DateOfDeathBeforePage, true).success.value
+        .set(DateOfDeathBeforePage, true)
+        .success
+        .value
 
-      navigator.nextPage(page, userAnswers)
-         .mustBe(routes.MoreThanQuarterMillController.onPageLoad())
+      navigator
+        .nextPage(page, userAnswers)
+        .mustBe(routes.MoreThanQuarterMillController.onPageLoad())
     }
 
     "DateOfDeathBeforePage -> no -> MoreThanHalfMillPage" in {
@@ -42,9 +45,12 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
       val page = DateOfDeathBeforePage
 
       val userAnswers = emptyUserAnswers
-        .set(DateOfDeathBeforePage, false).success.value
+        .set(DateOfDeathBeforePage, false)
+        .success
+        .value
 
-      navigator.nextPage(page, userAnswers)
+      navigator
+        .nextPage(page, userAnswers)
         .mustBe(routes.MoreThanHalfMillController.onPageLoad())
     }
 
@@ -53,9 +59,12 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
       val page = MoreThanQuarterMillPage
 
       val userAnswers = emptyUserAnswers
-        .set(MoreThanQuarterMillPage, true).success.value
+        .set(MoreThanQuarterMillPage, true)
+        .success
+        .value
 
-      navigator.nextPage(page, userAnswers)
+      navigator
+        .nextPage(page, userAnswers)
         .mustBe(routes.YouNeedToRegisterController.onPageLoad())
     }
 
@@ -64,9 +73,12 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
       val page = MoreThanQuarterMillPage
 
       val userAnswers = emptyUserAnswers
-        .set(MoreThanQuarterMillPage, false).success.value
+        .set(MoreThanQuarterMillPage, false)
+        .success
+        .value
 
-      navigator.nextPage(page, userAnswers)
+      navigator
+        .nextPage(page, userAnswers)
         .mustBe(routes.MoreThanTenThousandController.onPageLoad())
     }
 
@@ -75,9 +87,12 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
       val page = MoreThanHalfMillPage
 
       val userAnswers = emptyUserAnswers
-        .set(MoreThanHalfMillPage, true).success.value
+        .set(MoreThanHalfMillPage, true)
+        .success
+        .value
 
-      navigator.nextPage(page, userAnswers)
+      navigator
+        .nextPage(page, userAnswers)
         .mustBe(routes.YouNeedToRegisterController.onPageLoad())
     }
 
@@ -86,9 +101,12 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
       val page = MoreThanHalfMillPage
 
       val userAnswers = emptyUserAnswers
-        .set(MoreThanHalfMillPage, false).success.value
+        .set(MoreThanHalfMillPage, false)
+        .success
+        .value
 
-      navigator.nextPage(page, userAnswers)
+      navigator
+        .nextPage(page, userAnswers)
         .mustBe(routes.MoreThanTenThousandController.onPageLoad())
     }
 
@@ -97,9 +115,12 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
       val page = MoreThanTenThousandPage
 
       val userAnswers = emptyUserAnswers
-        .set(MoreThanTenThousandPage, true).success.value
+        .set(MoreThanTenThousandPage, true)
+        .success
+        .value
 
-      navigator.nextPage(page, userAnswers)
+      navigator
+        .nextPage(page, userAnswers)
         .mustBe(routes.YouNeedToRegisterController.onPageLoad())
     }
 
@@ -108,21 +129,26 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
       val page = MoreThanTenThousandPage
 
       val userAnswers = emptyUserAnswers
-        .set(MoreThanTenThousandPage, false).success.value
+        .set(MoreThanTenThousandPage, false)
+        .success
+        .value
 
-      navigator.nextPage(page, userAnswers)
+      navigator
+        .nextPage(page, userAnswers)
         .mustBe(routes.MoreThanTwoHalfMillController.onPageLoad())
     }
-
 
     "MoreThanTwoHalfMill -> Yes -> YouNeedToRegister" in {
 
       val page = MoreThanTwoHalfMillPage
 
       val userAnswers = emptyUserAnswers
-        .set(MoreThanTwoHalfMillPage, true).success.value
+        .set(MoreThanTwoHalfMillPage, true)
+        .success
+        .value
 
-      navigator.nextPage(page, userAnswers)
+      navigator
+        .nextPage(page, userAnswers)
         .mustBe(routes.YouNeedToRegisterController.onPageLoad())
     }
 
@@ -131,11 +157,15 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
       val page = MoreThanTwoHalfMillPage
 
       val userAnswers = emptyUserAnswers
-        .set(MoreThanTwoHalfMillPage, false).success.value
+        .set(MoreThanTwoHalfMillPage, false)
+        .success
+        .value
 
-      navigator.nextPage(page, userAnswers)
+      navigator
+        .nextPage(page, userAnswers)
         .mustBe(routes.DoNotNeedToRegisterController.onPageLoad())
     }
 
   }
+
 }

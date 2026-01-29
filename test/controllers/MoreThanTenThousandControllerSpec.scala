@@ -157,4 +157,5 @@ class MoreThanTenThousandControllerSpec extends SpecBase {
       application.stop()
     }
   }
+
 }

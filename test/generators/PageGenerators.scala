@@ -35,4 +35,5 @@ trait PageGenerators {
 
   implicit lazy val arbitraryDateOfDeathBeforePage: Arbitrary[DateOfDeathBeforePage.type] =
     Arbitrary(DateOfDeathBeforePage)
+
 }

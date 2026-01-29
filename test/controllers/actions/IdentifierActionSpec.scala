@@ -104,7 +104,7 @@ class IdentifierActionSpec extends SpecBase {
         val controller = new Harness(action)
         val result     = controller.onPageLoad()(fakeRequest)
 
-        status(result) mustBe SEE_OTHER
+        status(result)           mustBe SEE_OTHER
         redirectLocation(result) mustBe Some(controllers.routes.UnauthorisedController.onPageLoad.url)
 
         application.stop()
@@ -169,4 +169,5 @@ class IdentifierActionSpec extends SpecBase {
       }
     }
   }
+
 }

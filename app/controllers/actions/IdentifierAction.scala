@@ -30,24 +30,25 @@ import utils.Session
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class AuthenticatedIdentifierAction @Inject()(val trustsAuth: TrustsAuthorisedFunctions,
-                                              val parser: BodyParsers.Default
-                                             )(implicit val executionContext: ExecutionContext) extends IdentifierAction with Logging {
+class AuthenticatedIdentifierAction @Inject() (
+  val trustsAuth: TrustsAuthorisedFunctions,
+  val parser: BodyParsers.Default
+)(implicit val executionContext: ExecutionContext)
+    extends IdentifierAction with Logging {
 
-  def invokeBlock[A](request: Request[A],
-                     block: IdentifierRequest[A] => Future[Result]) : Future[Result] = {
+  def invokeBlock[A](request: Request[A], block: IdentifierRequest[A] => Future[Result]): Future[Result] = {
 
     val retrievals = Retrievals.internalId and
       Retrievals.affinityGroup
 
-    implicit val hc : HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
+    implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
 
     trustsAuth.authorised().retrieve(retrievals) {
-      case Some(internalId) ~ Some(Agent) =>
+      case Some(internalId) ~ Some(Agent)        =>
         block(IdentifierRequest(request, AgentUser(internalId)))
       case Some(internalId) ~ Some(Organisation) =>
         block(IdentifierRequest(request, OrganisationUser(internalId)))
-      case _ =>
+      case _                                     =>
         logger.info(s"[Session ID: ${Session.id(hc)}] Insufficient enrolment")
         Future.successful(Redirect(controllers.routes.UnauthorisedController.onPageLoad))
     } recover trustsAuth.recoverFromAuthorisation

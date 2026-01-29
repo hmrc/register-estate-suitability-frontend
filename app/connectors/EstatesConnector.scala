@@ -29,12 +29,14 @@ import uk.gov.hmrc.http.client.HttpClientV2
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class EstatesConnector @Inject()(http: HttpClientV2, config : FrontendAppConfig, adapter: UserAnswersToTaxAmountOwed) {
+class EstatesConnector @Inject() (http: HttpClientV2, config: FrontendAppConfig, adapter: UserAnswersToTaxAmountOwed) {
 
   implicit def httpResponse: HttpReads[HttpResponse] =
     throwOnFailure(readEitherOf[HttpResponse](Implicits.readRaw))
 
-  def saveTaxAmountOwed(userAnswers: UserAnswers)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] = {
+  def saveTaxAmountOwed(
+    userAnswers: UserAnswers
+  )(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] = {
     val postTaxAmountOwedUrl = s"${config.estatesUrl}/estates/amount-tax-owed"
     adapter.convert(userAnswers) match {
       case Some(amount) =>
@@ -42,7 +44,7 @@ class EstatesConnector @Inject()(http: HttpClientV2, config : FrontendAppConfig,
           .post(url"$postTaxAmountOwedUrl")
           .withBody(Json.toJson(AmountOfTaxOwed(amount)))
           .execute[HttpResponse]
-      case None =>
+      case None         =>
         Future.failed(new RuntimeException("Unable to determine amount of tax owed"))
     }
   }
