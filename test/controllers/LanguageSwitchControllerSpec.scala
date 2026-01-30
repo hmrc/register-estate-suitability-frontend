@@ -35,9 +35,9 @@ class LanguageSwitchControllerSpec extends SpecBase {
   private val welsh           = "cymraeg"
   private val fakeUrl: String = "fakeUrl"
 
-  private lazy val config: Configuration                                          = injector.instanceOf[Configuration]
-  private lazy val contactConfig                                                  = injector.instanceOf[ContactFrontendConfig]
-  private lazy val servicesConfig                                                 = injector.instanceOf[ServicesConfig]
+  private lazy val config: Configuration = injector.instanceOf[Configuration]
+  private lazy val contactConfig         = injector.instanceOf[ContactFrontendConfig]
+  private lazy val servicesConfig        = injector.instanceOf[ServicesConfig]
 
   def frontendAppConfig(languageToggleEnabled: Boolean = true): FrontendAppConfig =
     new FrontendAppConfig(config, contactConfig, servicesConfig) {

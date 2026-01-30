@@ -58,7 +58,7 @@ class FrontendAppConfig @Inject() (
 
   lazy val cachettlSessionInSeconds: Long = configuration.get[Int]("mongodb.timeToLiveInSeconds")
 
-  lazy val dropIndexes: Boolean           =
+  lazy val dropIndexes: Boolean =
     configuration.getOptional[Boolean]("microservice.services.features.mongo.dropIndexes").getOrElse(false)
 
   def languageMap: Map[String, Lang] = Map(
