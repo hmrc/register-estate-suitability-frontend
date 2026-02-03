@@ -39,6 +39,12 @@ class DateOfDeathBeforeViewSpec extends YesNoViewBehaviours {
 
     behave like pageWithBackLink(applyView(form))
 
-    behave like yesNoPage(form, applyView, messageKeyPrefix, controllers.routes.DateOfDeathBeforeController.onSubmit().url)
+    behave like yesNoPage(
+      form,
+      applyView,
+      messageKeyPrefix,
+      controllers.routes.DateOfDeathBeforeController.onSubmit().url
+    )
   }
+
 }

@@ -39,7 +39,8 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       } yield (page, value)
     }
 
-  implicit lazy val arbitraryMoreThanQuarterMillPageUserAnswersEntry: Arbitrary[(MoreThanQuarterMillPage.type, JsValue)] =
+  implicit lazy val arbitraryMoreThanQuarterMillPageUserAnswersEntry
+    : Arbitrary[(MoreThanQuarterMillPage.type, JsValue)] =
     Arbitrary {
       for {
         page  <- arbitrary[MoreThanQuarterMillPage.type]
@@ -62,4 +63,5 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
         value <- arbitrary[Boolean].map(Json.toJson(_))
       } yield (page, value)
     }
+
 }

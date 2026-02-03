@@ -23,14 +23,14 @@ import pages.Page
 import play.api.mvc.Call
 
 @Singleton
-class Navigator @Inject()() {
+class Navigator @Inject() () {
 
   private val normalRoutes: Page => UserAnswers => Call =
-    EstateSuitabilityNavigator.normalRoutes orElse {
-      case _ => _ => routes.IndexController.onPageLoad
+    EstateSuitabilityNavigator.normalRoutes orElse { case _ =>
+      _ => routes.IndexController.onPageLoad
     }
 
-  def nextPage(page: Page, userAnswers: UserAnswers): Call = {
+  def nextPage(page: Page, userAnswers: UserAnswers): Call =
     normalRoutes(page)(userAnswers)
-  }
+
 }

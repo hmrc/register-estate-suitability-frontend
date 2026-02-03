@@ -27,12 +27,12 @@ case object MoreThanTenThousandPage extends QuestionPage[Boolean] {
 
   override def toString: String = "moreThanTenThousand"
 
-  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] = {
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
     value match {
       case Some(true) =>
         userAnswers.remove(MoreThanTwoHalfMillPage)
-      case _ =>
+      case _          =>
         super.cleanup(value, userAnswers)
     }
-  }
+
 }

@@ -44,4 +44,5 @@ class MoreThanTenThousandViewSpec extends YesNoViewBehaviours {
 
     behave like pageWithNonHintText(applyView(form))
   }
+
 }

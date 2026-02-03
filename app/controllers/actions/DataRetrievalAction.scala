@@ -27,18 +27,19 @@ import utils.Session
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class DataRetrievalActionImpl @Inject()(
-                                         val sessionRepository: SessionRepository
-                                       )(implicit val executionContext: ExecutionContext) extends DataRetrievalAction with Logging {
+class DataRetrievalActionImpl @Inject() (
+  val sessionRepository: SessionRepository
+)(implicit val executionContext: ExecutionContext)
+    extends DataRetrievalAction with Logging {
 
   override protected def transform[A](request: IdentifierRequest[A]): Future[OptionalDataRequest[A]] = {
-    sessionRepository.get(request.user.internalId).map (OptionalDataRequest(request.request, _, request.user))
-  } recover {
-    case e: Throwable =>
-      implicit val hc : HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
-      logger.warn(s"[Session ID: ${Session.id(hc)}] unable to retrieve data due to exception ${e.getMessage}")
-      throw e
+    sessionRepository.get(request.user.internalId).map(OptionalDataRequest(request.request, _, request.user))
+  } recover { case e: Throwable =>
+    implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
+    logger.warn(s"[Session ID: ${Session.id(hc)}] unable to retrieve data due to exception ${e.getMessage}")
+    throw e
   }
+
 }
 
 trait DataRetrievalAction extends ActionTransformer[IdentifierRequest, OptionalDataRequest]

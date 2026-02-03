@@ -33,10 +33,7 @@ case class OrganisationUser(internalId: String) extends User {
   override val affinityGroup: AffinityGroup = AffinityGroup.Organisation
 }
 
-case class OptionalDataRequest[A](request: Request[A],
-                                  userAnswers: Option[UserAnswers],
-                                  user: User) extends WrappedRequest[A](request)
+case class OptionalDataRequest[A](request: Request[A], userAnswers: Option[UserAnswers], user: User)
+    extends WrappedRequest[A](request)
 
-case class DataRequest[A](request: Request[A],
-                          userAnswers: UserAnswers,
-                          user: User) extends WrappedRequest[A](request)
+case class DataRequest[A](request: Request[A], userAnswers: UserAnswers, user: User) extends WrappedRequest[A](request)

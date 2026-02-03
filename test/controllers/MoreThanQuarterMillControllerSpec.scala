@@ -160,4 +160,5 @@ class MoreThanQuarterMillControllerSpec extends SpecBase {
       application.stop()
     }
   }
+
 }

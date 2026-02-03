@@ -31,4 +31,5 @@ class DoNotNeedToRegisterViewSpec extends ViewBehaviours {
 
     behave like normalPage(applyView, messageKeyPrefix)
   }
+
 }

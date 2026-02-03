@@ -24,4 +24,5 @@ class FakeNavigator(desiredRoute: Call) extends Navigator {
 
   override def nextPage(page: Page, userAnswers: UserAnswers): Call =
     desiredRoute
+
 }

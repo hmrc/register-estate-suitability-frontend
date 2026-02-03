@@ -23,7 +23,6 @@ class YouNeedToRegisterViewSpec extends ViewBehaviours {
 
   val messageKeyPrefix = "youNeedToRegister"
 
-
   "YouNeedToRegisterViewSpec view" must {
 
     val view = viewFor[YouNeedToRegisterView](Some(emptyUserAnswers))
@@ -34,4 +33,5 @@ class YouNeedToRegisterViewSpec extends ViewBehaviours {
 
     behave like pageWithBackLink(applyView)
   }
+
 }

@@ -30,36 +30,33 @@ import views.html.DateOfDeathBeforeView
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class DateOfDeathBeforeController @Inject()(
-                                             override val messagesApi: MessagesApi,
-                                             sessionRepository: SessionRepository,
-                                             navigator: Navigator,
-                                             actions: RegisterEstateActions,
-                                             formProvider: YesNoFormProvider,
-                                             val controllerComponents: MessagesControllerComponents,
-                                             view: DateOfDeathBeforeView
-                                 )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class DateOfDeathBeforeController @Inject() (
+  override val messagesApi: MessagesApi,
+  sessionRepository: SessionRepository,
+  navigator: Navigator,
+  actions: RegisterEstateActions,
+  formProvider: YesNoFormProvider,
+  val controllerComponents: MessagesControllerComponents,
+  view: DateOfDeathBeforeView
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController with I18nSupport {
 
   val form: Form[Boolean] = formProvider.withPrefix("dateOfDeathBefore")
 
-  def onPageLoad(): Action[AnyContent] = actions.authWithData {
-    implicit request =>
+  def onPageLoad(): Action[AnyContent] = actions.authWithData { implicit request =>
+    val preparedForm = request.userAnswers.get(DateOfDeathBeforePage) match {
+      case None        => form
+      case Some(value) => form.fill(value)
+    }
 
-      val preparedForm = request.userAnswers.get(DateOfDeathBeforePage) match {
-        case None => form
-        case Some(value) => form.fill(value)
-      }
-
-      Ok(view(preparedForm))
+    Ok(view(preparedForm))
   }
 
-  def onSubmit(): Action[AnyContent] = actions.authWithData.async {
-    implicit request =>
-
-      form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors))),
-
+  def onSubmit(): Action[AnyContent] = actions.authWithData.async { implicit request =>
+    form
+      .bindFromRequest()
+      .fold(
+        formWithErrors => Future.successful(BadRequest(view(formWithErrors))),
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(DateOfDeathBeforePage, value))
@@ -67,4 +64,5 @@ class DateOfDeathBeforeController @Inject()(
           } yield Redirect(navigator.nextPage(DateOfDeathBeforePage, updatedAnswers))
       )
   }
+
 }

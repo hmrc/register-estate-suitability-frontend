@@ -72,4 +72,5 @@ class IndexControllerSpec extends SpecBase {
       application.stop()
     }
   }
+
 }

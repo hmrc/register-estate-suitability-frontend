@@ -28,4 +28,5 @@ class MoreThanTwoHalfMillPageSpec extends PageBehaviours {
 
     beRemovable[Boolean](MoreThanTwoHalfMillPage)
   }
+
 }

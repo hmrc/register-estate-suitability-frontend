@@ -31,9 +31,15 @@ class DateOfDeathBeforePageSpec extends PageBehaviours {
 
   "implement cleanup logic when NO selected" in {
     val userAnswers = emptyUserAnswers
-      .set(MoreThanQuarterMillPage, true).success.value
-      .set(MoreThanTenThousandPage, false).success.value
-      .set(MoreThanTwoHalfMillPage, false).success.value
+      .set(MoreThanQuarterMillPage, true)
+      .success
+      .value
+      .set(MoreThanTenThousandPage, false)
+      .success
+      .value
+      .set(MoreThanTwoHalfMillPage, false)
+      .success
+      .value
 
     val cleaned = userAnswers.set(DateOfDeathBeforePage, false).success.value
 
@@ -44,9 +50,15 @@ class DateOfDeathBeforePageSpec extends PageBehaviours {
 
   "implement cleanup logic when YES selected" in {
     val userAnswers = emptyUserAnswers
-      .set(MoreThanHalfMillPage, false).success.value
-      .set(MoreThanTenThousandPage, false).success.value
-      .set(MoreThanTwoHalfMillPage, false).success.value
+      .set(MoreThanHalfMillPage, false)
+      .success
+      .value
+      .set(MoreThanTenThousandPage, false)
+      .success
+      .value
+      .set(MoreThanTwoHalfMillPage, false)
+      .success
+      .value
 
     val cleaned = userAnswers.set(DateOfDeathBeforePage, true).success.value
 
@@ -54,4 +66,5 @@ class DateOfDeathBeforePageSpec extends PageBehaviours {
     cleaned.get(MoreThanTenThousandPage) mustNot be(defined)
     cleaned.get(MoreThanTwoHalfMillPage) mustNot be(defined)
   }
+
 }

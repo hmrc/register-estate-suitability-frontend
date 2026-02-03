@@ -21,17 +21,21 @@ import pages.{MoreThanHalfMillPage, MoreThanQuarterMillPage, MoreThanTenThousand
 
 class UserAnswersToTaxAmountOwed {
 
-  case class TaxOwedQuestions(is500Thousand: Boolean, is250Thousand: Boolean, is10Thousand: Boolean, is2AndHalfMillion: Boolean) {
+  case class TaxOwedQuestions(
+    is500Thousand: Boolean,
+    is250Thousand: Boolean,
+    is10Thousand: Boolean,
+    is2AndHalfMillion: Boolean
+  ) {
 
-    def convert : Option[String] = {
+    def convert: Option[String] =
       this match {
         case TaxOwedQuestions(true, false, false, false) => Some("03")
         case TaxOwedQuestions(false, true, false, false) => Some("02")
         case TaxOwedQuestions(false, false, true, false) => Some("01")
         case TaxOwedQuestions(false, false, false, true) => Some("04")
-        case _ => None
+        case _                                           => None
       }
-    }
 
   }
 

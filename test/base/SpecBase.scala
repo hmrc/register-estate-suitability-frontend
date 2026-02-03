@@ -62,4 +62,5 @@ trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with TryValues with Sca
         bind[DataRetrievalAction].toInstance(new FakeDataRetrievalAction(userAnswers))
       )
       .configure(defaultAppConfigurations)
+
 }
