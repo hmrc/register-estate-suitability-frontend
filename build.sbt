@@ -1,5 +1,5 @@
 ThisBuild / scalaVersion := "2.13.18"
-ThisBuild / majorVersion := 0
+ThisBuild / majorVersion := 1
 
 lazy val microservice = Project("register-estate-suitability-frontend", file("."))
   .enablePlugins(PlayScala, SbtDistributablesPlugin)
