@@ -53,9 +53,6 @@ class FrontendAppConfig @Inject() (
   lazy val agentDetails: String         = configuration.get[String]("urls.agentDetails")
   lazy val registrationProgress: String = configuration.get[String]("urls.registrationProgress")
 
-  lazy val locationCanonicalList: String      = configuration.get[String]("location.canonical.list.all")
-  lazy val locationCanonicalListNonUK: String = configuration.get[String]("location.canonical.list.nonUK")
-
   lazy val estatesUrl: String = servicesConfig.baseUrl("estates")
 
   lazy val languageTranslationEnabled: Boolean =
