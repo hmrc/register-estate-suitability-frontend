@@ -55,9 +55,6 @@ class FrontendAppConfig @Inject() (
 
   lazy val estatesUrl: String = servicesConfig.baseUrl("estates")
 
-  lazy val languageTranslationEnabled: Boolean =
-    configuration.get[Boolean]("microservice.services.features.welsh-translation")
-
   lazy val cachettlSessionInSeconds: Long = configuration.get[Int]("mongodb.timeToLiveInSeconds")
 
   lazy val dropIndexes: Boolean =
