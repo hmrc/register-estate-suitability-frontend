@@ -38,4 +38,5 @@ POST       /do-not-need-to-register                     controllers.DoNotNeedToR
 GET        /you-need-to-register                        controllers.YouNeedToRegisterController.onPageLoad()
 POST       /you-need-to-register                        controllers.YouNeedToRegisterController.onSubmit()
 
-
+GET        /check-your-answers                          controllers.CheckYourAnswersController.onPageLoad
+POST       /check-your-answers                          controllers.CheckYourAnswersController.onSubmit

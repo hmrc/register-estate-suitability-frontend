@@ -18,9 +18,10 @@ package controllers
 
 import controllers.actions._
 import forms.YesNoFormProvider
+
 import javax.inject.Inject
 import navigation.Navigator
-import pages.MoreThanTwoHalfMillPage
+import pages.{checkAnswersPage, MoreThanTwoHalfMillPage}
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -61,7 +62,7 @@ class MoreThanTwoHalfMillController @Inject() (
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(MoreThanTwoHalfMillPage, value))
             _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(MoreThanTwoHalfMillPage, updatedAnswers))
+          } yield Redirect(navigator.nextPage(checkAnswersPage, updatedAnswers))
       )
   }
 

@@ -17,51 +17,58 @@
 package navigation
 
 import models.UserAnswers
-import pages.{
-  DateOfDeathBeforePage, MoreThanHalfMillPage, MoreThanQuarterMillPage, MoreThanTenThousandPage,
-  MoreThanTwoHalfMillPage, Page
-}
+import pages._
 import play.api.mvc.Call
 
 object EstateSuitabilityNavigator {
 
   val normalRoutes: PartialFunction[Page, UserAnswers => Call] = {
 
-    case DateOfDeathBeforePage   => dateOfDeathBeforeRoute
+    case DateOfDeathBeforePage => dateOfDeathBeforeRoute
     case MoreThanQuarterMillPage => moreThanQuarterRoute
-    case MoreThanHalfMillPage    => moreThanHalfMillRoute
+    case MoreThanHalfMillPage => moreThanHalfMillRoute
     case MoreThanTenThousandPage => moreThanTenThousandRoute
     case MoreThanTwoHalfMillPage => moreThanTwoHalfMillRoute
+    case `checkAnswersPage` => checkAns
+  }
+
+
+  private def checkAns(answers: UserAnswers) = {
+    val detils = answers.get(checkAnswersPage)
+    detils match {
+      case Some(true) => controllers.routes.CheckYourAnswersController.onPageLoad
+      case None => controllers.routes.CheckYourAnswersController.onPageLoad
+    }
   }
 
   private def dateOfDeathBeforeRoute(answers: UserAnswers) = answers.get(DateOfDeathBeforePage) match {
-    case Some(true)  => controllers.routes.MoreThanQuarterMillController.onPageLoad()
+    case Some(true) => controllers.routes.MoreThanQuarterMillController.onPageLoad()
     case Some(false) => controllers.routes.MoreThanHalfMillController.onPageLoad()
-    case None        => controllers.routes.SessionExpiredController.onPageLoad
+    case None => controllers.routes.SessionExpiredController.onPageLoad
   }
 
   private def moreThanQuarterRoute(answers: UserAnswers) = answers.get(MoreThanQuarterMillPage) match {
-    case Some(true)  => controllers.routes.YouNeedToRegisterController.onPageLoad()
+    case Some(true) => controllers.routes.YouNeedToRegisterController.onPageLoad()
     case Some(false) => controllers.routes.MoreThanTenThousandController.onPageLoad()
-    case None        => controllers.routes.SessionExpiredController.onPageLoad
+    case None => controllers.routes.SessionExpiredController.onPageLoad
   }
 
   private def moreThanHalfMillRoute(answers: UserAnswers) = answers.get(MoreThanHalfMillPage) match {
-    case Some(true)  => controllers.routes.YouNeedToRegisterController.onPageLoad()
+    case Some(true) => controllers.routes.YouNeedToRegisterController.onPageLoad()
     case Some(false) => controllers.routes.MoreThanTenThousandController.onPageLoad()
-    case None        => controllers.routes.SessionExpiredController.onPageLoad
+    case None => controllers.routes.SessionExpiredController.onPageLoad
   }
 
   private def moreThanTenThousandRoute(answers: UserAnswers) = answers.get(MoreThanTenThousandPage) match {
-    case Some(true)  => controllers.routes.YouNeedToRegisterController.onPageLoad()
+    case Some(true) => controllers.routes.YouNeedToRegisterController.onPageLoad()
     case Some(false) => controllers.routes.MoreThanTwoHalfMillController.onPageLoad()
-    case None        => controllers.routes.SessionExpiredController.onPageLoad
+    case None => controllers.routes.SessionExpiredController.onPageLoad
   }
 
   private def moreThanTwoHalfMillRoute(answers: UserAnswers) = answers.get(MoreThanTwoHalfMillPage) match {
-    case Some(true)  => controllers.routes.YouNeedToRegisterController.onPageLoad()
+    case Some(true) => controllers.routes.YouNeedToRegisterController.onPageLoad()
     case Some(false) => controllers.routes.DoNotNeedToRegisterController.onPageLoad()
-    case None        => controllers.routes.SessionExpiredController.onPageLoad
+    case None => controllers.routes.SessionExpiredController.onPageLoad
   }
 
 }

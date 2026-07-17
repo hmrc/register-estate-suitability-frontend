@@ -14,27 +14,18 @@
  * limitations under the License.
  */
 
-package pages
+package utils
 
-import models.UserAnswers
-import play.api.libs.json.JsPath
+import play.api.i18n.Messages
+import play.twirl.api.{Html, HtmlFormat}
 
-import scala.util.Try
+object CheckAnswersFormatters {
 
-  case object MoreThanHalfMillPage extends QuestionPage[Boolean] {
-
-  override def path: JsPath = JsPath \ toString
-
-  override def toString: String = "moreThanHalfMill"
-
-  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] =
-    value match {
-      case Some(true) =>
-        userAnswers
-          .remove(MoreThanTenThousandPage)
-          .flatMap(_.remove(MoreThanTwoHalfMillPage))
-      case _          =>
-        super.cleanup(value, userAnswers)
+  def yesOrNo(answer: Boolean)(implicit messages: Messages): Html =
+    if (answer) {
+      HtmlFormat.escape(messages("site.yes"))
+    } else {
+      HtmlFormat.escape(messages("site.no"))
     }
 
 }
