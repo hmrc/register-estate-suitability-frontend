@@ -17,57 +17,117 @@
 package utils
 
 import com.google.inject.Inject
+import config.FrontendAppConfig
 import models.UserAnswers
 import pages._
 import play.api.i18n.Messages
 import viewmodels.{AnswerRow, AnswerSection}
 
-class CheckYourAnswersHelper @Inject()(answerRowConverter: AnswerRowConverter) {
+class CheckYourAnswersHelper @Inject()(
+                                        answerRowConverter: AnswerRowConverter,
+                                        config: FrontendAppConfig
+                                      ) {
 
-
-  def pageAnswers(userAnswers: UserAnswers, pageName: String)(implicit
-                                                                        messages: Messages
-  ): Option[AnswerSection] = {
-    val bound = answerRowConverter.bind(userAnswers)
+  def pageAnswers(
+                   userAnswers: UserAnswers,
+                   pageName: String,
+                   answerOverride: Option[Boolean] = None
+                 )(implicit messages: Messages): Option[AnswerSection] = {
 
     val page = yesNoPageForRegister(pageName)
     val changeRoute = changeRouteForTaxYear(pageName)
 
+    val answersToDisplay: UserAnswers =
+      answerOverride match {
+        case Some(value) =>
+          userAnswers
+            .set(page, value)
+            .getOrElse(userAnswers)
+
+        case None =>
+          userAnswers
+      }
+
+    val bound = answerRowConverter.bind(answersToDisplay)
+
     val answerRows: Seq[AnswerRow] = Seq(
       bound.yesNoQuestion(
         page,
-        s"$pageName",
+        pageName,
         changeRoute
       )
     ).flatten
 
     answerRows match {
-      case Nil => None
+      case Nil =>
+        None
+
       case _ =>
         Some(
           AnswerSection(
-            Some(messages("taxLiabilityBetweenYears.checkYourAnswerSectionHeading", pageName)),
+            Some(
+              messages(
+                "taxLiabilityBetweenYears.checkYourAnswerSectionHeading",
+                pageName
+              )
+            ),
             answerRows
           )
         )
     }
   }
 
+  private def changeRouteForTaxYear(pageName: String): String =
+    pageName match {
+      case "haveUtrYesNo" =>
+        s"${config.loginContinueUrl}/have-utr?origin=suitability-check-your-answers"
 
-  private def changeRouteForTaxYear(pageName: String): String = pageName match {
-    case "dateOfDeathBefore" => controllers.routes.DateOfDeathBeforeController.onPageLoad.url
-    case "moreThanHalfMill" => controllers.routes.MoreThanHalfMillController.onPageLoad.url
-    case "moreThanQuarterMill" => controllers.routes.MoreThanQuarterMillController.onPageLoad.url
-    case "moreThanTenThousand" => controllers.routes.MoreThanTenThousandController.onPageLoad.url
-    case "moreThanTwoHalfMill" => controllers.routes.MoreThanTwoHalfMillController.onPageLoad.url
-  }
+      case "dateOfDeathBefore" =>
+        controllers.routes.DateOfDeathBeforeController
+          .onPageLoad
+          .url
 
+      case "moreThanHalfMill" =>
+        controllers.routes.MoreThanHalfMillController
+          .onPageLoad
+          .url
 
-  private def yesNoPageForRegister(pageName: String): QuestionPage[Boolean] = pageName match {
-    case "dateOfDeathBefore" => DateOfDeathBeforePage
-    case "moreThanHalfMill" => MoreThanHalfMillPage
-    case "moreThanQuarterMill" => MoreThanQuarterMillPage
-    case "moreThanTenThousand" => MoreThanTenThousandPage
-    case "moreThanTwoHalfMill" => MoreThanTwoHalfMillPage
-  }
+      case "moreThanQuarterMill" =>
+        controllers.routes.MoreThanQuarterMillController
+          .onPageLoad
+          .url
+
+      case "moreThanTenThousand" =>
+        controllers.routes.MoreThanTenThousandController
+          .onPageLoad
+          .url
+
+      case "moreThanTwoHalfMill" =>
+        controllers.routes.MoreThanTwoHalfMillController
+          .onPageLoad
+          .url
+    }
+
+  private def yesNoPageForRegister(
+                                    pageName: String
+                                  ): QuestionPage[Boolean] =
+    pageName match {
+      case "haveUtrYesNo" =>
+        EstateRegisteredOnlineYesNoPage
+
+      case "dateOfDeathBefore" =>
+        DateOfDeathBeforePage
+
+      case "moreThanHalfMill" =>
+        MoreThanHalfMillPage
+
+      case "moreThanQuarterMill" =>
+        MoreThanQuarterMillPage
+
+      case "moreThanTenThousand" =>
+        MoreThanTenThousandPage
+
+      case "moreThanTwoHalfMill" =>
+        MoreThanTwoHalfMillPage
+    }
 }

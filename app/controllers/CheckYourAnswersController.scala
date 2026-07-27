@@ -18,13 +18,16 @@ package controllers
 
 import com.google.inject.Inject
 import config.FrontendAppConfig
+import connectors.RegisterEstateConnector
 import controllers.actions.RegisterEstateActions
 import pages._
 import play.api.Logging
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
+import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import utils.{CheckYourAnswersHelper, Session}
 import views.html.CheckYourAnswersView
 
@@ -38,27 +41,47 @@ class CheckYourAnswersController @Inject()(
                                             checkYourAnswersHelper: CheckYourAnswersHelper,
                                             sessionRepository: SessionRepository,
                                             actions: RegisterEstateActions,
+                                            registerEstateConnector: RegisterEstateConnector,
                                             val appConfig: FrontendAppConfig)(implicit ec: ExecutionContext)
   extends FrontendBaseController with I18nSupport with Logging {
 
-  def onPageLoad(): Action[AnyContent] = actions.authWithData(implicit request => {
-    val dateOfDeathBeforePage = checkYourAnswersHelper.pageAnswers(request.userAnswers, DateOfDeathBeforePage.toString)
-    val moreThanHalfMillPage = checkYourAnswersHelper.pageAnswers(request.userAnswers, MoreThanHalfMillPage.toString)
-    val moreThanQuarterMillPage = checkYourAnswersHelper.pageAnswers(request.userAnswers, MoreThanQuarterMillPage.toString)
-    val moreThanTenThousandPage = checkYourAnswersHelper.pageAnswers(request.userAnswers, MoreThanTenThousandPage.toString)
-    val moreThanTwoHalfMillPage = checkYourAnswersHelper.pageAnswers(request.userAnswers, MoreThanTwoHalfMillPage.toString)
+  def onPageLoad(): Action[AnyContent] =
+    actions.authWithData.async { implicit request =>
 
 
-    val sections = Seq(
-      dateOfDeathBeforePage,
-      moreThanHalfMillPage,
-      moreThanQuarterMillPage,
-      moreThanTenThousandPage,
-      moreThanTwoHalfMillPage
-    ).flatten
+      implicit val hc: HeaderCarrier =
+        HeaderCarrierConverter.fromRequestAndSession(
+          request,
+          request.session
+        )
 
-    Ok(view(sections))
-  })
+      registerEstateConnector.getUTRFlag().map { utrFlag =>
+
+
+        val utrPage = checkYourAnswersHelper.pageAnswers(request.userAnswers, EstateRegisteredOnlineYesNoPage.toString, Some(utrFlag))
+
+        val dateOfDeathBeforePage = checkYourAnswersHelper.pageAnswers(request.userAnswers, DateOfDeathBeforePage.toString)
+
+        val moreThanHalfMillPage = checkYourAnswersHelper.pageAnswers(request.userAnswers, MoreThanHalfMillPage.toString)
+
+        val moreThanQuarterMillPage = checkYourAnswersHelper.pageAnswers(request.userAnswers, MoreThanQuarterMillPage.toString)
+
+        val moreThanTenThousandPage = checkYourAnswersHelper.pageAnswers(request.userAnswers, MoreThanTenThousandPage.toString)
+
+        val moreThanTwoHalfMillPage = checkYourAnswersHelper.pageAnswers(request.userAnswers, MoreThanTwoHalfMillPage.toString)
+
+        val sections = Seq(
+          utrPage,
+          dateOfDeathBeforePage,
+          moreThanHalfMillPage,
+          moreThanQuarterMillPage,
+          moreThanTenThousandPage,
+          moreThanTwoHalfMillPage
+        ).flatten
+
+        Ok(view(sections))
+      }
+    }
 
 
   def onSubmit(): Action[AnyContent] = actions.authWithData.async { implicit request =>

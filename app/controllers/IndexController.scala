@@ -35,16 +35,30 @@ class IndexController @Inject() (
 )(implicit ex: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
-  def onPageLoad: Action[AnyContent] = actions.authWithSession.async { implicit request =>
-    request.userAnswers match {
-      case Some(_) =>
-        Future.successful(Redirect(routes.DateOfDeathBeforeController.onPageLoad()))
-      case None    =>
-        val userAnswers: UserAnswers = UserAnswers(request.user.internalId)
-        repository.set(userAnswers).map { _ =>
-          Redirect(routes.DateOfDeathBeforeController.onPageLoad())
+  def onPageLoad(origin: Option[String]): Action[AnyContent] = actions.authWithSession.async { implicit request =>
+
+      val nextPage =
+        if (origin.nonEmpty) {
+          routes.CheckYourAnswersController.onPageLoad
+        } else {
+          routes.DateOfDeathBeforeController.onPageLoad()
         }
+
+      request.userAnswers match {
+
+        case Some(_) =>
+          Future.successful(
+            Redirect(nextPage)
+          )
+
+        case None =>
+          val userAnswers =
+            UserAnswers(request.user.internalId)
+
+          repository.set(userAnswers).map { _ =>
+            Redirect(nextPage)
+          }
+      }
     }
-  }
 
 }

@@ -29,7 +29,7 @@ object EstateSuitabilityNavigator {
     case MoreThanHalfMillPage => moreThanHalfMillRoute
     case MoreThanTenThousandPage => moreThanTenThousandRoute
     case MoreThanTwoHalfMillPage => moreThanTwoHalfMillRoute
-    case `checkAnswersPage` => checkAns
+    case checkAnswersPage => checkAns
   }
 
 
