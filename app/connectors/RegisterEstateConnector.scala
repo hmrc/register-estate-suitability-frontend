@@ -18,6 +18,7 @@ package connectors
 
 import config.FrontendAppConfig
 import play.api.Logging
+import play.api.http.Status.OK
 import uk.gov.hmrc.http.HttpReads.Implicits
 import uk.gov.hmrc.http.HttpReads.Implicits.{readEitherOf, throwOnFailure}
 import uk.gov.hmrc.http.client.HttpClientV2
@@ -42,21 +43,22 @@ class RegisterEstateConnector @Inject()(http: HttpClientV2, config: FrontendAppC
 
     http
       .get(url"$utrFlagUrl")
+      .setHeader("Accept" -> "application/json")
       .execute[HttpResponse]
       .map { response =>
-
-
-        println("response#################### "+ response.body)
-        logger.info(s"UTR URL: $utrFlagUrl")
-        logger.info(s"UTR status: ${response.status}")
-        logger.info(
-          s"UTR content type: ${response.header("Content-Type")}"
-        )
-        logger.info(
-          s"UTR response body: ${response.body.take(500)}"
-        )
-
-        false
+        response.status match {
+          case OK =>
+            (response.json \ "utrFlag")
+              .asOpt[Boolean]
+              .getOrElse {
+                logger.error("[RegisterEstateConnector][getUTRFlag] utrFlag is missing or not a Boolean")
+                false
+              }
+          case status =>
+            logger.error(s"[RegisterEstateConnector][getUTRFlag] Failed to retrieve UTR flag. " +
+                s"Status: $status, " +s"Response: ${response.body}")
+            false
+        }
       }
   }
 

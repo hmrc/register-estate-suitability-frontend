@@ -91,3 +91,7 @@ youNeedToRegister.p1 = Ni allwch gadw’r cofrestriad hwn a dod yn ôl yn nes ym
 youNeedToRegister.p2 = Os nad ydych yn gwneud unrhyw beth am 15 munud byddwn yn dileu’ch atebion a bydd yn rhaid i chi ddechrau o’r dechrau. Mae hyn er mwyn diogelu’ch gwybodaeth.
 youNeedToRegister.p3 = Os oes angen help arnoch gyda’r gwasanaeth hwn,
 youNeedToRegister.contact.link = cysylltwch â Gwasanaeth cwsmeriaid Cymraeg CThEF (yn agor tab newydd)
+
+haveUtrYesNo.title = A oes gan yr ystâd Gyfeirnod Unigryw y Trethdalwr (UTR)?
+haveUtrYesNo.heading = A oes gan yr ystâd Gyfeirnod Unigryw y Trethdalwr (UTR)?
+haveUtrYesNo.checkYourAnswersLabel = A oes gan yr ystâd Gyfeirnod Unigryw y Trethdalwr (UTR)?

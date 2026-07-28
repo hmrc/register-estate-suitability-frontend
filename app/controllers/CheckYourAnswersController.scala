@@ -22,12 +22,11 @@ import connectors.RegisterEstateConnector
 import controllers.actions.RegisterEstateActions
 import pages._
 import play.api.Logging
+import play.api.http.HeaderNames
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
-import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import utils.{CheckYourAnswersHelper, Session}
 import views.html.CheckYourAnswersView
 
@@ -45,18 +44,12 @@ class CheckYourAnswersController @Inject()(
                                             val appConfig: FrontendAppConfig)(implicit ec: ExecutionContext)
   extends FrontendBaseController with I18nSupport with Logging {
 
-  def onPageLoad(): Action[AnyContent] =
-    actions.authWithData.async { implicit request =>
+  def onPageLoad(): Action[AnyContent] = actions.authWithData.async { implicit request =>
 
 
-      implicit val hc: HeaderCarrier =
-        HeaderCarrierConverter.fromRequestAndSession(
-          request,
-          request.session
-        )
+    val hcWithCookie = hc.copy(extraHeaders = hc.headers(Seq(HeaderNames.COOKIE)))
 
-      registerEstateConnector.getUTRFlag().map { utrFlag =>
-
+    registerEstateConnector.getUTRFlag()(hcWithCookie, ec).map { utrFlag =>
 
         val utrPage = checkYourAnswersHelper.pageAnswers(request.userAnswers, EstateRegisteredOnlineYesNoPage.toString, Some(utrFlag))
 
