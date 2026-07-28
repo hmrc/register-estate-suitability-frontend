@@ -32,50 +32,51 @@ import views.html.CheckYourAnswersView
 
 import scala.concurrent.ExecutionContext
 
-
-class CheckYourAnswersController @Inject()(
-                                            override val messagesApi: MessagesApi,
-                                            val controllerComponents: MessagesControllerComponents,
-                                            view: CheckYourAnswersView,
-                                            checkYourAnswersHelper: CheckYourAnswersHelper,
-                                            sessionRepository: SessionRepository,
-                                            actions: RegisterEstateActions,
-                                            registerEstateConnector: RegisterEstateConnector,
-                                            val appConfig: FrontendAppConfig)(implicit ec: ExecutionContext)
-  extends FrontendBaseController with I18nSupport with Logging {
+class CheckYourAnswersController @Inject() (
+  override val messagesApi: MessagesApi,
+  val controllerComponents: MessagesControllerComponents,
+  view: CheckYourAnswersView,
+  checkYourAnswersHelper: CheckYourAnswersHelper,
+  sessionRepository: SessionRepository,
+  actions: RegisterEstateActions,
+  registerEstateConnector: RegisterEstateConnector,
+  val appConfig: FrontendAppConfig
+)(implicit ec: ExecutionContext)
+    extends FrontendBaseController with I18nSupport with Logging {
 
   def onPageLoad(): Action[AnyContent] = actions.authWithData.async { implicit request =>
-
-
     val hcWithCookie = hc.copy(extraHeaders = hc.headers(Seq(HeaderNames.COOKIE)))
 
     registerEstateConnector.getUTRFlag()(hcWithCookie, ec).map { utrFlag =>
+      val utrPage =
+        checkYourAnswersHelper.pageAnswers(request.userAnswers, EstateRegisteredOnlineYesNoPage.toString, Some(utrFlag))
 
-        val utrPage = checkYourAnswersHelper.pageAnswers(request.userAnswers, EstateRegisteredOnlineYesNoPage.toString, Some(utrFlag))
+      val dateOfDeathBeforePage =
+        checkYourAnswersHelper.pageAnswers(request.userAnswers, DateOfDeathBeforePage.toString)
 
-        val dateOfDeathBeforePage = checkYourAnswersHelper.pageAnswers(request.userAnswers, DateOfDeathBeforePage.toString)
+      val moreThanHalfMillPage = checkYourAnswersHelper.pageAnswers(request.userAnswers, MoreThanHalfMillPage.toString)
 
-        val moreThanHalfMillPage = checkYourAnswersHelper.pageAnswers(request.userAnswers, MoreThanHalfMillPage.toString)
+      val moreThanQuarterMillPage =
+        checkYourAnswersHelper.pageAnswers(request.userAnswers, MoreThanQuarterMillPage.toString)
 
-        val moreThanQuarterMillPage = checkYourAnswersHelper.pageAnswers(request.userAnswers, MoreThanQuarterMillPage.toString)
+      val moreThanTenThousandPage =
+        checkYourAnswersHelper.pageAnswers(request.userAnswers, MoreThanTenThousandPage.toString)
 
-        val moreThanTenThousandPage = checkYourAnswersHelper.pageAnswers(request.userAnswers, MoreThanTenThousandPage.toString)
+      val moreThanTwoHalfMillPage =
+        checkYourAnswersHelper.pageAnswers(request.userAnswers, MoreThanTwoHalfMillPage.toString)
 
-        val moreThanTwoHalfMillPage = checkYourAnswersHelper.pageAnswers(request.userAnswers, MoreThanTwoHalfMillPage.toString)
+      val sections = Seq(
+        utrPage,
+        dateOfDeathBeforePage,
+        moreThanHalfMillPage,
+        moreThanQuarterMillPage,
+        moreThanTenThousandPage,
+        moreThanTwoHalfMillPage
+      ).flatten
 
-        val sections = Seq(
-          utrPage,
-          dateOfDeathBeforePage,
-          moreThanHalfMillPage,
-          moreThanQuarterMillPage,
-          moreThanTenThousandPage,
-          moreThanTwoHalfMillPage
-        ).flatten
-
-        Ok(view(sections))
-      }
+      Ok(view(sections))
     }
-
+  }
 
   def onSubmit(): Action[AnyContent] = actions.authWithData.async { implicit request =>
     for {
@@ -88,4 +89,5 @@ class CheckYourAnswersController @Inject()(
       Redirect(appConfig.registrationProgress)
     }
   }
+
 }

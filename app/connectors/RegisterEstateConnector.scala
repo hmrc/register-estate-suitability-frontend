@@ -27,14 +27,13 @@ import uk.gov.hmrc.http.{HeaderCarrier, HttpReads, HttpResponse, StringContextOp
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class RegisterEstateConnector @Inject()(http: HttpClientV2, config: FrontendAppConfig) extends Logging{
+class RegisterEstateConnector @Inject() (http: HttpClientV2, config: FrontendAppConfig) extends Logging {
 
   implicit def httpResponse: HttpReads[HttpResponse] =
     throwOnFailure(readEitherOf[HttpResponse](Implicits.readRaw))
 
-
-  def getUTRFlag()(
-    implicit hc: HeaderCarrier,
+  def getUTRFlag()(implicit
+    hc: HeaderCarrier,
     ec: ExecutionContext
   ): Future[Boolean] = {
 
@@ -47,7 +46,7 @@ class RegisterEstateConnector @Inject()(http: HttpClientV2, config: FrontendAppC
       .execute[HttpResponse]
       .map { response =>
         response.status match {
-          case OK =>
+          case OK     =>
             (response.json \ "utrFlag")
               .asOpt[Boolean]
               .getOrElse {
@@ -55,8 +54,10 @@ class RegisterEstateConnector @Inject()(http: HttpClientV2, config: FrontendAppC
                 false
               }
           case status =>
-            logger.error(s"[RegisterEstateConnector][getUTRFlag] Failed to retrieve UTR flag. " +
-                s"Status: $status, " +s"Response: ${response.body}")
+            logger.error(
+              s"[RegisterEstateConnector][getUTRFlag] Failed to retrieve UTR flag. " +
+                s"Status: $status, " + s"Response: ${response.body}"
+            )
             false
         }
       }

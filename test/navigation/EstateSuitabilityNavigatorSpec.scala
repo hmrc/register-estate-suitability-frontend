@@ -65,7 +65,7 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
 
       navigator
         .nextPage(page, userAnswers)
-        .mustBe(routes.YouNeedToRegisterController.onPageLoad())
+        .mustBe(routes.CheckYourAnswersController.onPageLoad)
     }
 
     "MoreThanQuarterMillPage -> No -> MoreThan10K" in {
@@ -93,7 +93,7 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
 
       navigator
         .nextPage(page, userAnswers)
-        .mustBe(routes.YouNeedToRegisterController.onPageLoad())
+        .mustBe(routes.CheckYourAnswersController.onPageLoad)
     }
 
     "MoreThanHalfMillPage -> no -> MoreThan10K" in {
@@ -121,7 +121,7 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
 
       navigator
         .nextPage(page, userAnswers)
-        .mustBe(routes.YouNeedToRegisterController.onPageLoad())
+        .mustBe(routes.CheckYourAnswersController.onPageLoad)
     }
 
     "MoreThanTenThousand -> no -> MoreThanTwoHalfMill" in {
@@ -149,7 +149,7 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
 
       navigator
         .nextPage(page, userAnswers)
-        .mustBe(routes.YouNeedToRegisterController.onPageLoad())
+        .mustBe(routes.CheckYourAnswersController.onPageLoad)
     }
 
     "MoreThanTwoHalfMill -> no -> MoreThanTwoHalfMill" in {

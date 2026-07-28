@@ -23,18 +23,18 @@ import pages._
 import play.api.i18n.Messages
 import viewmodels.{AnswerRow, AnswerSection}
 
-class CheckYourAnswersHelper @Inject()(
-                                        answerRowConverter: AnswerRowConverter,
-                                        config: FrontendAppConfig
-                                      ) {
+class CheckYourAnswersHelper @Inject() (
+  answerRowConverter: AnswerRowConverter,
+  config: FrontendAppConfig
+) {
 
   def pageAnswers(
-                   userAnswers: UserAnswers,
-                   pageName: String,
-                   answerOverride: Option[Boolean] = None
-                 )(implicit messages: Messages): Option[AnswerSection] = {
+    userAnswers: UserAnswers,
+    pageName: String,
+    answerOverride: Option[Boolean] = None
+  )(implicit messages: Messages): Option[AnswerSection] = {
 
-    val page = yesNoPageForRegister(pageName)
+    val page        = yesNoPageForRegister(pageName)
     val changeRoute = changeRouteForTaxYear(pageName)
 
     val answersToDisplay: UserAnswers =
@@ -83,34 +83,24 @@ class CheckYourAnswersHelper @Inject()(
         s"${config.loginContinueUrl}/have-utr?origin=suitability-check-your-answers"
 
       case "dateOfDeathBefore" =>
-        controllers.routes.DateOfDeathBeforeController
-          .onPageLoad
-          .url
+        controllers.routes.DateOfDeathBeforeController.onPageLoad.url
 
       case "moreThanHalfMill" =>
-        controllers.routes.MoreThanHalfMillController
-          .onPageLoad
-          .url
+        controllers.routes.MoreThanHalfMillController.onPageLoad.url
 
       case "moreThanQuarterMill" =>
-        controllers.routes.MoreThanQuarterMillController
-          .onPageLoad
-          .url
+        controllers.routes.MoreThanQuarterMillController.onPageLoad.url
 
       case "moreThanTenThousand" =>
-        controllers.routes.MoreThanTenThousandController
-          .onPageLoad
-          .url
+        controllers.routes.MoreThanTenThousandController.onPageLoad.url
 
       case "moreThanTwoHalfMill" =>
-        controllers.routes.MoreThanTwoHalfMillController
-          .onPageLoad
-          .url
+        controllers.routes.MoreThanTwoHalfMillController.onPageLoad.url
     }
 
   private def yesNoPageForRegister(
-                                    pageName: String
-                                  ): QuestionPage[Boolean] =
+    pageName: String
+  ): QuestionPage[Boolean] =
     pageName match {
       case "haveUtrYesNo" =>
         EstateRegisteredOnlineYesNoPage
@@ -130,4 +120,5 @@ class CheckYourAnswersHelper @Inject()(
       case "moreThanTwoHalfMill" =>
         MoreThanTwoHalfMillPage
     }
+
 }

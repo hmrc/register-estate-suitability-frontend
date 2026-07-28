@@ -21,7 +21,7 @@ import play.api.libs.json.JsPath
 
 import scala.util.Try
 
-  case object MoreThanHalfMillPage extends QuestionPage[Boolean] {
+case object MoreThanHalfMillPage extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ toString
 

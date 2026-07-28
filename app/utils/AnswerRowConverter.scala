@@ -22,7 +22,7 @@ import pages.QuestionPage
 import play.api.i18n.Messages
 import viewmodels.AnswerRow
 
-class AnswerRowConverter @Inject()() {
+class AnswerRowConverter @Inject() () {
 
   def bind(userAnswers: UserAnswers)(implicit messages: Messages): Bound = new Bound(userAnswers)
 
