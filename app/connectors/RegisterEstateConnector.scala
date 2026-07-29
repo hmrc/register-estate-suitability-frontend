@@ -42,7 +42,6 @@ class RegisterEstateConnector @Inject() (http: HttpClientV2, config: FrontendApp
 
     http
       .get(url"$utrFlagUrl")
-      .setHeader("Accept" -> "application/json")
       .execute[HttpResponse]
       .map { response =>
         response.status match {

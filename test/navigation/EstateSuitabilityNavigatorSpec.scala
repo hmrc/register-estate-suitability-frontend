@@ -54,6 +54,11 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
         .mustBe(routes.MoreThanHalfMillController.onPageLoad())
     }
 
+    "DateOfDeathBeforePage -> None -> SessionExpiredController" in
+      navigator
+        .nextPage(DateOfDeathBeforePage, emptyUserAnswers)
+        .mustBe(routes.SessionExpiredController.onPageLoad)
+
     "MoreThanQuarterMillPage -> yes -> YouNeedToRegister" in {
 
       val page = MoreThanQuarterMillPage
@@ -81,6 +86,11 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
         .nextPage(page, userAnswers)
         .mustBe(routes.MoreThanTenThousandController.onPageLoad())
     }
+
+    "MoreThanQuarterMillPage -> None -> SessionExpiredController" in
+      navigator
+        .nextPage(MoreThanQuarterMillPage, emptyUserAnswers)
+        .mustBe(routes.SessionExpiredController.onPageLoad)
 
     "MoreThanHalfMillPage -> Yes -> YouNeedToRegister" in {
 
@@ -110,6 +120,11 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
         .mustBe(routes.MoreThanTenThousandController.onPageLoad())
     }
 
+    "MoreThanHalfMillPage -> None -> SessionExpiredController" in
+      navigator
+        .nextPage(MoreThanHalfMillPage, emptyUserAnswers)
+        .mustBe(routes.SessionExpiredController.onPageLoad)
+
     "MoreThanTenThousand -> Yes -> YouNeedToRegister" in {
 
       val page = MoreThanTenThousandPage
@@ -138,6 +153,11 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
         .mustBe(routes.MoreThanTwoHalfMillController.onPageLoad())
     }
 
+    "MoreThanTenThousand -> None -> SessionExpiredController" in
+      navigator
+        .nextPage(MoreThanTenThousandPage, emptyUserAnswers)
+        .mustBe(routes.SessionExpiredController.onPageLoad)
+
     "MoreThanTwoHalfMill -> Yes -> YouNeedToRegister" in {
 
       val page = MoreThanTwoHalfMillPage
@@ -165,6 +185,30 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
         .nextPage(page, userAnswers)
         .mustBe(routes.DoNotNeedToRegisterController.onPageLoad())
     }
+
+    "MoreThanTwoHalfMill -> None -> SessionExpiredController" in
+      navigator
+        .nextPage(MoreThanTwoHalfMillPage, emptyUserAnswers)
+        .mustBe(routes.SessionExpiredController.onPageLoad)
+
+    "checkAnswersPage -> yes -> MoreThanQuarterMillPage" in {
+
+      val page = checkAnswersPage
+
+      val userAnswers = emptyUserAnswers
+        .set(checkAnswersPage, true)
+        .success
+        .value
+
+      navigator
+        .nextPage(page, userAnswers)
+        .mustBe(routes.CheckYourAnswersController.onPageLoad)
+    }
+
+    "checkAnswersPage -> None -> SessionExpiredController" in
+      navigator
+        .nextPage(checkAnswersPage, emptyUserAnswers)
+        .mustBe(routes.SessionExpiredController.onPageLoad)
 
   }
 

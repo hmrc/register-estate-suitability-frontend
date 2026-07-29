@@ -44,50 +44,41 @@ class CheckYourAnswersController @Inject() (
 )(implicit ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport with Logging {
 
-  def onPageLoad(): Action[AnyContent] = actions.authWithData.async { implicit request =>
-    val hcWithCookie = hc.copy(extraHeaders = hc.headers(Seq(HeaderNames.COOKIE)))
+  def onPageLoad(): Action[AnyContent] =
+    actions.authWithData.async { implicit request =>
+      val hcWithCookie = hc.copy(extraHeaders = hc.headers(Seq(HeaderNames.COOKIE)))
 
-    registerEstateConnector.getUTRFlag()(hcWithCookie, ec).map { utrFlag =>
-      val utrPage =
-        checkYourAnswersHelper.pageAnswers(request.userAnswers, EstateRegisteredOnlineYesNoPage.toString, Some(utrFlag))
+      registerEstateConnector.getUTRFlag()(hcWithCookie, ec).map { utrFlag =>
+        val pages = Seq(
+          EstateRegisteredOnlineYesNoPage.toString -> Some(utrFlag),
+          DateOfDeathBeforePage.toString           -> None,
+          MoreThanHalfMillPage.toString            -> None,
+          MoreThanQuarterMillPage.toString         -> None,
+          MoreThanTenThousandPage.toString         -> None,
+          MoreThanTwoHalfMillPage.toString         -> None
+        )
 
-      val dateOfDeathBeforePage =
-        checkYourAnswersHelper.pageAnswers(request.userAnswers, DateOfDeathBeforePage.toString)
+        val sections =
+          pages.flatMap { case (pageName, answerOverride) =>
+            checkYourAnswersHelper.pageAnswers(
+              request.userAnswers,
+              pageName,
+              answerOverride
+            )
+          }
 
-      val moreThanHalfMillPage = checkYourAnswersHelper.pageAnswers(request.userAnswers, MoreThanHalfMillPage.toString)
-
-      val moreThanQuarterMillPage =
-        checkYourAnswersHelper.pageAnswers(request.userAnswers, MoreThanQuarterMillPage.toString)
-
-      val moreThanTenThousandPage =
-        checkYourAnswersHelper.pageAnswers(request.userAnswers, MoreThanTenThousandPage.toString)
-
-      val moreThanTwoHalfMillPage =
-        checkYourAnswersHelper.pageAnswers(request.userAnswers, MoreThanTwoHalfMillPage.toString)
-
-      val sections = Seq(
-        utrPage,
-        dateOfDeathBeforePage,
-        moreThanHalfMillPage,
-        moreThanQuarterMillPage,
-        moreThanTenThousandPage,
-        moreThanTwoHalfMillPage
-      ).flatten
-
-      Ok(view(sections))
+        Ok(view(sections))
+      }
     }
-  }
 
   def onSubmit(): Action[AnyContent] = actions.authWithData.async { implicit request =>
     for {
       _ <- sessionRepository.set(request.userAnswers)
     } yield {
-      logger.info(
-        s"[Session ID: ${Session.id(hc)}]" +
-          s" user redirected for registration"
-      )
+      logger.info(s"[Session ID: ${Session.id(hc)}]" + s" user redirected for registration")
       Redirect(appConfig.registrationProgress)
     }
+
   }
 
 }

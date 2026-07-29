@@ -32,12 +32,9 @@ object EstateSuitabilityNavigator {
     case checkAnswersPage        => checkAns
   }
 
-  private def checkAns(answers: UserAnswers) = {
-    val detils = answers.get(checkAnswersPage)
-    detils match {
-      case Some(true) => controllers.routes.CheckYourAnswersController.onPageLoad
-      case None       => controllers.routes.CheckYourAnswersController.onPageLoad
-    }
+  private def checkAns(answers: UserAnswers) = answers.get(checkAnswersPage) match {
+    case Some(true) => controllers.routes.CheckYourAnswersController.onPageLoad
+    case None       => controllers.routes.SessionExpiredController.onPageLoad
   }
 
   private def dateOfDeathBeforeRoute(answers: UserAnswers) = answers.get(DateOfDeathBeforePage) match {
