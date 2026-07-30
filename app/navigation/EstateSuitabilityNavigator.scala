@@ -29,12 +29,7 @@ object EstateSuitabilityNavigator {
     case MoreThanHalfMillPage    => moreThanHalfMillRoute
     case MoreThanTenThousandPage => moreThanTenThousandRoute
     case MoreThanTwoHalfMillPage => moreThanTwoHalfMillRoute
-    case checkAnswersPage        => checkAns
-  }
-
-  private def checkAns(answers: UserAnswers) = answers.get(checkAnswersPage) match {
-    case Some(true) => controllers.routes.CheckYourAnswersController.onPageLoad
-    case None       => controllers.routes.SessionExpiredController.onPageLoad
+    case CheckAnswersPage        => _ => controllers.routes.CheckYourAnswersController.onPageLoad
   }
 
   private def dateOfDeathBeforeRoute(answers: UserAnswers) = answers.get(DateOfDeathBeforePage) match {

@@ -17,16 +17,14 @@
 package controllers
 
 import base.SpecBase
-import config.FrontendAppConfig
 import connectors.RegisterEstateConnector
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar.mock
-import pages.EstateRegisteredOnlineYesNoPage
+import pages._
 import play.api.inject
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.SessionRepository
 import utils.CheckYourAnswersHelper
 import views.html.CheckYourAnswersView
 
@@ -50,11 +48,7 @@ class CheckYourAnswersControllerSpec extends SpecBase {
         )
         .build()
 
-      val request =
-        FakeRequest(
-          GET,
-          routes.CheckYourAnswersController.onPageLoad.url
-        )
+      val request = FakeRequest(GET, routes.CheckYourAnswersController.onPageLoad.url)
 
       val result = route(application, request).value
 
@@ -89,35 +83,63 @@ class CheckYourAnswersControllerSpec extends SpecBase {
 
     "onSubmit" must {
 
-      "save the user answers and redirect to registration progress" in {
+      "redirect to YouNeedToRegister when any answer is true" in {
 
-        val sessionRepository = mock[SessionRepository]
-        val mockConfig        = mock[FrontendAppConfig]
+        val answersWithTrue = emptyUserAnswers
+          .set(MoreThanQuarterMillPage, false)
+          .get
+          .set(MoreThanHalfMillPage, true)
+          .get
+          .set(MoreThanTenThousandPage, false)
+          .get
 
-        val registrationProgressUrl = "/registration-progress"
+        val application = applicationBuilder(userAnswers = Some(answersWithTrue)).build()
 
-        when(sessionRepository.set(any())).thenReturn(Future.successful(true))
-
-        when(mockConfig.registrationProgress).thenReturn(registrationProgressUrl)
-
-        val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(
-            inject.bind[SessionRepository].toInstance(sessionRepository),
-            inject.bind[FrontendAppConfig].toInstance(mockConfig)
-          )
-          .build()
-
-        val request = FakeRequest(
-          POST,
-          routes.CheckYourAnswersController.onSubmit.url
-        )
+        val request = FakeRequest(POST, routes.CheckYourAnswersController.onSubmit.url)
 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
 
-        redirectLocation(result).value mustEqual
-          registrationProgressUrl
+        redirectLocation(result).value mustEqual controllers.routes.YouNeedToRegisterController.onPageLoad().url
+
+        application.stop()
+      }
+
+      "redirect to DoNotNeedToRegister when no answer is true" in {
+
+        val answersWithoutTrue = emptyUserAnswers
+          .set(MoreThanQuarterMillPage, false)
+          .get
+          .set(MoreThanHalfMillPage, false)
+          .get
+          .set(MoreThanTenThousandPage, false)
+          .get
+
+        val application = applicationBuilder(userAnswers = Some(answersWithoutTrue)).build()
+
+        val request = FakeRequest(POST, routes.CheckYourAnswersController.onSubmit.url)
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+
+        redirectLocation(result).value mustEqual controllers.routes.DoNotNeedToRegisterController.onPageLoad().url
+
+        application.stop()
+      }
+
+      "redirect to DoNotNeedToRegister when all answers are missing" in {
+
+        val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+        val request = FakeRequest(POST, routes.CheckYourAnswersController.onSubmit.url)
+
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+
+        redirectLocation(result).value mustEqual controllers.routes.DoNotNeedToRegisterController.onPageLoad().url
 
         application.stop()
       }

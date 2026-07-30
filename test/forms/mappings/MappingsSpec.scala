@@ -18,8 +18,8 @@ package forms.mappings
 
 import models.Enumerable
 import org.scalatest.OptionValues
-import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.must.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 import play.api.data.{Form, FormError}
 
 object MappingsSpec {

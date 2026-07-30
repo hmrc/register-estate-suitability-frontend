@@ -20,7 +20,7 @@ import com.google.inject.Inject
 import models.requests.{AgentUser, IdentifierRequest, OrganisationUser}
 import play.api.Logging
 import play.api.mvc.Results._
-import play.api.mvc.{Request, Result, _}
+import play.api.mvc._
 import uk.gov.hmrc.auth.core.AffinityGroup.{Agent, Organisation}
 import uk.gov.hmrc.auth.core.retrieve.v2.Retrievals
 import uk.gov.hmrc.auth.core.retrieve.~

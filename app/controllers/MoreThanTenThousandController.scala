@@ -18,7 +18,6 @@ package controllers
 
 import controllers.actions._
 import forms.YesNoFormProvider
-import javax.inject.Inject
 import navigation.Navigator
 import pages.MoreThanTenThousandPage
 import play.api.data.Form
@@ -28,6 +27,7 @@ import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.MoreThanTenThousandView
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class MoreThanTenThousandController @Inject() (

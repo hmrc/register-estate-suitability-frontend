@@ -18,15 +18,14 @@ package connectors
 
 import adapters.UserAnswersToTaxAmountOwed
 import config.FrontendAppConfig
-
-import javax.inject.Inject
 import models.{AmountOfTaxOwed, UserAnswers}
 import play.api.libs.json.Json
 import uk.gov.hmrc.http.HttpReads.Implicits
-import uk.gov.hmrc.http.{HeaderCarrier, HttpReads, HttpResponse, StringContextOps}
 import uk.gov.hmrc.http.HttpReads.Implicits.{readEitherOf, throwOnFailure}
 import uk.gov.hmrc.http.client.HttpClientV2
+import uk.gov.hmrc.http.{HeaderCarrier, HttpReads, HttpResponse, StringContextOps}
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class EstatesConnector @Inject() (http: HttpClientV2, config: FrontendAppConfig, adapter: UserAnswersToTaxAmountOwed) {

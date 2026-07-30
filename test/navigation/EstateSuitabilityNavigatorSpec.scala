@@ -191,12 +191,12 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
         .nextPage(MoreThanTwoHalfMillPage, emptyUserAnswers)
         .mustBe(routes.SessionExpiredController.onPageLoad)
 
-    "checkAnswersPage -> yes -> MoreThanQuarterMillPage" in {
+    "CheckAnswersPage -> yes -> MoreThanQuarterMillPage" in {
 
-      val page = checkAnswersPage
+      val page = CheckAnswersPage
 
       val userAnswers = emptyUserAnswers
-        .set(checkAnswersPage, true)
+        .set(CheckAnswersPage, true)
         .success
         .value
 
@@ -204,11 +204,6 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
         .nextPage(page, userAnswers)
         .mustBe(routes.CheckYourAnswersController.onPageLoad)
     }
-
-    "checkAnswersPage -> None -> SessionExpiredController" in
-      navigator
-        .nextPage(checkAnswersPage, emptyUserAnswers)
-        .mustBe(routes.SessionExpiredController.onPageLoad)
 
   }
 

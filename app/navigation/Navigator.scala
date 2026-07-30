@@ -17,10 +17,11 @@
 package navigation
 
 import controllers.routes
-import javax.inject.{Inject, Singleton}
 import models.UserAnswers
 import pages.Page
 import play.api.mvc.Call
+
+import javax.inject.{Inject, Singleton}
 
 @Singleton
 class Navigator @Inject() () {
