@@ -37,8 +37,7 @@ class RegisterEstateConnector @Inject() (http: HttpClientV2, config: FrontendApp
     ec: ExecutionContext
   ): Future[Boolean] = {
 
-    val utrFlagUrl =
-      s"${config.loginContinueUrl}/utr-flag"
+    val utrFlagUrl = s"${config.loginContinueUrl}/utr-flag"
 
     http
       .get(url"$utrFlagUrl")

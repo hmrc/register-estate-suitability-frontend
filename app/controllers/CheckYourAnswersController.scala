@@ -87,9 +87,7 @@ class CheckYourAnswersController @Inject() (
         controllers.routes.DoNotNeedToRegisterController.onPageLoad()
       }
 
-    sessionRepository
-      .set(request.userAnswers)
-      .map(_ => Redirect(nextPage))
+    sessionRepository.set(request.userAnswers).map(_ => Redirect(nextPage))
   }
 
 }
