@@ -16,10 +16,11 @@
 
 package models
 
+import java.time.LocalDateTime
+
 import pages._
 import play.api.libs.json._
 
-import java.time.LocalDateTime
 import scala.util.{Failure, Success, Try}
 
 final case class UserAnswers(

@@ -16,9 +16,9 @@
 
 package forms.mappings
 
-import play.api.data.validation.{Constraint, Invalid, Valid}
-
 import java.time.LocalDate
+
+import play.api.data.validation.{Constraint, Invalid, Valid}
 
 trait Constraints {
 
