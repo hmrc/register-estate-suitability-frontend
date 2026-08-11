@@ -14,23 +14,18 @@
  * limitations under the License.
  */
 
-package navigation
+package utils
 
-import controllers.routes
-import javax.inject.{Inject, Singleton}
-import models.UserAnswers
-import pages.Page
-import play.api.mvc.Call
+import play.api.i18n.Messages
+import play.twirl.api.{Html, HtmlFormat}
 
-@Singleton
-class Navigator @Inject() () {
+object CheckAnswersFormatters {
 
-  private val normalRoutes: Page => UserAnswers => Call =
-    EstateSuitabilityNavigator.normalRoutes orElse { case _ =>
-      _ => routes.IndexController.onPageLoad(None)
+  def yesOrNo(answer: Boolean)(implicit messages: Messages): Html =
+    if (answer) {
+      HtmlFormat.escape(messages("site.yes"))
+    } else {
+      HtmlFormat.escape(messages("site.no"))
     }
-
-  def nextPage(page: Page, userAnswers: UserAnswers): Call =
-    normalRoutes(page)(userAnswers)
 
 }

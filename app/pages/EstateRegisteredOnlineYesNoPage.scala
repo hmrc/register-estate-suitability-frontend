@@ -14,23 +14,12 @@
  * limitations under the License.
  */
 
-package navigation
+package pages
 
-import controllers.routes
-import javax.inject.{Inject, Singleton}
-import models.UserAnswers
-import pages.Page
-import play.api.mvc.Call
+import play.api.libs.json.JsPath
 
-@Singleton
-class Navigator @Inject() () {
+case object EstateRegisteredOnlineYesNoPage extends QuestionPage[Boolean] {
+  override def path: JsPath = JsPath \ toString
 
-  private val normalRoutes: Page => UserAnswers => Call =
-    EstateSuitabilityNavigator.normalRoutes orElse { case _ =>
-      _ => routes.IndexController.onPageLoad(None)
-    }
-
-  def nextPage(page: Page, userAnswers: UserAnswers): Call =
-    normalRoutes(page)(userAnswers)
-
+  override def toString: String = "haveUtrYesNo"
 }

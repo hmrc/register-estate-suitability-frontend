@@ -54,6 +54,11 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
         .mustBe(routes.MoreThanHalfMillController.onPageLoad())
     }
 
+    "DateOfDeathBeforePage -> None -> SessionExpiredController" in
+      navigator
+        .nextPage(DateOfDeathBeforePage, emptyUserAnswers)
+        .mustBe(routes.SessionExpiredController.onPageLoad)
+
     "MoreThanQuarterMillPage -> yes -> YouNeedToRegister" in {
 
       val page = MoreThanQuarterMillPage
@@ -65,7 +70,7 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
 
       navigator
         .nextPage(page, userAnswers)
-        .mustBe(routes.YouNeedToRegisterController.onPageLoad())
+        .mustBe(routes.CheckYourAnswersController.onPageLoad)
     }
 
     "MoreThanQuarterMillPage -> No -> MoreThan10K" in {
@@ -82,6 +87,11 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
         .mustBe(routes.MoreThanTenThousandController.onPageLoad())
     }
 
+    "MoreThanQuarterMillPage -> None -> SessionExpiredController" in
+      navigator
+        .nextPage(MoreThanQuarterMillPage, emptyUserAnswers)
+        .mustBe(routes.SessionExpiredController.onPageLoad)
+
     "MoreThanHalfMillPage -> Yes -> YouNeedToRegister" in {
 
       val page = MoreThanHalfMillPage
@@ -93,7 +103,7 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
 
       navigator
         .nextPage(page, userAnswers)
-        .mustBe(routes.YouNeedToRegisterController.onPageLoad())
+        .mustBe(routes.CheckYourAnswersController.onPageLoad)
     }
 
     "MoreThanHalfMillPage -> no -> MoreThan10K" in {
@@ -110,6 +120,11 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
         .mustBe(routes.MoreThanTenThousandController.onPageLoad())
     }
 
+    "MoreThanHalfMillPage -> None -> SessionExpiredController" in
+      navigator
+        .nextPage(MoreThanHalfMillPage, emptyUserAnswers)
+        .mustBe(routes.SessionExpiredController.onPageLoad)
+
     "MoreThanTenThousand -> Yes -> YouNeedToRegister" in {
 
       val page = MoreThanTenThousandPage
@@ -121,7 +136,7 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
 
       navigator
         .nextPage(page, userAnswers)
-        .mustBe(routes.YouNeedToRegisterController.onPageLoad())
+        .mustBe(routes.CheckYourAnswersController.onPageLoad)
     }
 
     "MoreThanTenThousand -> no -> MoreThanTwoHalfMill" in {
@@ -138,6 +153,11 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
         .mustBe(routes.MoreThanTwoHalfMillController.onPageLoad())
     }
 
+    "MoreThanTenThousand -> None -> SessionExpiredController" in
+      navigator
+        .nextPage(MoreThanTenThousandPage, emptyUserAnswers)
+        .mustBe(routes.SessionExpiredController.onPageLoad)
+
     "MoreThanTwoHalfMill -> Yes -> YouNeedToRegister" in {
 
       val page = MoreThanTwoHalfMillPage
@@ -149,7 +169,7 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
 
       navigator
         .nextPage(page, userAnswers)
-        .mustBe(routes.YouNeedToRegisterController.onPageLoad())
+        .mustBe(routes.CheckYourAnswersController.onPageLoad)
     }
 
     "MoreThanTwoHalfMill -> no -> MoreThanTwoHalfMill" in {
@@ -164,6 +184,25 @@ class EstateSuitabilityNavigatorSpec extends SpecBase {
       navigator
         .nextPage(page, userAnswers)
         .mustBe(routes.DoNotNeedToRegisterController.onPageLoad())
+    }
+
+    "MoreThanTwoHalfMill -> None -> SessionExpiredController" in
+      navigator
+        .nextPage(MoreThanTwoHalfMillPage, emptyUserAnswers)
+        .mustBe(routes.SessionExpiredController.onPageLoad)
+
+    "CheckAnswersPage -> yes -> MoreThanQuarterMillPage" in {
+
+      val page = CheckAnswersPage
+
+      val userAnswers = emptyUserAnswers
+        .set(CheckAnswersPage, true)
+        .success
+        .value
+
+      navigator
+        .nextPage(page, userAnswers)
+        .mustBe(routes.CheckYourAnswersController.onPageLoad)
     }
 
   }

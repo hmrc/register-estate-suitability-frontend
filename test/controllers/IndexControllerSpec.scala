@@ -43,7 +43,7 @@ class IndexControllerSpec extends SpecBase {
 
       when(mockSessionRepository.set(any())).thenReturn(Future.successful(true))
 
-      val request = FakeRequest(GET, routes.IndexController.onPageLoad.url)
+      val request = FakeRequest(GET, routes.IndexController.onPageLoad(None).url)
 
       val result = route(application, request).value
 
@@ -61,7 +61,7 @@ class IndexControllerSpec extends SpecBase {
 
       when(mockSessionRepository.set(any())).thenReturn(Future.successful(true))
 
-      val request = FakeRequest(GET, routes.IndexController.onPageLoad.url)
+      val request = FakeRequest(GET, routes.IndexController.onPageLoad(None).url)
 
       val result = route(application, request).value
 
