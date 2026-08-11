@@ -38,7 +38,7 @@ class CheckYourAnswersControllerSpec extends SpecBase {
 
       val mockConnector = mock[RegisterEstateConnector]
 
-      when(mockConnector.getUTRFlag()(any(), any())).thenReturn(Future.successful(true))
+      when(mockConnector.getUTRFlag()(any(), any(), any())).thenReturn(Future.successful(true))
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
         .overrides(

@@ -47,7 +47,7 @@ class CheckYourAnswersController @Inject() (
   def onPageLoad(): Action[AnyContent] = actions.authWithData.async { implicit request =>
     val hcWithCookie = hc.copy(extraHeaders = hc.headers(Seq(HeaderNames.COOKIE)))
 
-    registerEstateConnector.getUTRFlag()(hcWithCookie, ec).map { utrFlag =>
+    registerEstateConnector.getUTRFlag()(request, hcWithCookie, ec).map { utrFlag =>
       val pages = Seq(
         EstateRegisteredOnlineYesNoPage.toString -> Some(utrFlag),
         DateOfDeathBeforePage.toString           -> None,

@@ -27,6 +27,8 @@ import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.{BeforeAndAfterAll, BeforeAndAfterEach, Inside}
 import org.scalatestplus.mockito.MockitoSugar.mock
 import play.api.http.Status.BAD_REQUEST
+import play.api.mvc.RequestHeader
+import play.api.test.FakeRequest
 import play.api.{Application, inject}
 import repositories.SessionRepository
 import uk.gov.hmrc.http.{HeaderCarrier, UpstreamErrorResponse}
@@ -43,6 +45,8 @@ class RegisterEstateConnectorSpec
     with IntegrationPatience {
 
   implicit lazy val hc: HeaderCarrier = HeaderCarrier()
+
+  implicit val requestHeader: RequestHeader = FakeRequest("GET", "/")
 
   protected val server: WireMockServer = new WireMockServer(wireMockConfig().dynamicPort())
 
