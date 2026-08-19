@@ -19,6 +19,7 @@ package connectors
 import config.FrontendAppConfig
 import play.api.Logging
 import play.api.http.Status.OK
+import play.api.mvc.RequestHeader
 import uk.gov.hmrc.http.HttpReads.Implicits
 import uk.gov.hmrc.http.HttpReads.Implicits.{readEitherOf, throwOnFailure}
 import uk.gov.hmrc.http.client.HttpClientV2
@@ -33,11 +34,28 @@ class RegisterEstateConnector @Inject() (http: HttpClientV2, config: FrontendApp
     throwOnFailure(readEitherOf[HttpResponse](Implicits.readRaw))
 
   def getUTRFlag()(implicit
+    request: RequestHeader,
     hc: HeaderCarrier,
     ec: ExecutionContext
   ): Future[Boolean] = {
 
-    val utrFlagUrl = s"${config.loginContinueUrl}/utr-flag"
+    val loginUrl = config.loginContinueUrl
+
+    val utrFlagUrl =
+      if (loginUrl.startsWith("http://") || loginUrl.startsWith("https://")) {
+        s"$loginUrl/utr-flag"
+      } else {
+        val protocol =
+          if (request.host.startsWith("localhost")) "http"
+          else "https"
+
+        val path =
+          if (loginUrl.startsWith("/")) loginUrl
+          else s"/$loginUrl"
+
+        s"$protocol://${request.host}$path/utr-flag"
+      }
+    logger.warn(s"[RegisterEstateConnector][getUTRFlag] url : $utrFlagUrl")
 
     http
       .get(url"$utrFlagUrl")
