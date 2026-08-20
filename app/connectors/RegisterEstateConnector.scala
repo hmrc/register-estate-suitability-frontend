@@ -39,22 +39,7 @@ class RegisterEstateConnector @Inject() (http: HttpClientV2, config: FrontendApp
     ec: ExecutionContext
   ): Future[Boolean] = {
 
-    val loginUrl = config.loginContinueUrl
-
-    val utrFlagUrl =
-      if (loginUrl.startsWith("http://") || loginUrl.startsWith("https://")) {
-        s"$loginUrl/utr-flag"
-      } else {
-        val protocol =
-          if (request.host.startsWith("localhost")) "http"
-          else "https"
-
-        val path =
-          if (loginUrl.startsWith("/")) loginUrl
-          else s"/$loginUrl"
-
-        s"$protocol://${request.host}$path/utr-flag"
-      }
+    val utrFlagUrl = s"${config.registerEstatesUrl}/register-an-estate/utr-flag"
     logger.warn(s"[RegisterEstateConnector][getUTRFlag] url : $utrFlagUrl")
 
     http
