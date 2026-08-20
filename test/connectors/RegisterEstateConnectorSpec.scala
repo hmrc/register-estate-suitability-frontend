@@ -68,9 +68,9 @@ class RegisterEstateConnectorSpec
   def getApplication() = {
     val mockConfig            = mock[FrontendAppConfig]
     val mockSessionRepository = mock[SessionRepository]
-    when(mockConfig.loginContinueUrl)
+    when(mockConfig.registerEstatesUrl)
       .thenReturn(
-        s"http://localhost:${server.port()}/register-an-estate"
+        s"http://localhost:${server.port()}"
       )
 
     val application =
