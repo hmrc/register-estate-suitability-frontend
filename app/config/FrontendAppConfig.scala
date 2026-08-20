@@ -68,7 +68,7 @@ class FrontendAppConfig @Inject() (
     "cymraeg" -> Lang("cy")
   )
 
-  lazy val registerEstatesUrl: String = configuration.get[String]("microservice.services.register-estate-host")
+  lazy val registerEstatesUrl: String = servicesConfig.baseUrl("register-an-estate")
 
   def routeToSwitchLanguage: String => Call =
     (lang: String) => routes.LanguageSwitchController.switchToLanguage(lang)
