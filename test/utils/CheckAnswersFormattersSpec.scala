@@ -14,6 +14,21 @@
  * limitations under the License.
  */
 
-package viewmodels
+package utils
 
-trait Section
+import base.SpecBase
+
+class CheckAnswersFormattersSpec extends SpecBase {
+
+  "yesOrNo" must {
+
+    "render Yes for true" in {
+      CheckAnswersFormatters.yesOrNo(answer = true).toString mustBe messages("site.yes")
+    }
+
+    "render No for false" in {
+      CheckAnswersFormatters.yesOrNo(answer = false).toString mustBe messages("site.no")
+    }
+  }
+
+}

@@ -14,6 +14,20 @@
  * limitations under the License.
  */
 
-package viewmodels
+package pages
 
-case class RepeaterAnswerRow(answer: String, changeUrl: String, deleteUrl: String)
+import org.scalatest.matchers.must.Matchers
+import org.scalatest.wordspec.AnyWordSpec
+
+class PageSpec extends AnyWordSpec with Matchers {
+
+  "Page" must {
+
+    "convert implicitly to the page name" in {
+      val name: String = MoreThanHalfMillPage
+
+      name mustBe "moreThanHalfMill"
+    }
+  }
+
+}
