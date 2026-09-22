@@ -14,7 +14,6 @@ lazy val microservice = Project("register-estate-suitability-frontend", file("."
       "uk.gov.hmrc.hmrcfrontend.views.html.components._",
       "uk.gov.hmrc.hmrcfrontend.views.html.helpers._",
       "views.ViewUtils._",
-      "models.Mode",
       "controllers.routes._"
     ),
     PlayKeys.playDefaultPort := 8821,
