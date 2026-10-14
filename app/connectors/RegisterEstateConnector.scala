@@ -24,23 +24,21 @@ import uk.gov.hmrc.http.HttpReads.Implicits
 import uk.gov.hmrc.http.HttpReads.Implicits.{readEitherOf, throwOnFailure}
 import uk.gov.hmrc.http.client.HttpClientV2
 import uk.gov.hmrc.http.{HeaderCarrier, HttpReads, HttpResponse, StringContextOps}
+import utils.Session
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
+import scala.util.control.NonFatal
 
 class RegisterEstateConnector @Inject() (http: HttpClientV2, config: FrontendAppConfig) extends Logging {
 
   implicit def httpResponse: HttpReads[HttpResponse] =
     throwOnFailure(readEitherOf[HttpResponse](Implicits.readRaw))
 
-  def getUTRFlag()(implicit
-    request: RequestHeader,
-    hc: HeaderCarrier,
-    ec: ExecutionContext
-  ): Future[Boolean] = {
+  def getUTRFlag()(implicit request: RequestHeader, hc: HeaderCarrier, ec: ExecutionContext): Future[Boolean] = {
 
     val utrFlagUrl = s"${config.registerEstatesUrl}/register-an-estate/utr-flag"
-    logger.warn(s"[RegisterEstateConnector][getUTRFlag] url : $utrFlagUrl")
+    logger.warn(s"[RegisterEstateConnector][getUTRFlag][Session ID: ${Session.id(hc)}] url : $utrFlagUrl")
 
     http
       .get(url"$utrFlagUrl")
@@ -51,16 +49,25 @@ class RegisterEstateConnector @Inject() (http: HttpClientV2, config: FrontendApp
             (response.json \ "utrFlag")
               .asOpt[Boolean]
               .getOrElse {
-                logger.error("[RegisterEstateConnector][getUTRFlag] utrFlag is missing or not a Boolean")
+                logger.error(
+                  s"[RegisterEstateConnector][getUTRFlag] [Session ID: ${Session.id(hc)}] utrFlag is missing or not a Boolean"
+                )
                 false
               }
           case status =>
             logger.error(
-              s"[RegisterEstateConnector][getUTRFlag] Failed to retrieve UTR flag. " +
+              s"[RegisterEstateConnector][getUTRFlag] [Session ID: ${Session.id(hc)}] Failed to retrieve UTR flag. " +
                 s"Status: $status, " + s"Response: ${response.body}"
             )
             false
         }
+      }
+      .recover { case NonFatal(e) =>
+        logger.error(
+          s"[RegisterEstateConnector][getUTRFlag]  " +
+            s"[Session ID: ${Session.id(hc)}] unable to retrieve data due to exception ${e.getMessage}"
+        )
+        false
       }
   }
 
