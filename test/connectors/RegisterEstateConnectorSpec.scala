@@ -26,12 +26,11 @@ import org.mockito.Mockito.when
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.{BeforeAndAfterAll, BeforeAndAfterEach, Inside}
 import org.scalatestplus.mockito.MockitoSugar.mock
-import play.api.http.Status.BAD_REQUEST
 import play.api.mvc.RequestHeader
 import play.api.test.FakeRequest
 import play.api.{Application, inject}
 import repositories.SessionRepository
-import uk.gov.hmrc.http.{HeaderCarrier, UpstreamErrorResponse}
+import uk.gov.hmrc.http.HeaderCarrier
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -201,12 +200,8 @@ class RegisterEstateConnectorSpec
 
       val result = connector.getUTRFlag()
 
-      whenReady(result.failed) {
-        case UpstreamErrorResponse.Upstream4xxResponse(upstream) =>
-          upstream.statusCode mustBe BAD_REQUEST
-
-        case error =>
-          fail(s"Unexpected exception: $error")
+      whenReady(result) { flag =>
+        flag mustBe false
       }
 
       application.stop()
