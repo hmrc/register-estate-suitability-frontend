@@ -22,7 +22,7 @@ import org.mockito.Mockito
 import org.mockito.Mockito.when
 import play.api.inject.bind
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import repositories.SessionRepository
 
 import scala.concurrent.Future
@@ -82,7 +82,7 @@ class IndexControllerSpec extends SpecBase {
 
       status(result) mustEqual SEE_OTHER
 
-      redirectLocation(result).value mustBe routes.CheckYourAnswersController.onPageLoad.url
+      redirectLocation(result).value mustBe routes.CheckYourAnswersController.onPageLoad().url
 
       application.stop()
     }

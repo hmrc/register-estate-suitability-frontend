@@ -16,7 +16,7 @@
 
 package controllers
 
-import controllers.actions.{DataRetrievalAction, IdentifierAction, RegisterEstateActions}
+import controllers.actions.RegisterEstateActions
 
 import javax.inject.Inject
 import models.UserAnswers
@@ -28,17 +28,15 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class IndexController @Inject() (
   val controllerComponents: MessagesControllerComponents,
-  identify: IdentifierAction,
-  getData: DataRetrievalAction,
   repository: SessionRepository,
   actions: RegisterEstateActions
-)(implicit ex: ExecutionContext)
+)(using ex: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
-  def onPageLoad(origin: Option[String]): Action[AnyContent] = actions.authWithSession.async { implicit request =>
+  def onPageLoad(origin: Option[String]): Action[AnyContent] = actions.authWithSession.async { request =>
     val nextPage =
       if (origin.nonEmpty) {
-        routes.CheckYourAnswersController.onPageLoad
+        routes.CheckYourAnswersController.onPageLoad()
       } else {
         routes.DateOfDeathBeforeController.onPageLoad()
       }

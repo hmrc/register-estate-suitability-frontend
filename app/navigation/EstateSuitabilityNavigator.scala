@@ -17,7 +17,7 @@
 package navigation
 
 import models.UserAnswers
-import pages._
+import pages.*
 import play.api.mvc.Call
 
 object EstateSuitabilityNavigator {
@@ -29,7 +29,7 @@ object EstateSuitabilityNavigator {
     case MoreThanHalfMillPage    => moreThanHalfMillRoute
     case MoreThanTenThousandPage => moreThanTenThousandRoute
     case MoreThanTwoHalfMillPage => moreThanTwoHalfMillRoute
-    case CheckAnswersPage        => _ => controllers.routes.CheckYourAnswersController.onPageLoad
+    case CheckAnswersPage        => _ => controllers.routes.CheckYourAnswersController.onPageLoad()
   }
 
   private def dateOfDeathBeforeRoute(answers: UserAnswers) = answers.get(DateOfDeathBeforePage) match {
@@ -39,25 +39,25 @@ object EstateSuitabilityNavigator {
   }
 
   private def moreThanQuarterRoute(answers: UserAnswers) = answers.get(MoreThanQuarterMillPage) match {
-    case Some(true)  => controllers.routes.CheckYourAnswersController.onPageLoad
+    case Some(true)  => controllers.routes.CheckYourAnswersController.onPageLoad()
     case Some(false) => controllers.routes.MoreThanTenThousandController.onPageLoad()
     case None        => controllers.routes.SessionExpiredController.onPageLoad
   }
 
   private def moreThanHalfMillRoute(answers: UserAnswers) = answers.get(MoreThanHalfMillPage) match {
-    case Some(true)  => controllers.routes.CheckYourAnswersController.onPageLoad
+    case Some(true)  => controllers.routes.CheckYourAnswersController.onPageLoad()
     case Some(false) => controllers.routes.MoreThanTenThousandController.onPageLoad()
     case None        => controllers.routes.SessionExpiredController.onPageLoad
   }
 
   private def moreThanTenThousandRoute(answers: UserAnswers) = answers.get(MoreThanTenThousandPage) match {
-    case Some(true)  => controllers.routes.CheckYourAnswersController.onPageLoad
+    case Some(true)  => controllers.routes.CheckYourAnswersController.onPageLoad()
     case Some(false) => controllers.routes.MoreThanTwoHalfMillController.onPageLoad()
     case None        => controllers.routes.SessionExpiredController.onPageLoad
   }
 
   private def moreThanTwoHalfMillRoute(answers: UserAnswers) = answers.get(MoreThanTwoHalfMillPage) match {
-    case Some(true)  => controllers.routes.CheckYourAnswersController.onPageLoad
+    case Some(true)  => controllers.routes.CheckYourAnswersController.onPageLoad()
     case Some(false) => controllers.routes.DoNotNeedToRegisterController.onPageLoad()
     case None        => controllers.routes.SessionExpiredController.onPageLoad
   }

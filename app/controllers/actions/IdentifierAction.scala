@@ -19,7 +19,7 @@ package controllers.actions
 import com.google.inject.Inject
 import models.requests.{AgentUser, IdentifierRequest, OrganisationUser}
 import play.api.Logging
-import play.api.mvc.Results._
+import play.api.mvc.Results.*
 import play.api.mvc.{Request, Result, _}
 import uk.gov.hmrc.auth.core.AffinityGroup.{Agent, Organisation}
 import uk.gov.hmrc.auth.core.retrieve.v2.Retrievals
@@ -33,15 +33,17 @@ import scala.concurrent.{ExecutionContext, Future}
 class AuthenticatedIdentifierAction @Inject() (
   val trustsAuth: TrustsAuthorisedFunctions,
   val parser: BodyParsers.Default
-)(implicit val executionContext: ExecutionContext)
+)(override protected val executionContext: ExecutionContext)
     extends IdentifierAction with Logging {
+
+  given ExecutionContext = executionContext
 
   def invokeBlock[A](request: Request[A], block: IdentifierRequest[A] => Future[Result]): Future[Result] = {
 
     val retrievals = Retrievals.internalId and
       Retrievals.affinityGroup
 
-    implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
+    given hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
 
     trustsAuth.authorised().retrieve(retrievals) {
       case Some(internalId) ~ Some(Agent)        =>

@@ -25,14 +25,14 @@
     submitButton: SubmitButton
 )
 
-@(form: Form[_])(implicit request: RequestHeader, messages: Messages)
+@(form: Form[?])(implicit request: RequestHeader, messages: Messages)
 
 @mainTemplate(
     title = s"${errorPrefix(form)}${messages("moreThanQuarterMill.title")}",
     showBackLink = true
     ) {
 
-    @formHelper(action = MoreThanQuarterMillController.onSubmit(), Symbol("autoComplete") -> "off") {
+    @formHelper(action = routes.MoreThanQuarterMillController.onSubmit(), Symbol("autoComplete") -> "off") {
 
         @errorSummary(form.errors, isYesNo = true)
 

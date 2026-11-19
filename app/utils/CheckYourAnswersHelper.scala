@@ -19,7 +19,7 @@ package utils
 import com.google.inject.Inject
 import config.FrontendAppConfig
 import models.UserAnswers
-import pages._
+import pages.*
 import play.api.i18n.Messages
 import viewmodels.{AnswerRow, AnswerSection}
 
@@ -32,7 +32,7 @@ class CheckYourAnswersHelper @Inject() (
     userAnswers: UserAnswers,
     pageName: String,
     answerOverride: Option[Boolean] = None
-  )(implicit messages: Messages): Option[AnswerSection] = {
+  )(using messages: Messages): Option[AnswerSection] = {
 
     val page        = yesNoPageForRegister(pageName)
     val changeRoute = changeRouteForTaxYear(pageName)

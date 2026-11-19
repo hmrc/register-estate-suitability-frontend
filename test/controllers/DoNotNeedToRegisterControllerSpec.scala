@@ -19,7 +19,7 @@ package controllers
 import base.SpecBase
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import views.html.DoNotNeedToRegisterView
 
 class DoNotNeedToRegisterControllerSpec extends SpecBase {
@@ -42,7 +42,7 @@ class DoNotNeedToRegisterControllerSpec extends SpecBase {
 
       status(result) mustEqual OK
 
-      contentAsString(result) mustEqual view()(request, messages).toString
+      contentAsString(result) mustEqual view()(using request, messages).toString
 
       application.stop()
     }

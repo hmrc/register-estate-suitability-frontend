@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import connectors.EstatesConnector
-import controllers.actions._
+import controllers.actions.*
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito
@@ -28,13 +28,16 @@ import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.mvc.Call
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HttpResponse
 import views.html.YouNeedToRegisterView
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
+import uk.gov.hmrc.http.HeaderCarrier
 
 class YouNeedToRegisterControllerSpec extends SpecBase {
+  given HeaderCarrier    = HeaderCarrier()
+  given ExecutionContext = ExecutionContext.global
 
   def onwardRoute: Call = Call("GET", "/foo")
 
@@ -55,7 +58,7 @@ class YouNeedToRegisterControllerSpec extends SpecBase {
       status(result) mustEqual OK
 
       contentAsString(result) mustEqual
-        view()(request, messages).toString
+        view()(using request, messages).toString
 
       application.stop()
     }
@@ -64,7 +67,7 @@ class YouNeedToRegisterControllerSpec extends SpecBase {
 
       val mockConnector = Mockito.mock(classOf[EstatesConnector])
 
-      when(mockConnector.saveTaxAmountOwed(any())(any(), any()))
+      when(mockConnector.saveTaxAmountOwed(any())(using any(), any()))
         .thenReturn(Future.successful(HttpResponse.apply(OK, "")))
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
@@ -89,7 +92,7 @@ class YouNeedToRegisterControllerSpec extends SpecBase {
 
       val mockConnector = Mockito.mock(classOf[EstatesConnector])
 
-      when(mockConnector.saveTaxAmountOwed(any())(any(), any()))
+      when(mockConnector.saveTaxAmountOwed(any())(using any(), any()))
         .thenReturn(Future.successful(HttpResponse.apply(OK, "")))
 
       val userAnswers = emptyUserAnswers.set(MoreThanHalfMillPage, true).success.value

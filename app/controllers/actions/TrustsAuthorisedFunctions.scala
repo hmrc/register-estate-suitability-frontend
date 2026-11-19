@@ -28,7 +28,7 @@ import utils.Session
 class TrustsAuthorisedFunctions @Inject() (override val authConnector: AuthConnector, val config: FrontendAppConfig)
     extends AuthorisedFunctions with Logging {
 
-  def recoverFromAuthorisation(implicit hc: HeaderCarrier): PartialFunction[Throwable, Result] = {
+  def recoverFromAuthorisation(using hc: HeaderCarrier): PartialFunction[Throwable, Result] = {
     case _: NoActiveSession        =>
       logger.warn(s"[Session ID: ${Session.id(hc)}] no active session")
       redirectToLogin

@@ -19,14 +19,14 @@ package views
 import org.jsoup.nodes.Document
 import views.html.DoNotNeedToRegisterView
 
-import scala.jdk.CollectionConverters._
+import scala.jdk.CollectionConverters.*
 
 class MainTemplateSpec extends ViewSpecBase {
 
   private lazy val doc: Document = {
     val application = applicationBuilder().build()
     val view        = application.injector.instanceOf[DoNotNeedToRegisterView]
-    val rendered    = asDocument(view.apply()(fakeRequest, messages))
+    val rendered    = asDocument(view.apply()(using fakeRequest, messages))
     application.stop()
     rendered
   }

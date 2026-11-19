@@ -24,7 +24,7 @@ class PageSpec extends AnyWordSpec with Matchers {
   "Page" must {
 
     "convert implicitly to the page name" in {
-      val name: String = MoreThanHalfMillPage
+      val name: String = MoreThanHalfMillPage.toString
 
       name mustBe "moreThanHalfMill"
     }

@@ -19,7 +19,7 @@ package models
 import org.scalatest.{EitherValues, OptionValues}
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.must.Matchers
-import play.api.libs.json._
+import play.api.libs.json.*
 
 object EnumerableSpec {
 
@@ -31,8 +31,8 @@ object EnumerableSpec {
 
     val values: Set[Foo] = Set(Bar, Baz)
 
-    implicit val fooEnumerable: Enumerable[Foo] =
-      Enumerable(values.toSeq.map(v => v.toString -> v): _*)
+    given fooEnumerable: Enumerable[Foo] =
+      Enumerable(values.toSeq.map(v => v.toString -> v)*)
 
   }
 
@@ -40,12 +40,12 @@ object EnumerableSpec {
 
 class EnumerableSpec extends AnyWordSpec with Matchers with EitherValues with OptionValues with Enumerable.Implicits {
 
-  import EnumerableSpec._
+  import EnumerableSpec.*
 
   ".reads" must {
 
     "be found implicitly" in {
-      implicitly[Reads[Foo]]
+      summon[Reads[Foo]]
     }
 
     Foo.values.foreach { value =>
@@ -70,7 +70,7 @@ class EnumerableSpec extends AnyWordSpec with Matchers with EitherValues with Op
   ".writes" must {
 
     "be found implicitly" in {
-      implicitly[Writes[Foo]]
+      summon[Writes[Foo]]
     }
 
     Foo.values.foreach { value =>
@@ -83,7 +83,7 @@ class EnumerableSpec extends AnyWordSpec with Matchers with EitherValues with Op
   ".formats" must {
 
     "be found implicitly" in {
-      implicitly[Format[Foo]]
+      summon[Format[Foo]]
     }
   }
 

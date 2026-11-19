@@ -21,7 +21,7 @@ import play.twirl.api.{Html, HtmlFormat}
 
 object CheckAnswersFormatters {
 
-  def yesOrNo(answer: Boolean)(implicit messages: Messages): Html =
+  def yesOrNo(answer: Boolean)(using messages: Messages): Html =
     if (answer) {
       HtmlFormat.escape(messages("site.yes"))
     } else {
