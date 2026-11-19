@@ -19,6 +19,7 @@ package views.behaviours
 import play.api.data.{Form, FormError}
 import play.twirl.api.HtmlFormat
 import views.ViewUtils
+import scala.annotation.unused
 
 trait QuestionViewBehaviours[A] extends ViewBehaviours {
 
@@ -32,7 +33,7 @@ trait QuestionViewBehaviours[A] extends ViewBehaviours {
     form: Form[A],
     createView: Form[A] => HtmlFormat.Appendable,
     messageKeyPrefix: String,
-    _expectedFormAction: String,
+    @unused expectedFormAction: String,
     fields: String*
   ) =
 

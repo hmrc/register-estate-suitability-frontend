@@ -34,7 +34,7 @@ trait FormSpec extends AnyWordSpec with OptionValues with Matchers {
             formWithErrors.errors      should contain(FormError(error.key, error.message, error.args))
           formWithErrors.errors.size shouldBe expectedErrors.size
         },
-        _form => fail("Expected a validation error when binding the form, but it was bound successfully.")
+        _ => fail("Expected a validation error when binding the form, but it was bound successfully.")
       )
 
   def error(key: String, value: String, args: Any*) = Seq(FormError(key, value, args))

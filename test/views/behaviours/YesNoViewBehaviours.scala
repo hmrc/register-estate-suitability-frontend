@@ -19,6 +19,7 @@ package views.behaviours
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 import views.ViewUtils
+import scala.annotation.unused
 
 trait YesNoViewBehaviours extends QuestionViewBehaviours[Boolean] {
 
@@ -26,7 +27,7 @@ trait YesNoViewBehaviours extends QuestionViewBehaviours[Boolean] {
     form: Form[Boolean],
     createView: Form[Boolean] => HtmlFormat.Appendable,
     messageKeyPrefix: String,
-    _expectedFormAction: String
+    @unused expectedFormAction: String
   ): Unit =
 
     "behave like a page with a Yes/No question" when {
