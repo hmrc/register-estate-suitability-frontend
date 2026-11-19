@@ -24,10 +24,10 @@ import generators.Generators
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.{BeforeAndAfterAll, BeforeAndAfterEach, Inside}
 import pages.MoreThanHalfMillPage
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import uk.gov.hmrc.http.{HeaderCarrier, UpstreamErrorResponse}
 
-import scala.concurrent.ExecutionContext.Implicits._
+import scala.concurrent.ExecutionContext.Implicits.*
 
 class EstatesConnectorSpec
     extends SpecBase
@@ -37,7 +37,7 @@ class EstatesConnectorSpec
     with BeforeAndAfterAll
     with BeforeAndAfterEach
     with IntegrationPatience {
-  implicit lazy val hc: HeaderCarrier = HeaderCarrier()
+  lazy given hc: HeaderCarrier = HeaderCarrier()
 
   protected val server: WireMockServer = new WireMockServer(wireMockConfig().dynamicPort())
 

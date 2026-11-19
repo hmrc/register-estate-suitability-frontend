@@ -32,10 +32,10 @@ import scala.util.control.NonFatal
 
 class RegisterEstateConnector @Inject() (http: HttpClientV2, config: FrontendAppConfig) extends Logging {
 
-  implicit def httpResponse: HttpReads[HttpResponse] =
-    throwOnFailure(readEitherOf[HttpResponse](Implicits.readRaw))
+  given httpResponse: HttpReads[HttpResponse] =
+    throwOnFailure(readEitherOf[HttpResponse](using Implicits.readRaw))
 
-  def getUTRFlag()(implicit request: RequestHeader, hc: HeaderCarrier, ec: ExecutionContext): Future[Boolean] = {
+  def getUTRFlag()(using _request: RequestHeader, hc: HeaderCarrier, ec: ExecutionContext): Future[Boolean] = {
 
     val utrFlagUrl = s"${config.registerEstatesUrl}/register-an-estate/utr-flag"
     logger.warn(s"[RegisterEstateConnector][getUTRFlag][Session ID: ${Session.id(hc)}] url : $utrFlagUrl")

@@ -43,9 +43,9 @@ class RegisterEstateConnectorSpec
     with BeforeAndAfterEach
     with IntegrationPatience {
 
-  implicit lazy val hc: HeaderCarrier = HeaderCarrier()
+  lazy given hc: HeaderCarrier = HeaderCarrier()
 
-  implicit val requestHeader: RequestHeader = FakeRequest("GET", "/")
+  given requestHeader: RequestHeader = FakeRequest("GET", "/")
 
   protected val server: WireMockServer = new WireMockServer(wireMockConfig().dynamicPort())
 

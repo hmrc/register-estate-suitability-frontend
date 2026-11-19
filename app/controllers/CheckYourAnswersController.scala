@@ -20,9 +20,8 @@ import com.google.inject.Inject
 import config.FrontendAppConfig
 import connectors.RegisterEstateConnector
 import controllers.actions.RegisterEstateActions
-import pages._
+import pages.*
 import play.api.Logging
-import play.api.http.HeaderNames
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepository
@@ -41,14 +40,15 @@ class CheckYourAnswersController @Inject() (
   actions: RegisterEstateActions,
   val appConfig: FrontendAppConfig,
   registerEstateConnector: RegisterEstateConnector
-)(implicit ec: ExecutionContext)
+)(using ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport with Logging {
 
-  def onPageLoad(): Action[AnyContent] = actions.authWithData.async { implicit request =>
-    val hcWithCookie = hc.copy(extraHeaders = hc.headers(Seq(HeaderNames.COOKIE)))
+  def onPageLoad(): Action[AnyContent] = actions.authWithData.async { request =>
+    given play.api.mvc.RequestHeader                    = request
+    given play.api.mvc.Request[play.api.mvc.AnyContent] = request
 
     for {
-      utrFlag        <- registerEstateConnector.getUTRFlag()(request, hcWithCookie, ec)
+      utrFlag        <- registerEstateConnector.getUTRFlag()
       updatedAnswers <- Future.fromTry(request.userAnswers.set(EstateRegisteredOnlineYesNoPage, utrFlag))
       _              <- sessionRepository.set(updatedAnswers)
     } yield {
@@ -80,7 +80,7 @@ class CheckYourAnswersController @Inject() (
     }
   }
 
-  def onSubmit(): Action[AnyContent] = actions.authWithData.async { implicit request =>
+  def onSubmit(): Action[AnyContent] = actions.authWithData.async { request =>
     val isAlreadyRegistered = request.userAnswers.get(EstateRegisteredOnlineYesNoPage).contains(true)
 
     val answers = Seq(

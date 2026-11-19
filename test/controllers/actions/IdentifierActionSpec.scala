@@ -22,11 +22,10 @@ import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito
 import org.mockito.Mockito.when
 import play.api.mvc.{Action, AnyContent, BodyParsers, Results}
-import play.api.test.Helpers._
-import uk.gov.hmrc.auth.core._
+import play.api.test.Helpers.*
+import uk.gov.hmrc.auth.core.*
 import uk.gov.hmrc.auth.core.retrieve.{Retrieval, ~}
 
-import scala.concurrent.ExecutionContext.Implicits._
 import scala.concurrent.Future
 
 class IdentifierActionSpec extends SpecBase {
@@ -59,10 +58,11 @@ class IdentifierActionSpec extends SpecBase {
 
         val bodyParsers = application.injector.instanceOf[BodyParsers.Default]
 
-        when(mockAuthConnector.authorise(any(), any[Retrieval[RetrievalType]]())(any(), any()))
+        when(mockAuthConnector.authorise(any(), any[Retrieval[RetrievalType]]())(using any(), any()))
           .thenReturn(authRetrievals(AffinityGroup.Agent))
 
-        val action = new AuthenticatedIdentifierAction(trustsAuth, bodyParsers)
+        val action =
+          new AuthenticatedIdentifierAction(trustsAuth, bodyParsers)(scala.concurrent.ExecutionContext.global)
 
         val controller = new Harness(action)
         val result     = controller.onPageLoad()(fakeRequest)
@@ -77,10 +77,11 @@ class IdentifierActionSpec extends SpecBase {
 
         val application = applicationBuilder(userAnswers = None).build()
 
-        when(mockAuthConnector.authorise(any(), any[Retrieval[RetrievalType]]())(any(), any()))
+        when(mockAuthConnector.authorise(any(), any[Retrieval[RetrievalType]]())(using any(), any()))
           .thenReturn(authRetrievals(AffinityGroup.Organisation))
 
-        val action = new AuthenticatedIdentifierAction(trustsAuth, bodyParsers)
+        val action =
+          new AuthenticatedIdentifierAction(trustsAuth, bodyParsers)(scala.concurrent.ExecutionContext.global)
 
         val controller = new Harness(action)
         val result     = controller.onPageLoad()(fakeRequest)
@@ -95,10 +96,11 @@ class IdentifierActionSpec extends SpecBase {
 
         val application = applicationBuilder(userAnswers = None).build()
 
-        when(mockAuthConnector.authorise(any(), any[Retrieval[RetrievalType]]())(any(), any()))
+        when(mockAuthConnector.authorise(any(), any[Retrieval[RetrievalType]]())(using any(), any()))
           .thenReturn(Future.successful(new ~(None, Some(AffinityGroup.Organisation))))
 
-        val action = new AuthenticatedIdentifierAction(trustsAuth, bodyParsers)
+        val action =
+          new AuthenticatedIdentifierAction(trustsAuth, bodyParsers)(scala.concurrent.ExecutionContext.global)
 
         val controller = new Harness(action)
         val result     = controller.onPageLoad()(fakeRequest)
@@ -116,10 +118,11 @@ class IdentifierActionSpec extends SpecBase {
         val application = applicationBuilder(userAnswers = None).build()
 
         when(
-          mockAuthConnector.authorise(any(), any[Retrieval[RetrievalType]]())(any(), any())
-        ) thenReturn (Future failed UnsupportedAffinityGroup())
+          mockAuthConnector.authorise(any(), any[Retrieval[RetrievalType]]())(using any(), any())
+        ).thenReturn(Future.failed(UnsupportedAffinityGroup()))
 
-        val action = new AuthenticatedIdentifierAction(trustsAuth, bodyParsers)
+        val action =
+          new AuthenticatedIdentifierAction(trustsAuth, bodyParsers)(scala.concurrent.ExecutionContext.global)
 
         val controller = new Harness(action)
         val result     = controller.onPageLoad()(fakeRequest)
@@ -136,10 +139,11 @@ class IdentifierActionSpec extends SpecBase {
 
         val application = applicationBuilder(userAnswers = None).build()
 
-        when(mockAuthConnector.authorise(any(), any[Retrieval[RetrievalType]]())(any(), any()))
+        when(mockAuthConnector.authorise(any(), any[Retrieval[RetrievalType]]())(using any(), any()))
           .thenReturn(Future.failed(MissingBearerToken()))
 
-        val action = new AuthenticatedIdentifierAction(trustsAuth, bodyParsers)
+        val action =
+          new AuthenticatedIdentifierAction(trustsAuth, bodyParsers)(scala.concurrent.ExecutionContext.global)
 
         val controller = new Harness(action)
         val result     = controller.onPageLoad()(fakeRequest)
@@ -156,10 +160,11 @@ class IdentifierActionSpec extends SpecBase {
 
         val application = applicationBuilder(userAnswers = None).build()
 
-        when(mockAuthConnector.authorise(any(), any[Retrieval[RetrievalType]]())(any(), any()))
+        when(mockAuthConnector.authorise(any(), any[Retrieval[RetrievalType]]())(using any(), any()))
           .thenReturn(Future.failed(BearerTokenExpired()))
 
-        val action = new AuthenticatedIdentifierAction(trustsAuth, bodyParsers)
+        val action =
+          new AuthenticatedIdentifierAction(trustsAuth, bodyParsers)(scala.concurrent.ExecutionContext.global)
 
         val controller = new Harness(action)
         val result     = controller.onPageLoad()(fakeRequest)
@@ -176,10 +181,11 @@ class IdentifierActionSpec extends SpecBase {
 
         val application = applicationBuilder(userAnswers = None).build()
 
-        when(mockAuthConnector.authorise(any(), any[Retrieval[RetrievalType]]())(any(), any()))
+        when(mockAuthConnector.authorise(any(), any[Retrieval[RetrievalType]]())(using any(), any()))
           .thenReturn(authRetrievals(AffinityGroup.Organisation))
 
-        val action = new AuthenticatedIdentifierAction(trustsAuth, bodyParsers)
+        val action =
+          new AuthenticatedIdentifierAction(trustsAuth, bodyParsers)(scala.concurrent.ExecutionContext.global)
 
         val controller = new ThrowingHarness(action)
         val result     = controller.onPageLoad()(fakeRequest)

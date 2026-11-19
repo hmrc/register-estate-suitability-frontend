@@ -24,9 +24,9 @@ import viewmodels.AnswerRow
 
 class AnswerRowConverter @Inject() () {
 
-  def bind(userAnswers: UserAnswers)(implicit messages: Messages): Bound = new Bound(userAnswers)
+  def bind(userAnswers: UserAnswers)(using messages: Messages): Bound = new Bound(userAnswers)
 
-  class Bound(userAnswers: UserAnswers)(implicit messages: Messages) {
+  class Bound(userAnswers: UserAnswers)(using messages: Messages) {
 
     def yesNoQuestion(
       query: QuestionPage[Boolean],
@@ -36,7 +36,7 @@ class AnswerRowConverter @Inject() () {
     ): Option[AnswerRow] =
       userAnswers.get(query) map { x =>
         AnswerRow(
-          messages(s"$labelKey.checkYourAnswersLabel", arguments: _*),
+          messages(s"$labelKey.checkYourAnswersLabel", arguments*),
           CheckAnswersFormatters.yesOrNo(x),
           changeUrl
         )

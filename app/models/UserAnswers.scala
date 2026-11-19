@@ -18,8 +18,8 @@ package models
 
 import java.time.Instant
 
-import pages._
-import play.api.libs.json._
+import pages.*
+import play.api.libs.json.*
 import uk.gov.hmrc.mongo.play.json.formats.MongoJavatimeFormats
 
 import scala.util.{Failure, Success, Try}
@@ -30,10 +30,10 @@ final case class UserAnswers(
   lastUpdated: Instant = Instant.now
 ) {
 
-  def get[A](page: QuestionPage[A])(implicit rds: Reads[A]): Option[A] =
-    Reads.optionNoError(Reads.at(page.path)).reads(data).getOrElse(None)
+  def get[A](page: QuestionPage[A])(using rds: Reads[A]): Option[A] =
+    Reads.optionNoError(using Reads.at(page.path)(using rds)).reads(data).getOrElse(None)
 
-  def set[A](page: QuestionPage[A], value: A)(implicit writes: Writes[A]): Try[UserAnswers] = {
+  def set[A](page: QuestionPage[A], value: A)(using writes: Writes[A]): Try[UserAnswers] = {
 
     val updatedData = data.setObject(page.path, Json.toJson(value)) match {
       case JsSuccess(jsValue, _) =>
@@ -69,26 +69,23 @@ object UserAnswers {
 
   val format: Format[UserAnswers] = Format(reads, writes)
 
-  implicit lazy val reads: Reads[UserAnswers] = {
+  given reads: Reads[UserAnswers] = {
 
-    import play.api.libs.functional.syntax._
+    import play.api.libs.functional.syntax.*
 
     (
       (__ \ "_id").read[String] and
         (__ \ "data").read[JsObject] and
-        (__ \ "lastUpdated").read(MongoJavatimeFormats.instantReads)
-    )(UserAnswers.apply _)
+        (__ \ "lastUpdated").read(using MongoJavatimeFormats.instantReads)
+    )(UserAnswers.apply)
   }
 
-  implicit lazy val writes: OWrites[UserAnswers] = {
-
-    import play.api.libs.functional.syntax._
-
-    (
-      (__ \ "_id").write[String] and
-        (__ \ "data").write[JsObject] and
-        (__ \ "lastUpdated").write(MongoJavatimeFormats.instantWrites)
-    )(unlift(UserAnswers.unapply))
+  given writes: OWrites[UserAnswers] = OWrites { userAnswers =>
+    Json.obj(
+      "_id"         -> userAnswers.id,
+      "data"        -> userAnswers.data,
+      "lastUpdated" -> MongoJavatimeFormats.instantWrites.writes(userAnswers.lastUpdated)
+    )
   }
 
 }

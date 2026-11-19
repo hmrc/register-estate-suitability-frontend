@@ -17,15 +17,15 @@
 package forms.behaviours
 
 import forms.FormSpec
-import models._
-import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
+import models.*
+import org.scalatest.matchers.should.Matchers.*
 import play.api.data.Form
 
 trait FormBehaviours extends FormSpec {
 
   val validData: Map[String, String]
 
-  val form: Form[_]
+  val form: Form[?]
 
   def questionForm[A](expectedResult: A) =
     "bind valid values correctly" in {

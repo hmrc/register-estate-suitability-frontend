@@ -16,12 +16,12 @@
 
 package forms.behaviours
 
-import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
+import org.scalatest.matchers.should.Matchers.*
 import play.api.data.{Form, FormError}
 
 trait BooleanFieldBehaviours extends FieldBehaviours {
 
-  def booleanField(form: Form[_], fieldName: String, invalidError: FormError): Unit = {
+  def booleanField(form: Form[?], fieldName: String, invalidError: FormError): Unit = {
 
     "bind true" in {
       val result = form.bind(Map(fieldName -> "true"))

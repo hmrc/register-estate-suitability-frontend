@@ -18,9 +18,10 @@ package handlers
 
 import base.SpecBase
 import org.jsoup.Jsoup
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 
 class ErrorHandlerSpec extends SpecBase {
+  given play.api.mvc.RequestHeader = fakeRequest
 
   private lazy val handler: ErrorHandler = injector.instanceOf[ErrorHandler]
 
@@ -28,7 +29,7 @@ class ErrorHandlerSpec extends SpecBase {
 
     "render the standard error template through the main template" in {
 
-      val html = await(handler.standardErrorTemplate("a title", "a heading", "a message")(fakeRequest))
+      val html = await(handler.standardErrorTemplate("a title", "a heading", "a message"))
       val doc  = Jsoup.parse(html.toString)
 
       doc.title                                  mustBe views.ViewUtils.breadcrumbTitle("a title")

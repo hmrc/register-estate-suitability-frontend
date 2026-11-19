@@ -27,7 +27,7 @@ import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.must.Matchers
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import pages.QuestionPage
-import play.api.libs.json._
+import play.api.libs.json.*
 
 trait PageBehaviours
     extends AnyWordSpec with Matchers with ScalaCheckPropertyChecks with Generators with OptionValues with TryValues {
@@ -36,7 +36,7 @@ trait PageBehaviours
 
   class BeRetrievable[A] {
 
-    def apply[P <: QuestionPage[A]](genP: Gen[P])(implicit ev1: Arbitrary[A], ev2: Format[A]): Unit = {
+    def apply[P <: QuestionPage[A]](genP: Gen[P])(using ev1: Arbitrary[A], ev2: Format[A]): Unit = {
 
       "return None" when {
 
@@ -82,7 +82,7 @@ trait PageBehaviours
 
   class BeSettable[A] {
 
-    def apply[P <: QuestionPage[A]](genP: Gen[P])(implicit ev1: Arbitrary[A], ev2: Format[A]): Unit =
+    def apply[P <: QuestionPage[A]](genP: Gen[P])(using ev1: Arbitrary[A], ev2: Format[A]): Unit =
 
       "be able to be set on UserAnswers" in {
 
@@ -103,7 +103,7 @@ trait PageBehaviours
 
   class BeRemovable[A] {
 
-    def apply[P <: QuestionPage[A]](genP: Gen[P])(implicit ev1: Arbitrary[A], ev2: Format[A]): Unit =
+    def apply[P <: QuestionPage[A]](genP: Gen[P])(using ev1: Arbitrary[A], ev2: Format[A]): Unit =
 
       "be able to be removed from UserAnswers" in {
 

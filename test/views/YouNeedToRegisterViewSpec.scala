@@ -27,7 +27,7 @@ class YouNeedToRegisterViewSpec extends ViewBehaviours {
 
     val view = viewFor[YouNeedToRegisterView](Some(emptyUserAnswers))
 
-    val applyView = view.apply()(fakeRequest, messages)
+    val applyView = view.apply()(using fakeRequest, messages)
 
     behave like normalPage(applyView, messageKeyPrefix)
 

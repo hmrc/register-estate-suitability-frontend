@@ -18,12 +18,12 @@ package generators
 
 import org.scalacheck.Arbitrary
 import org.scalacheck.Arbitrary.arbitrary
-import pages._
+import pages.*
 import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
 
-  implicit lazy val arbitraryMoreThanTwoHalfMillUserAnswersEntry: Arbitrary[(MoreThanTwoHalfMillPage.type, JsValue)] =
+  lazy given arbitraryMoreThanTwoHalfMillUserAnswersEntry: Arbitrary[(MoreThanTwoHalfMillPage.type, JsValue)] =
     Arbitrary {
       for {
         page  <- arbitrary[MoreThanTwoHalfMillPage.type]
@@ -31,7 +31,7 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       } yield (page, value)
     }
 
-  implicit lazy val arbitraryMoreThanTenThousandUserAnswersEntry: Arbitrary[(MoreThanTenThousandPage.type, JsValue)] =
+  lazy given arbitraryMoreThanTenThousandUserAnswersEntry: Arbitrary[(MoreThanTenThousandPage.type, JsValue)] =
     Arbitrary {
       for {
         page  <- arbitrary[MoreThanTenThousandPage.type]
@@ -39,8 +39,7 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       } yield (page, value)
     }
 
-  implicit lazy val arbitraryMoreThanQuarterMillPageUserAnswersEntry
-    : Arbitrary[(MoreThanQuarterMillPage.type, JsValue)] =
+  lazy given arbitraryMoreThanQuarterMillPageUserAnswersEntry: Arbitrary[(MoreThanQuarterMillPage.type, JsValue)] =
     Arbitrary {
       for {
         page  <- arbitrary[MoreThanQuarterMillPage.type]
@@ -48,7 +47,7 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       } yield (page, value)
     }
 
-  implicit lazy val arbitraryMoreThanHalfMillUserAnswersEntry: Arbitrary[(MoreThanHalfMillPage.type, JsValue)] =
+  lazy given arbitraryMoreThanHalfMillUserAnswersEntry: Arbitrary[(MoreThanHalfMillPage.type, JsValue)] =
     Arbitrary {
       for {
         page  <- arbitrary[MoreThanHalfMillPage.type]
@@ -56,7 +55,7 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       } yield (page, value)
     }
 
-  implicit lazy val arbitraryDateOfDeathBeforeUserAnswersEntry: Arbitrary[(DateOfDeathBeforePage.type, JsValue)] =
+  lazy given arbitraryDateOfDeathBeforeUserAnswersEntry: Arbitrary[(DateOfDeathBeforePage.type, JsValue)] =
     Arbitrary {
       for {
         page  <- arbitrary[DateOfDeathBeforePage.type]

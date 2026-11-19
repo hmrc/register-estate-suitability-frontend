@@ -17,13 +17,10 @@
 package utils
 
 import base.SpecBase
-import play.api.i18n.{Lang, Messages}
 
 import scala.util.matching.Regex
 
 class MessagesSpec extends SpecBase {
-
-  implicit override lazy val messages: Messages = messagesApi.preferred(Seq(Lang("en"), Lang("cy")))
 
   val MatchSingleQuoteOnly: Regex   = """\w+'{1}\w+""".r
   val MatchBacktickQuoteOnly: Regex = """`+""".r

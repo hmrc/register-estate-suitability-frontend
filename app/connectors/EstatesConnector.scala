@@ -22,6 +22,7 @@ import config.FrontendAppConfig
 import javax.inject.Inject
 import models.{AmountOfTaxOwed, UserAnswers}
 import play.api.libs.json.Json
+import play.api.libs.ws.JsonBodyWritables.*
 import uk.gov.hmrc.http.HttpReads.Implicits
 import uk.gov.hmrc.http.{HeaderCarrier, HttpReads, HttpResponse, StringContextOps}
 import uk.gov.hmrc.http.HttpReads.Implicits.{readEitherOf, throwOnFailure}
@@ -31,12 +32,12 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class EstatesConnector @Inject() (http: HttpClientV2, config: FrontendAppConfig, adapter: UserAnswersToTaxAmountOwed) {
 
-  implicit def httpResponse: HttpReads[HttpResponse] =
-    throwOnFailure(readEitherOf[HttpResponse](Implicits.readRaw))
+  given httpResponse: HttpReads[HttpResponse] =
+    throwOnFailure(readEitherOf[HttpResponse](using Implicits.readRaw))
 
   def saveTaxAmountOwed(
     userAnswers: UserAnswers
-  )(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] = {
+  )(using hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] = {
     val postTaxAmountOwedUrl = s"${config.estatesUrl}/estates/amount-tax-owed"
     adapter.convert(userAnswers) match {
       case Some(amount) =>
