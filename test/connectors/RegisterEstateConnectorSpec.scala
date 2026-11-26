@@ -44,7 +44,7 @@ class RegisterEstateConnectorSpec
     with IntegrationPatience {
 
   lazy given hc: HeaderCarrier = HeaderCarrier()
-  given ExecutionContext = ExecutionContext.global
+  given ExecutionContext       = ExecutionContext.global
 
   given requestHeader: RequestHeader = FakeRequest("GET", "/")
 

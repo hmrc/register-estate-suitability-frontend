@@ -38,7 +38,7 @@ class EstatesConnectorSpec
     with BeforeAndAfterEach
     with IntegrationPatience {
   lazy given hc: HeaderCarrier = HeaderCarrier()
-  given ExecutionContext = ExecutionContext.global
+  given ExecutionContext       = ExecutionContext.global
 
   protected val server: WireMockServer = new WireMockServer(wireMockConfig().dynamicPort())
 
