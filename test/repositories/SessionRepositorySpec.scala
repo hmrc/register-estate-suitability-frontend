@@ -26,9 +26,11 @@ import play.api.libs.json.Json
 import play.api.test.Helpers.{await, defaultAwaitTimeout}
 import uk.gov.hmrc.mongo.test.MongoSupport
 
-import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.{ExecutionContext, Future}
 
 class SessionRepositorySpec extends SpecBase with MongoSupport with BeforeAndAfterEach {
+
+  given ExecutionContext = ExecutionContext.global
 
   private val repository = new SessionRepository(mongoComponent, frontendAppConfig)
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import controllers.routes._
+@import controllers.routes.*
 @import views.html.components.{InputYesNo, Heading, ErrorSummary, SubmitButton}
 
 @this(
@@ -26,7 +26,7 @@
     submitButton: SubmitButton
 )
 
-@(form: Form[?])(implicit request: RequestHeader, messages: Messages)
+@(form: Form[?])(using request: RequestHeader, messages: Messages)
 
 @mainTemplate(
     title = s"${errorPrefix(form)}${messages("moreThanTenThousand.title")}",

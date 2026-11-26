@@ -31,7 +31,7 @@ object Enumerable {
         entries.toMap.get(str)
     }
 
-  trait Implicits {
+  trait Givens {
 
     given reads[A](using ev: Enumerable[A]): Reads[A] =
       Reads {

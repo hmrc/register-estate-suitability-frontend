@@ -38,7 +38,7 @@ object EnumerableSpec {
 
 }
 
-class EnumerableSpec extends AnyWordSpec with Matchers with EitherValues with OptionValues with Enumerable.Implicits {
+class EnumerableSpec extends AnyWordSpec with Matchers with EitherValues with OptionValues with Enumerable.Givens {
 
   import EnumerableSpec.*
 

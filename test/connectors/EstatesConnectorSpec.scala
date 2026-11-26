@@ -27,7 +27,7 @@ import pages.MoreThanHalfMillPage
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.{HeaderCarrier, UpstreamErrorResponse}
 
-import scala.concurrent.ExecutionContext.Implicits.*
+import scala.concurrent.{ExecutionContext, Future}
 
 class EstatesConnectorSpec
     extends SpecBase
@@ -38,6 +38,7 @@ class EstatesConnectorSpec
     with BeforeAndAfterEach
     with IntegrationPatience {
   lazy given hc: HeaderCarrier = HeaderCarrier()
+  given ExecutionContext = ExecutionContext.global
 
   protected val server: WireMockServer = new WireMockServer(wireMockConfig().dynamicPort())
 

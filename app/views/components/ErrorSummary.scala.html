@@ -15,14 +15,14 @@
  *@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
-@import utils.DateErrorFormatter._
+@import utils.DateErrorFormatter.*
 @import viewmodels.RadioOption
 
 @this(
         govUkErrorSummary: GovukErrorSummary
 )
 
-@(errors: Seq[FormError], radioOptions: Seq[RadioOption] = Nil, isYesNo: Boolean = false)(implicit messages: Messages)
+@(errors: Seq[FormError], radioOptions: Seq[RadioOption] = Nil, isYesNo: Boolean = false)(using messages: Messages)
 
     @if(errors.nonEmpty) {
         @govUkErrorSummary(uk.gov.hmrc.govukfrontend.views.viewmodels.errorsummary.ErrorSummary(
