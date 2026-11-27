@@ -18,11 +18,13 @@ package controllers
 
 import config.FrontendAppConfig
 import connectors.EstatesConnector
-import controllers.actions._
+import controllers.actions.*
 import javax.inject.Inject
 import models.requests.{AgentUser, OrganisationUser}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.YouNeedToRegisterView
 
@@ -35,14 +37,16 @@ class YouNeedToRegisterController @Inject() (
   view: YouNeedToRegisterView,
   config: FrontendAppConfig,
   connector: EstatesConnector
-)(implicit ec: ExecutionContext)
+)(using ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
-  def onPageLoad(): Action[AnyContent] = actions.authWithData { implicit request =>
+  def onPageLoad(): Action[AnyContent] = actions.authWithData { request =>
+    given play.api.mvc.RequestHeader = request
     Ok(view())
   }
 
-  def onSubmit(): Action[AnyContent] = actions.authWithData.async { implicit request =>
+  def onSubmit(): Action[AnyContent] = actions.authWithData.async { request =>
+    given hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
     connector.saveTaxAmountOwed(request.userAnswers) map { _ =>
       request.user match {
         case AgentUser(_)        => Redirect(config.agentDetails)

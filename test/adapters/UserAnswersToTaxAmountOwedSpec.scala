@@ -17,7 +17,7 @@
 package adapters
 
 import base.SpecBase
-import pages._
+import pages.*
 
 class UserAnswersToTaxAmountOwedSpec extends SpecBase {
 

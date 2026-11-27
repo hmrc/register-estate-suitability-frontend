@@ -29,13 +29,15 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class DataRetrievalActionImpl @Inject() (
   val sessionRepository: SessionRepository
-)(implicit val executionContext: ExecutionContext)
+)(override protected val executionContext: ExecutionContext)
     extends DataRetrievalAction with Logging {
+
+  given ExecutionContext = executionContext
 
   override protected def transform[A](request: IdentifierRequest[A]): Future[OptionalDataRequest[A]] = {
     sessionRepository.get(request.user.internalId).map(OptionalDataRequest(request.request, _, request.user))
   } recover { case e: Throwable =>
-    implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
+    given hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
     logger.warn(s"[Session ID: ${Session.id(hc)}] unable to retrieve data due to exception ${e.getMessage}")
     throw e
   }

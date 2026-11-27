@@ -17,12 +17,12 @@
 package controllers
 
 import base.SpecBase
-import org.mockito.ArgumentMatchers.{any, eq => eqTo}
+import org.mockito.ArgumentMatchers.{any, eq as eqTo}
 import org.mockito.Mockito
 import org.mockito.Mockito.{never, verify}
 import play.api.inject.bind
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import uk.gov.hmrc.play.audit.http.connector.AuditConnector
 
 import java.net.URLEncoder
@@ -54,7 +54,7 @@ class LogoutControllerSpec extends SpecBase {
         redirectLocation(result).value mustBe expectedUrl
 
         verify(mockAuditConnector)
-          .sendExplicitAudit(eqTo("estates"), any[Map[String, String]])(any(), any())
+          .sendExplicitAudit(eqTo("estates"), any[Map[String, String]])(using any(), any())
 
         application.stop()
 
@@ -84,7 +84,7 @@ class LogoutControllerSpec extends SpecBase {
         redirectLocation(result).value mustBe expectedUrl
 
         verify(mockAuditConnector, never())
-          .sendExplicitAudit(eqTo("estates"), any[Map[String, String]])(any(), any())
+          .sendExplicitAudit(eqTo("estates"), any[Map[String, String]])(using any(), any())
 
         application.stop()
 

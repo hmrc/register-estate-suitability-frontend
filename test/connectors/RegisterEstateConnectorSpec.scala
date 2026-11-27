@@ -32,7 +32,7 @@ import play.api.{Application, inject}
 import repositories.SessionRepository
 import uk.gov.hmrc.http.HeaderCarrier
 
-import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.{ExecutionContext, Future}
 
 class RegisterEstateConnectorSpec
     extends SpecBase
@@ -43,9 +43,10 @@ class RegisterEstateConnectorSpec
     with BeforeAndAfterEach
     with IntegrationPatience {
 
-  implicit lazy val hc: HeaderCarrier = HeaderCarrier()
+  lazy given hc: HeaderCarrier = HeaderCarrier()
+  given ExecutionContext       = ExecutionContext.global
 
-  implicit val requestHeader: RequestHeader = FakeRequest("GET", "/")
+  given requestHeader: RequestHeader = FakeRequest("GET", "/")
 
   protected val server: WireMockServer = new WireMockServer(wireMockConfig().dynamicPort())
 

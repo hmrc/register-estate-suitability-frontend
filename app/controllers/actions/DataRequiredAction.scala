@@ -28,14 +28,14 @@ import utils.Session
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class DataRequiredActionImpl @Inject() (implicit val executionContext: ExecutionContext)
+class DataRequiredActionImpl @Inject() (override protected val executionContext: ExecutionContext)
     extends DataRequiredAction with Logging {
 
   override protected def refine[A](request: OptionalDataRequest[A]): Future[Either[Result, DataRequest[A]]] =
 
     request.userAnswers match {
       case None       =>
-        implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
+        given hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
         logger.warn(s"[Session ID: ${Session.id(hc)}] UserAnswers required but don't exist")
         Future.successful(Left(Redirect(routes.SessionExpiredController.onPageLoad)))
       case Some(data) =>

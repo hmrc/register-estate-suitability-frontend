@@ -18,7 +18,7 @@ package repositories
 
 import config.FrontendAppConfig
 import models.UserAnswers
-import org.mongodb.scala.model._
+import org.mongodb.scala.model.*
 import uk.gov.hmrc.mongo.MongoComponent
 import uk.gov.hmrc.mongo.play.json.PlayMongoRepository
 
@@ -31,7 +31,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class SessionRepository @Inject() (
   mongo: MongoComponent,
   config: FrontendAppConfig
-)(implicit val ec: ExecutionContext)
+)(using ec: ExecutionContext)
     extends PlayMongoRepository[UserAnswers](
       mongoComponent = mongo,
       collectionName = "user-answers",

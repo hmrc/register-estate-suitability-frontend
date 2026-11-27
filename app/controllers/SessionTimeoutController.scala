@@ -31,7 +31,7 @@ class SessionTimeoutController @Inject() (
   mcc: MessagesControllerComponents
 ) extends FrontendController(mcc) {
 
-  val keepAlive: Action[AnyContent] = Action.async { implicit request =>
+  val keepAlive: Action[AnyContent] = Action.async { request =>
     Future.successful(Ok.withSession(request.session))
   }
 

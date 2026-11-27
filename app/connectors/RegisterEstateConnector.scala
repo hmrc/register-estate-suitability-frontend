@@ -27,15 +27,16 @@ import uk.gov.hmrc.http.{HeaderCarrier, HttpReads, HttpResponse, StringContextOp
 import utils.Session
 
 import javax.inject.Inject
+import scala.annotation.unused
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
 
 class RegisterEstateConnector @Inject() (http: HttpClientV2, config: FrontendAppConfig) extends Logging {
 
-  implicit def httpResponse: HttpReads[HttpResponse] =
-    throwOnFailure(readEitherOf[HttpResponse](Implicits.readRaw))
+  given httpResponse: HttpReads[HttpResponse] =
+    throwOnFailure(readEitherOf[HttpResponse](using Implicits.readRaw))
 
-  def getUTRFlag()(implicit request: RequestHeader, hc: HeaderCarrier, ec: ExecutionContext): Future[Boolean] = {
+  def getUTRFlag()(using @unused request: RequestHeader, hc: HeaderCarrier, ec: ExecutionContext): Future[Boolean] = {
 
     val utrFlagUrl = s"${config.registerEstatesUrl}/register-an-estate/utr-flag"
     logger.warn(s"[RegisterEstateConnector][getUTRFlag][Session ID: ${Session.id(hc)}] url : $utrFlagUrl")

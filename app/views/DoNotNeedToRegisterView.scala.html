@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import controllers.routes._
+@import controllers.routes.*
 @import views.html.components.{Heading, BulletList, SubmitButton}
 
 @this(
@@ -25,7 +25,7 @@
     submitButton: SubmitButton
 )
 
-@()(implicit request: RequestHeader, messages: Messages)
+@()(using request: RequestHeader, messages: Messages)
 
 @mainTemplate(
     title = messages("doNotNeedToRegister.title"),
@@ -41,7 +41,7 @@
 
     <p class="govuk-body">@messages("doNotNeedToRegister.p3") <a class="govuk-link" id="help-link" target="_blank" rel="noopener noreferrer" href="https://www.gov.uk/government/organisations/hm-revenue-customs/contact/bereavement-and-deceased-estate">@messages("doNotNeedToRegister.contact.link")</a>.</p>
 
-    @formHelper(action = DoNotNeedToRegisterController.onSubmit(), Symbol("autoComplete") -> "off") {
+    @formHelper(action = routes.DoNotNeedToRegisterController.onSubmit(), Symbol("autoComplete") -> "off") {
         @submitButton(Some(messages("site.sign_out")))
     }
 

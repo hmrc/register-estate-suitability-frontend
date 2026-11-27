@@ -19,6 +19,7 @@ package views.behaviours
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 import views.ViewUtils
+import scala.annotation.unused
 
 trait YesNoViewBehaviours extends QuestionViewBehaviours[Boolean] {
 
@@ -26,7 +27,7 @@ trait YesNoViewBehaviours extends QuestionViewBehaviours[Boolean] {
     form: Form[Boolean],
     createView: Form[Boolean] => HtmlFormat.Appendable,
     messageKeyPrefix: String,
-    expectedFormAction: String
+    @unused expectedFormAction: String
   ): Unit =
 
     "behave like a page with a Yes/No question" when {
@@ -85,7 +86,7 @@ trait YesNoViewBehaviours extends QuestionViewBehaviours[Boolean] {
           val doc       = asDocument(createView(form.withError(error)))
           val errorSpan = doc.getElementsByClass("govuk-error-message").first
           errorSpan.text mustBe (messages("error.browser.title.prefix") + " " + messages(errorMessage))
-          doc.getElementsByTag("fieldset").first.attr("aria-describedby") contains errorSpan.attr("id")
+          doc.getElementsByTag("fieldset").first.attr("aria-describedby").contains(errorSpan.attr("id"))
         }
 
         "show an error prefix in the browser title" in {

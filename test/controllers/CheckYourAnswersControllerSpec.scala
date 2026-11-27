@@ -21,16 +21,20 @@ import connectors.RegisterEstateConnector
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar.mock
-import pages._
+import pages.*
 import play.api.inject
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.CheckYourAnswersHelper
 import views.html.CheckYourAnswersView
 
 import scala.concurrent.Future
+import uk.gov.hmrc.http.HeaderCarrier
 
 class CheckYourAnswersControllerSpec extends SpecBase {
+  given HeaderCarrier                     = HeaderCarrier()
+  given play.api.mvc.RequestHeader        = FakeRequest()
+  given scala.concurrent.ExecutionContext = scala.concurrent.ExecutionContext.global
 
   "Check Your Answers Controller" must {
 
@@ -38,7 +42,7 @@ class CheckYourAnswersControllerSpec extends SpecBase {
 
       val mockConnector = mock[RegisterEstateConnector]
 
-      when(mockConnector.getUTRFlag()(any(), any(), any())).thenReturn(Future.successful(true))
+      when(mockConnector.getUTRFlag()(using any(), any(), any())).thenReturn(Future.successful(true))
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
         .overrides(
@@ -48,7 +52,7 @@ class CheckYourAnswersControllerSpec extends SpecBase {
         )
         .build()
 
-      val request = FakeRequest(GET, routes.CheckYourAnswersController.onPageLoad.url)
+      val request = FakeRequest(GET, routes.CheckYourAnswersController.onPageLoad().url)
 
       val result = route(application, request).value
 
@@ -61,7 +65,7 @@ class CheckYourAnswersControllerSpec extends SpecBase {
 
       status(result) mustEqual OK
 
-      contentAsString(result) mustEqual view(expectedSections)(request, messages).toString
+      contentAsString(result) mustEqual view(expectedSections)(using request, messages).toString
 
       application.stop()
     }
@@ -70,7 +74,7 @@ class CheckYourAnswersControllerSpec extends SpecBase {
 
       val mockConnector = mock[RegisterEstateConnector]
 
-      when(mockConnector.getUTRFlag()(any(), any(), any())).thenReturn(Future.successful(false))
+      when(mockConnector.getUTRFlag()(using any(), any(), any())).thenReturn(Future.successful(false))
 
       val answers = emptyUserAnswers
         .set(DateOfDeathBeforePage, true)
@@ -84,7 +88,7 @@ class CheckYourAnswersControllerSpec extends SpecBase {
         .overrides(inject.bind[RegisterEstateConnector].toInstance(mockConnector))
         .build()
 
-      val request = FakeRequest(GET, routes.CheckYourAnswersController.onPageLoad.url)
+      val request = FakeRequest(GET, routes.CheckYourAnswersController.onPageLoad().url)
 
       val result = route(application, request).value
 
@@ -104,7 +108,7 @@ class CheckYourAnswersControllerSpec extends SpecBase {
 
       status(result) mustEqual OK
 
-      contentAsString(result) mustEqual view(expectedSections)(request, messages).toString
+      contentAsString(result) mustEqual view(expectedSections)(using request, messages).toString
 
       application.stop()
     }
@@ -113,7 +117,7 @@ class CheckYourAnswersControllerSpec extends SpecBase {
 
       val application = applicationBuilder(userAnswers = None).build()
 
-      val request = FakeRequest(GET, routes.CheckYourAnswersController.onPageLoad.url)
+      val request = FakeRequest(GET, routes.CheckYourAnswersController.onPageLoad().url)
 
       val result = route(application, request).value
 
@@ -138,7 +142,7 @@ class CheckYourAnswersControllerSpec extends SpecBase {
 
         val application = applicationBuilder(userAnswers = Some(answers)).build()
 
-        val request = FakeRequest(POST, routes.CheckYourAnswersController.onSubmit.url)
+        val request = FakeRequest(POST, routes.CheckYourAnswersController.onSubmit().url)
 
         val result = route(application, request).value
 
@@ -161,7 +165,7 @@ class CheckYourAnswersControllerSpec extends SpecBase {
 
         val application = applicationBuilder(userAnswers = Some(answersWithTrue)).build()
 
-        val request = FakeRequest(POST, routes.CheckYourAnswersController.onSubmit.url)
+        val request = FakeRequest(POST, routes.CheckYourAnswersController.onSubmit().url)
 
         val result = route(application, request).value
 
@@ -184,7 +188,7 @@ class CheckYourAnswersControllerSpec extends SpecBase {
 
         val application = applicationBuilder(userAnswers = Some(answersWithoutTrue)).build()
 
-        val request = FakeRequest(POST, routes.CheckYourAnswersController.onSubmit.url)
+        val request = FakeRequest(POST, routes.CheckYourAnswersController.onSubmit().url)
 
         val result = route(application, request).value
 
@@ -199,7 +203,7 @@ class CheckYourAnswersControllerSpec extends SpecBase {
 
         val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
-        val request = FakeRequest(POST, routes.CheckYourAnswersController.onSubmit.url)
+        val request = FakeRequest(POST, routes.CheckYourAnswersController.onSubmit().url)
 
         val result = route(application, request).value
 

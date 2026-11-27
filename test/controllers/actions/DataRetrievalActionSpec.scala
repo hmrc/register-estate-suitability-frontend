@@ -24,12 +24,14 @@ import org.mockito.Mockito.when
 import org.scalatest.concurrent.ScalaFutures
 import repositories.SessionRepository
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class DataRetrievalActionSpec extends SpecBase with ScalaFutures {
 
-  class Harness(sessionRepository: SessionRepository) extends DataRetrievalActionImpl(sessionRepository) {
+  given ExecutionContext = ExecutionContext.global
+
+  class Harness(sessionRepository: SessionRepository)
+      extends DataRetrievalActionImpl(sessionRepository)(scala.concurrent.ExecutionContext.global) {
     def callTransform[A](request: IdentifierRequest[A]): Future[OptionalDataRequest[A]] = transform(request)
   }
 

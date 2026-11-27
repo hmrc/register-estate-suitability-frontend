@@ -17,7 +17,7 @@
 package controllers.actions
 
 import models.requests.{AgentUser, IdentifierRequest, OrganisationUser}
-import play.api.mvc._
+import play.api.mvc.*
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
@@ -31,7 +31,7 @@ class FakeIdentifierAction @Inject() (bodyParsers: PlayBodyParsers) extends Iden
     bodyParsers.default
 
   override protected def executionContext: ExecutionContext =
-    scala.concurrent.ExecutionContext.Implicits.global
+    ExecutionContext.global
 
 }
 
@@ -44,6 +44,6 @@ class FakeIdentifierActionAsAgent @Inject() (bodyParsers: PlayBodyParsers) exten
     bodyParsers.default
 
   override protected def executionContext: ExecutionContext =
-    scala.concurrent.ExecutionContext.Implicits.global
+    ExecutionContext.global
 
 }

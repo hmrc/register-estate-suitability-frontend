@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import controllers.routes._
+@import controllers.routes.*
 @import utils.SectionFormatter.formatSections
 @import viewmodels.AnswerSection
 @import views.html.components.{Heading, SubmitButton}
@@ -27,13 +27,13 @@
  submitButton: SubmitButton
 )
 
-@(answerSections: Seq[AnswerSection])(implicit request: Request[_], messages: Messages)
+@(answerSections: Seq[AnswerSection])(using request: Request[?], messages: Messages)
 
 @main_template(
  title = messages("haveUtrYesNo.title"),
  showBackLink = true
 ) {
-  @formHelper(action = CheckYourAnswersController.onSubmit, Symbol("autoComplete") -> "off") {
+  @formHelper(action = routes.CheckYourAnswersController.onSubmit(), Symbol("autoComplete") -> "off") {
 
   @heading("haveUtrYesNo.title")
 

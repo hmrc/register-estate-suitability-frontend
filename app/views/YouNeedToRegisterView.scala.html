@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import controllers.routes._
+@import controllers.routes.*
 @import views.html.components.{Heading, SubmitButton}
 
 @this(
@@ -25,14 +25,14 @@
 )
 
 
-@()(implicit request: RequestHeader, messages: Messages)
+@()(using request: RequestHeader, messages: Messages)
 
 @mainTemplate(
     title = messages("youNeedToRegister.title"),
     showBackLink = true
 ) {
 
-    @formHelper(action = YouNeedToRegisterController.onSubmit(), Symbol("autoComplete") -> "off") {
+    @formHelper(action = routes.YouNeedToRegisterController.onSubmit(), Symbol("autoComplete") -> "off") {
 
         @heading("youNeedToRegister.heading")
         <p class="govuk-body">@messages("youNeedToRegister.p1")</p>

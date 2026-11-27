@@ -22,6 +22,6 @@ case class AmountOfTaxOwed(amount: String)
 
 object AmountOfTaxOwed {
 
-  implicit val format: Format[AmountOfTaxOwed] = Json.format[AmountOfTaxOwed]
+  given format: Format[AmountOfTaxOwed] = Json.format[AmountOfTaxOwed]
 
 }

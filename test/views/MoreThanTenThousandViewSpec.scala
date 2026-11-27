@@ -33,8 +33,8 @@ class MoreThanTenThousandViewSpec extends YesNoViewBehaviours {
 
     val view = viewFor[MoreThanTenThousandView](Some(emptyUserAnswers))
 
-    def applyView(form: Form[_]): HtmlFormat.Appendable =
-      view.apply(form)(fakeRequest, messages)
+    def applyView(form: Form[?]): HtmlFormat.Appendable =
+      view.apply(form)(using fakeRequest, messages)
 
     behave like normalPage(applyView(form), messageKeyPrefix)
 

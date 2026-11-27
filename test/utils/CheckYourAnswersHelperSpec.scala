@@ -17,7 +17,7 @@
 package utils
 
 import base.SpecBase
-import pages._
+import pages.*
 
 class CheckYourAnswersHelperSpec extends SpecBase {
 

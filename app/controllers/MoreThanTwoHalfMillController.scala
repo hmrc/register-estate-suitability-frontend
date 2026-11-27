@@ -16,7 +16,7 @@
 
 package controllers
 
-import controllers.actions._
+import controllers.actions.*
 import forms.YesNoFormProvider
 import navigation.Navigator
 import pages.{CheckAnswersPage, MoreThanTwoHalfMillPage}
@@ -38,13 +38,14 @@ class MoreThanTwoHalfMillController @Inject() (
   formProvider: YesNoFormProvider,
   val controllerComponents: MessagesControllerComponents,
   view: MoreThanTwoHalfMillView
-)(implicit ec: ExecutionContext)
+)(using ec: ExecutionContext)
     extends FrontendBaseController with I18nSupport {
 
   val form: Form[Boolean] = formProvider.withPrefix("moreThanTwoHalfMill")
 
-  def onPageLoad(): Action[AnyContent] = actions.authWithData { implicit request =>
-    val preparedForm = request.userAnswers.get(MoreThanTwoHalfMillPage) match {
+  def onPageLoad(): Action[AnyContent] = actions.authWithData { request =>
+    given play.api.mvc.RequestHeader = request
+    val preparedForm                 = request.userAnswers.get(MoreThanTwoHalfMillPage) match {
       case None        => form
       case Some(value) => form.fill(value)
     }
@@ -52,7 +53,8 @@ class MoreThanTwoHalfMillController @Inject() (
     Ok(view(preparedForm))
   }
 
-  def onSubmit(): Action[AnyContent] = actions.authWithData.async { implicit request =>
+  def onSubmit(): Action[AnyContent] = actions.authWithData.async { request =>
+    given play.api.mvc.Request[play.api.mvc.AnyContent] = request
     form
       .bindFromRequest()
       .fold(
